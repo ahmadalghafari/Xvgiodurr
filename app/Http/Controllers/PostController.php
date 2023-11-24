@@ -26,61 +26,61 @@ class PostController extends Controller{
         return view('home' , compact('posts'));
     }
 
-//    public function create(){
-//
-//    }
-//
-//    public function store(Request $request){
-////        dd($request);
-//        $error_message = 'You cannot post empty content!';
-//        $request->validate([
-//            'images.*' => 'required_without_all:files,videos,voice,text|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-//            'files.*' => 'required_without_all:images,videos,voice,text|max:2048',
-//            'videos.*' => 'required_without_all:files,voice,images,text|mimetypes:video/avi,video/mpeg,video/mp4|max:10000',
-//            'voice.*' => 'required_without_all:files,images,videos,text|mimetypes:audio/mpeg,audio/wav|max:10000',
-//            'text' => 'required_without_all:files,voice,videos,images|min:1']
-//            ,[
-//                'images.required_without_all' =>  $error_message,
-//                'files.required_without_all' => $error_message ,
-//                'videos.required_without_all' => $error_message ,
-//                'text.required_without_all' => $error_message ,
-//                'voice.required_without_all' => $error_message
-//            ]
-//        );
-//
-//
-//        $text = $request->text ?: '';
-//        $id =auth::user()->id;
-//
-//        $post = post::create([
-//            'user_id' => $id,
-//            'text' => $text ,
-//        ]);
-//
-//        $fileTypes = ['images', 'videos', 'files', 'voice'];
-//
-//        foreach ($fileTypes as $fileType) {
-//            if ($request->hasFile($fileType)) {
-//                foreach ($request->file($fileType) as $file) {
-//                    $fileName = $id . '.' . time() . '.' . $file->extension();
-//                    $filePath = 'posts_' . $fileType . '/' . $fileName;
-//
-//                    file::create([
-//                        'post_id' => $post->id,
-//                        'file_path' => $filePath,
-//                        'file_type' => $fileType,
-//                        'prefix' => $file->extension(),
-//                    ]);
-//
-//                    $file->move(public_path('posts_' . $fileType), $fileName);
-//                }
-//            }
-//        }
-//
-//        // Return a success message
-//        return redirect()->route('home.posts.index');
-//
-//    }
+    public function create(){
+
+    }
+
+    public function store(Request $request){
+//        dd($request);
+        $error_message = 'You cannot post empty content!';
+        $request->validate([
+            'images.*' => 'required_without_all:files,videos,voice,text|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'files.*' => 'required_without_all:images,videos,voice,text|max:2048',
+            'videos.*' => 'required_without_all:files,voice,images,text|mimetypes:video/avi,video/mpeg,video/mp4|max:10000',
+            'voice.*' => 'required_without_all:files,images,videos,text|mimetypes:audio/mpeg,audio/wav|max:10000',
+            'text' => 'required_without_all:files,voice,videos,images|min:1']
+            ,[
+                'images.required_without_all' =>  $error_message,
+                'files.required_without_all' => $error_message ,
+                'videos.required_without_all' => $error_message ,
+                'text.required_without_all' => $error_message ,
+                'voice.required_without_all' => $error_message
+            ]
+        );
+
+
+        $text = $request->text ?: '';
+        $id =auth::user()->id;
+
+        $post = post::create([
+            'user_id' => $id,
+            'text' => $text ,
+        ]);
+
+        $fileTypes = ['images', 'videos', 'files', 'voice'];
+
+        foreach ($fileTypes as $fileType) {
+            if ($request->hasFile($fileType)) {
+                foreach ($request->file($fileType) as $file) {
+                    $fileName = $id . '.' . time() . '.' . $file->extension();
+                    $filePath = 'posts_' . $fileType . '/' . $fileName;
+
+                    file::create([
+                        'post_id' => $post->id,
+                        'file_path' => $filePath,
+                        'file_type' => $fileType,
+                        'prefix' => $file->extension(),
+                    ]);
+
+                    $file->move(public_path('posts_' . $fileType), $fileName);
+                }
+            }
+        }
+
+        // Return a success message
+        return redirect()->route('home.posts.index');
+
+    }
 
     public function show(post $post){
 
