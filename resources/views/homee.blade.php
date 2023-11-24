@@ -16,7 +16,7 @@
 
                     {{ __('You are logged in!') }}
                 </div>
-                <p>go to text file to read what i had written</p>
+
             </div>
         </div>
     </div>
