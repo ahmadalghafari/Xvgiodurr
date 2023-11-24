@@ -1,4 +1,4 @@
-@extends('layouts.test')
+@extends('livewire.layouts.test')
 
 @section('meta')
 @endsection
@@ -40,10 +40,11 @@
                 <input type="submit" value="Like" name="like" class="btn btn-primary">
             </form>
         @else
-            <form action="{{route('likes.destroy' , $post->like->where('user_id',Auth::user()->id)->first() ) }}" method="POST">
+            <form action="{{route('likes.destroy' , $post->like->where('user_id',Auth::user()->id)->first() ) }}"
+                  method="POST">
                 @csrf
                 @method('DELETE')
-                <input type="submit" value="Liked"  class="btn btn-primary">
+                <input type="submit" value="Liked" class="btn btn-primary">
             </form>
         @endif
         <h6>{{ count($post->like)}}</h6>

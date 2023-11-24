@@ -1,4 +1,4 @@
-@extends('layouts.test')
+@extends('livewire.layouts.test')
 
 @section('meta')
 @endsection
@@ -15,7 +15,7 @@
     <table class="table  table-striped table-hover">
         @foreach($followers as $follow)
             <tr>
-                <td ><a href="{{route('users.show' ,$follow->user_follower)}}"> {{$follow->mind->name}} </a>
+                <td><a href="{{route('users.show' ,$follow->user_follower)}}"> {{$follow->mind->name}} </a>
 
                     <form action="{{route('blocks.store' )}}" method="POST">
                         @csrf

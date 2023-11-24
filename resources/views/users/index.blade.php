@@ -1,4 +1,4 @@
-@extends('layouts.test')
+@extends('livewire.layouts.test')
 
 @section('meta')
 @endsection
@@ -15,9 +15,9 @@
         @foreach($users as $user)
             <tr>
                 <td>
-                    <a href="{{route('users.show' , $user)}}" >{{$user->name}}</a><br>
+                    <a href="{{route('users.show' , $user)}}">{{$user->name}}</a><br>
                     @if(Auth::user()->follow->contains('user_follower',$user->id))
-                        <button class="btn btn-secondary " disabled >Following</button>
+                        <button class="btn btn-secondary " disabled>Following</button>
                     @elseif(!(Auth::user()->follow->contains('user_follower',$user->id)) && !(Auth::user()->block->contains('user_blocked',$user->id)))
                         <form action="{{route('follows.store')}}" method="POST">
                             @csrf

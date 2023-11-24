@@ -1,4 +1,4 @@
-@extends('layouts.test')
+@extends('livewire.layouts.test')
 
 @section('meta')
 @endsection
@@ -18,7 +18,7 @@
 
 
     @if(Auth::user()->follow->contains('user_follower',$user->id))
-        <button class="btn btn-secondary " disabled >Following</button>
+        <button class="btn btn-secondary " disabled>Following</button>
     @elseif(!(Auth::user()->follow->contains('user_follower',$user->id)) && !(Auth::user()->block->contains('user_blocked',$user->id)))
         <form action="{{route('follows.store')}}" method="POST">
             @csrf
@@ -29,7 +29,7 @@
 
 
     @if(Auth::user()->block->contains('user_blocked',$user->id))
-        <button class="btn btn-warning" disabled >blocked</button>
+        <button class="btn btn-warning" disabled>blocked</button>
     @else
         <form action="{{route('blocks.store')}}" method="POST">
             @csrf
@@ -45,16 +45,17 @@
     @foreach($posts as $post)
         {{$post->text}}
         @if(!(Auth::user()->like->contains('post_id',$post->id)))
-        <form action="{{route('likes.store') }}" method="POST">
-            @csrf
-            <input type="text" value="{{$post->id}}" name="post_id" style="display: none">
-            <input type="submit" value="Like" name="like" class="btn btn-primary">
-        </form>
+            <form action="{{route('likes.store') }}" method="POST">
+                @csrf
+                <input type="text" value="{{$post->id}}" name="post_id" style="display: none">
+                <input type="submit" value="Like" name="like" class="btn btn-primary">
+            </form>
         @else
-            <form action="{{route('likes.destroy' , $post->like->where('user_id',Auth::user()->id)->first() ) }}" method="POST">
+            <form action="{{route('likes.destroy' , $post->like->where('user_id',Auth::user()->id)->first() ) }}"
+                  method="POST">
                 @csrf
                 @method('DELETE')
-                <input type="submit" value="Liked"  class="btn btn-primary">
+                <input type="submit" value="Liked" class="btn btn-primary">
             </form>
         @endif
         <form action="{{route('comments.store')}}" method="POST" enctype="multipart/form-data" id="post_form">
@@ -66,13 +67,10 @@
 
             <input type="submit" value="post" id="post_submit" disabled>
         </form>
-        <br><hr>
+        <br>
+        <hr>
     @endforeach
     {{ $posts->links() }}
-
-
-
-
 
 @endsection
 
@@ -80,13 +78,13 @@
     @if(session('error_follow'))
         <script>alert('{{session('error_follow')}}')</script>
         @php
-        session()->forget('error_follow');
+            session()->forget('error_follow');
         @endphp
     @endif
     @if(session('error_block'))
         <script>alert('{{session('error_block')}}')</script>
         @php
-        session()->forget('error_block')
+            session()->forget('error_block')
         @endphp
     @endif
 @endsection

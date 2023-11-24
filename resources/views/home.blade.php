@@ -479,17 +479,7 @@ Header END -->
 											<!-- Divider -->
 											<div class="vr"></div>
 											<!-- User stat item -->
-											<div>
-												<h6 class="mb-0">{{Auth::user()->followMe->count()}}</h6>
-												<small>Followers</small>
-											</div>
-											<!-- Divider -->
-											<div class="vr"></div>
-											<!-- User stat item -->
-											<div>
-												<h6 class="mb-0">{{Auth::user()->follow->count()}}</h6>
-												<small>Following</small>
-											</div>
+											@livewireContent()
 										</div>
 										<!-- User stat END -->
 									</div>
