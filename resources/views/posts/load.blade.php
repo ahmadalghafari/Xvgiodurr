@@ -16,7 +16,7 @@
                     <!-- Info -->
                     <div>
                         <div class="nav nav-divider">
-                            <h6 class="nav-item card-title mb-0"> <a href="#!">{{$post->user->nsme}}</a></h6>
+                            <h6 class="nav-item card-title mb-0"> <a href="#!">{{$post->user->name}}</a></h6>
                             <span class="nav-item small"> {{ $post->created_at->diffForHumans() }}</span>
                         </div>
                         <p class="mb-0 small">Web Developer at Webestica</p>
