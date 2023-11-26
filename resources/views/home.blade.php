@@ -91,7 +91,7 @@
 
 	<!-- Theme CSS -->
 	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/css/style.css')}}">
-
+        @livewireStyles
 </head>
 <body>
 
@@ -124,12 +124,28 @@ Header START nav-->
 				<!-- Nav Search START -->
 				<div class="nav mt-3 mt-lg-0 flex-nowrap align-items-center px-4 px-lg-0">
 					<div class="nav-item w-100">
-						<form class="rounded position-relative">
-							<input class="form-control ps-5 bg-light" type="search" placeholder="Search..." aria-label="Search">
-							<button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit"><i class="bi bi-search fs-5"> </i></button>
-						</form>
+                        <div class="dropdown">
+						    <form class="rounded position-relative">
+
+                                <input class="form-control ps-5 bg-light" type="search" placeholder="Search..." aria-label="Search" data-toggle="dropdown">
+                                <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit"><i class="bi bi-search fs-5"> </i></button>
+                                    <ul class="dropdown-menu mt-2">
+                                        <!-- Your search results will go here -->
+                                        <li><a class="dropdown-item" href="#">Result 1</a></li>
+                                        <li><a class="dropdown-item" href="#">Result 2</a></li>
+                                        <li><a class="dropdown-item" href="#">Result 3</a></li>
+                                        <!-- Add more result items as needed -->
+                                    </ul>
+
+						    </form>
+                        </div>
 					</div>
 				</div>
+                <ul class="dropdown-menu">
+
+                        <li><a class="dropdown-item" href="#">Result 3</a><</li>
+                    </ul>
+
 				<!-- Nav Search END -->
 
 				<ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -414,6 +430,7 @@ Header START nav-->
 		</div>
 	</nav>
 	<!-- Logo Nav END -->
+
 </header>
 <!-- =======================
 Header END -->
@@ -479,7 +496,14 @@ Header END -->
 											<!-- Divider -->
 											<div class="vr"></div>
 											<!-- User stat item -->
-											@livewireContent()
+											@livewire('following')
+                                            <!-- Divider -->
+                                            <div class="vr"></div>
+                                            <!-- User stat item -->
+                                            <div>
+                                                <h6 class="mb-0">{{Auth::user()->follow->count()}}</h6>
+                                                <small>Following</small>
+                                            </div>
 										</div>
 										<!-- User stat END -->
 									</div>
@@ -3031,10 +3055,13 @@ JS libraries, plugins and custom scripts -->
 <script src="{{asset('import/assets/vendor/dropzone/dist/min/dropzone.min.js')}}"></script>
 <script src="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.js')}}"></script>
 <script src="{{asset('import/assets/js/zuck-stories.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-fz3+P0kAFv3K6buXfNi0l5+Cx5s1gA8II0+Z+6m21pHV4cO2XzTXR4vMKpFHL6bA" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WykRq1xdkFIa5yFA2J8p1Q6CKVaO5FwFhC" crossorigin="anonymous"></script>
 
 <!-- Theme Functions -->
 <script src="{{asset('import/assets/js/functions.js')}}"></script>
 
-
+@livewireScripts
 </body>
 </html>
