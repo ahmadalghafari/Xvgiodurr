@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\post;
+use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Rules\EmptyFields;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\file;
 
 class PostController extends Controller{
-    public function index(){
+    public function index(Request $request){
         $userid = auth::user()->id;
 
         $posts = Post::whereNotIn('user_id', function ($query) use ($userid) {
@@ -22,6 +23,10 @@ class PostController extends Controller{
                     ->from('follows')
                     ->where('user_follow', $userid);
             })->simplePaginate(5);
+        if($request->ajax()){
+            $view = view('posts.load', compact('posts'))->render();
+            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl()]);
+        }
 //        dd($posts);
         return view('home' , compact('posts'));
     }
