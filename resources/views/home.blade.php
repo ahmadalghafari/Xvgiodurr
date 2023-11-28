@@ -9,6 +9,7 @@
 	<meta name="author" content="Webestica.com">
 	<meta name="description" content="Bootstrap 5 based Social Media Network and Community Theme">
 
+
 	<!-- Dark mode -->
 
 	<script>
@@ -90,7 +91,9 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.css')}}">
 
 	<!-- Theme CSS -->
-	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/css/style.css')}}">
+	    <link rel="stylesheet" type="text/css" href="{{asset('import/assets/css/style.css')}}">
+{{--        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>--}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         @livewireStyles
 </head>
 <body>
@@ -585,7 +588,7 @@ Header END -->
 			<!-- Sidenav END -->
 
 			<!-- Main content START -->
-			<div class="col-md-8 col-lg-6 vstack gap-4">
+			<div class="col-md-8 col-lg-6 vstack gap-4" id="posts-container">
 
 				<!-- Story START -->
                     {{--        <div class="d-flex gap-2 mb-n3">--}}
@@ -920,23 +923,28 @@ Header END -->
                         </div>
 				</div>
 				<!-- مكان نشر البوست ينتهي -->
-                @include('posts.load')
+
+
+{{--                <div id="posts-container">--}}
+                    @include('posts.load')
+{{--                </div>--}}
 
 
 
-
-                <!-- Load more button START -->
-                <a href="#!" role="button" class="btn btn-loader btn-primary-soft" data-bs-toggle="button" aria-pressed="true">
-						<span class="load-text"> Load more </span>
-						<div class="load-icon">
-							<div class="spinner-grow spinner-grow-sm" role="status">
-								<span class="visually-hidden">Loading...</span>
-							</div>
-						</div>
-					</a>
-                <!-- Load more button END -->
 
             </div>
+            {{--                <!-- Load more button START -->--}}
+{{--                <a href="#!" role="button" class="btn btn-loader btn-primary-soft" data-bs-toggle="button" aria-pressed="true">--}}
+{{--						<span class="load-text"> Load more </span>--}}
+{{--						<div class="load-icon">--}}
+{{--							<div class="spinner-grow spinner-grow-sm" role="status">--}}
+{{--								<span class="visually-hidden">Loading...</span>--}}
+{{--							</div>--}}
+{{--						</div>--}}
+{{--					</a>--}}
+{{--                <!-- Load more button END -->--}}
+
+
 			<!-- Main content END -->
 
 			<!-- Right sidebar START -->
@@ -1682,6 +1690,7 @@ JS libraries, plugins and custom scripts -->
 
 <script>
     $(document).ready(function () {
+
         let nextPageUrl = '{{ $posts->nextPageUrl() }}';
         $(window).scroll(function () {
             if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
@@ -1699,7 +1708,7 @@ JS libraries, plugins and custom scripts -->
                 },
                 success: function (data) {
                     nextPageUrl = data.nextPageUrl;
-                    $('#posts-container').append(data.view);
+                    $("#posts-container").append(data.view);
                 },
                 error: function (xhr, status, error) {
                     console.error("Error loading more posts:", error);

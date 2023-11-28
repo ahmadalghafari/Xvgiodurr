@@ -22,12 +22,12 @@ class PostController extends Controller{
                 $query->select('user_follower')
                     ->from('follows')
                     ->where('user_follow', $userid);
-            })->simplePaginate(5);
+            })->latest()->Paginate(5);
+
         if($request->ajax()){
             $view = view('posts.load', compact('posts'))->render();
-            return Response::json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl()]);
+            return response()->json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl()]);
         }
-//        dd($posts);
         return view('home' , compact('posts'));
     }
 

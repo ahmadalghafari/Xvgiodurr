@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 class post extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id' , 'photo_path' , 'video_path' , 'file_path' , 'text'];
+    protected $fillable = ['user_id' ,  'text' , 'id'];
 
     public function user():BelongsTo{
         return $this->belongsTo(user::class , 'user_id');
