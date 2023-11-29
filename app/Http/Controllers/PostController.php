@@ -90,12 +90,18 @@ class PostController extends Controller{
     public function show(post $post){
 
     }
-    public function edit(post $post){
-
+    public function edit($id)
+    {
+        $post = Post::find($id);
+        return view('posts/edit', compact('post'));
     }
 
-    public function update(Request $request, post $post){
-
+    public function update(Request $request, $id)
+    {
+        $post = Post::find($id);
+        $post->text = $request->text;
+        $post->save();
+        return redirect()->route('posts', $id);
     }
 
     public function destroy(post $post){
