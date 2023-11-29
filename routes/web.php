@@ -10,7 +10,6 @@ use App\Http\Controllers\CommentController;
 
 
 Route::name('home.')->middleware('auth')->prefix('home/')->group(function (){
-
     Route::resource('posts',PostController::class);
     Route::resource('follows' , FollowController::class);
     Route::resource('likes' , LikeController::class)->except(['index','show','create','update','edit']);
