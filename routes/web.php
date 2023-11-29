@@ -32,4 +32,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get( 'home/posts/edit/{id}' ,[PostController::class , 'edit'] )->name('edit.post');
 Route::put( 'home/posts/update/{id}' ,[PostController::class , 'update'] )->name('update.post');
 
-Route::get( 'home/posts' ,[PostController::class ] )->name('posts');
+//Route::get( 'home/posts' ,[PostController::class ] )->name('posts');
