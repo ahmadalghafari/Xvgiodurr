@@ -588,363 +588,187 @@ Header END -->
 			<!-- Sidenav END -->
 
 			<!-- Main content START -->
+            <!--warning --- don't delete or change the id of the under div : id="posts-container"-->
 			<div class="col-md-8 col-lg-6 vstack gap-4" id="posts-container">
-
-				<!-- Story START -->
-                    {{--        <div class="d-flex gap-2 mb-n3">--}}
-{{--					<div class="position-relative">--}}
-{{--						<div class="card border border-2 border-dashed h-150px px-4 px-sm-5 shadow-none d-flex align-items-center justify-content-center text-center">--}}
-{{--							<div>--}}
-{{--								<a class="stretched-link btn btn-light rounded-circle icon-md" href="#!"><i class="fa-solid fa-plus"></i></a>--}}
-{{--								<h6 class="mt-2 mb-0 small">Post a Story</h6>--}}
-{{--							</div>--}}
-{{--						</div>--}}
-{{--					</div>--}}
-
-{{--					<!-- Stories -->--}}
-{{--					<div id="stories" class="storiesWrapper stories-square stories user-icon carousel scroll-enable"></div>--}}
-{{--				</div>--}}
-
-
-				<!-- Share feed START -->
-                <!-- Story END -->
-
-                <!--مكان نشر البوست يبدأ -->
+                <!--place of posting start-->
 				<div class="card card-body">
 					<div class="d-flex mb-3">
 						<!-- Avatar -->
 						<div class="avatar avatar-xs me-2">
-							<a href="#"> <img class="avatar-img rounded-circle" @if(Auth::user()->pphoto_id != null)
-                                    src="{{asset(Auth::user()->photo->path)}}"
-                                              @else
-                                                  src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                                              @endif alt=""> </a>
+							<a href="">
+                                <img class="avatar-img rounded-circle"
+                                            @if(Auth::user()->pphoto_id != null)
+                                                src="{{asset(Auth::user()->photo->path)}}"
+                                            @else
+                                                src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
+                                            @endif>
+                            </a>
 						</div>
-						<!-- Post input -->
-						    <form class="w-100" action="{{route('home.posts.store')}}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                @foreach($errors->all() as $error)
-                                    <div >{{ $error }}</div>
-                                @endforeach
-							    <textarea class="form-control pe-4 border-0"  name="text" id="post_text" rows="2" data-autoresize placeholder="Share your thoughts..."></textarea><br>
+                        <!-- Form Start -->
+                        <form class="w-100" action="{{route('home.posts.store')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @foreach($errors->all() as $error)
+                                <div >{{ $error }}</div>
+                            @endforeach
+                            <textarea class="form-control pe-4 border-0"  name="text" id="post_text" rows="2" data-autoresize placeholder="Share your thoughts..."></textarea><br>
 
-					            <!-- Share feed toolbar START -->
-					            <ul class="nav nav-pills nav-stack small fw-normal">
-                                    <li class="nav-item">
-                                        <a class="nav-link bg-light py-1 px-2 mb-0" href="#!" data-bs-toggle="modal" data-bs-target="#feedActionPhoto"> <i class="bi bi-image-fill text-success pe-2"></i>Photo</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link bg-light py-1 px-2 mb-0" href="#!" data-bs-toggle="modal" data-bs-target="#feedActionVideo"> <i class="bi bi-camera-reels-fill text-info pe-2"></i>Video</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link bg-light py-1 px-2 mb-0" data-bs-toggle="modal" data-bs-target="#modalCreateEvents"> <i class="bi bi-calendar2-event-fill text-danger pe-2"></i>Event </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link bg-light py-1 px-2 mb-0" href="#!" data-bs-toggle="modal" data-bs-target="#modalCreateFeed"> <i class="bi bi-emoji-smile-fill text-warning pe-2"></i>Feeling /Activity</a>
-                                    </li>
+                            <!-- Share feed toolbar START -->
+                            <ul class="nav nav-pills nav-stack small fw-normal">
+                                <li class="nav-item">
+                                    <a class="nav-link bg-light py-1 px-2 mb-0" href="#!" data-bs-toggle="modal" data-bs-target="#feedActionPhoto"> <i class="bi bi-image-fill text-success pe-2"></i>Photo</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link bg-light py-1 px-2 mb-0" href="#!" data-bs-toggle="modal" data-bs-target="#feedActionVideo"> <i class="bi bi-camera-reels-fill text-info pe-2"></i>Video</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link bg-light py-1 px-2 mb-0" data-bs-toggle="modal" data-bs-target="#modalCreateEvents"> <i class="bi bi-card-list text-danger pe-2 "></i>File </a>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" name="submit" value="Post" class="nav-link bg-light py-1 px-2 mb-0">
+                                        Post
+                                    </button>
+                                </li>
+                                <li class="nav-item dropdown ms-lg-auto">
+                                    <a class="nav-link bg-light py-1 px-2 mb-0" href="#" id="feedActionShare" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots"></i>
+                                    </a>
+                                    <!-- Dropdown menu -->
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="feedActionShare">
+                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-envelope fa-fw pe-2"></i>Create a poll</a></li>
+                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark-check fa-fw pe-2"></i>Ask a question </a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Help</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
 
+                            <!-- Modals start-->
+                            <!-- Modal create Feed photo START -->
+                            <div class="modal fade" id="feedActionPhoto" tabindex="-1" aria-labelledby="feedActionPhotoLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <!-- Modal feed header START -->
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="feedActionPhotoLabel">Add photo</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <!-- Modal feed header END -->
 
-                                    <li class="nav-item">
-                                        <input type="submit" name="submit" value="Post" >
-                                    </li>
-                                    <li class="nav-item dropdown ms-lg-auto">
-                                        <a class="nav-link bg-light py-1 px-2 mb-0" href="#" id="feedActionShare" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="bi bi-three-dots"></i>
-                                        </a>
-                                        <!-- Dropdown menu -->
-                                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="feedActionShare">
-                                            <li><a class="dropdown-item" href="#"> <i class="bi bi-envelope fa-fw pe-2"></i>Create a poll</a></li>
-                                            <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark-check fa-fw pe-2"></i>Ask a question </a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Help</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                    <!-- بداية المودلات-->
-                                    <!-- Modal create Feed photo START -->
-                                    <div class="modal fade" id="feedActionPhoto" tabindex="-1" aria-labelledby="feedActionPhotoLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <!-- Modal feed header START -->
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="feedActionPhotoLabel">Add post photo</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <!-- Modal feed header END -->
-
-                                                <!-- Modal feed body START -->
-                                                <div class="modal-body">
-                                                    <div class="modal-body text-bg-dark">
-                                                            photo : <input type="file" name="images[]" multiple id="photo" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <!-- Modal feed body END -->
-
-                                                <!-- Modal feed footer -->
-                                                <div class="modal-footer ">
-                                                    <!-- Button -->
-                                                    <button type="button" class="btn btn-success-soft" data-bs-dismiss="modal">Done</button>
-                                                </div>
-                                                <!-- Modal feed footer -->
-
+                                        <!-- Modal feed body START -->
+                                        <div class="modal-body">
+                                            <div class="modal-body text-bg-dark">
+                                                <input type="file" name="images[]" multiple id="photo" class="form-control " accept="image/*" >
                                             </div>
                                         </div>
+                                        <!-- Modal feed body END -->
+
+                                        <!-- Modal feed footer -->
+                                        <div class="modal-footer ">
+                                            <!-- Button -->
+                                            <button type="button" class="btn btn-success-soft" data-bs-dismiss="modal">Done</button>
+                                        </div>
+                                        <!-- Modal feed footer -->
+
                                     </div>
-                                    <!-- Modal create Feed photo END -->
+                                </div>
+                            </div>
+                            <!-- Modal create Feed photo END -->
 
-                                    <!-- Modal create Feed video START -->
-                                    <div class="modal fade" id="feedActionVideo" tabindex="-1" aria-labelledby="feedActionVideoLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <!-- Modal feed header START -->
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="feedActionVideoLabel">Add post video</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <!-- Modal feed header END -->
+                            <!-- Modal create Feed video START -->
+                            <div class="modal fade" id="feedActionVideo" tabindex="-1" aria-labelledby="feedActionVideoLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <!-- Modal feed header START -->
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="feedActionVideoLabel">Add video</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <!-- Modal feed header END -->
 
-                                                <!-- Modal feed body START -->
-                                                <div class="modal-body">
-                                                    <!-- Add Feed -->
-{{--                                                    <div class="d-flex mb-3">--}}
-{{--                                                        <!-- Avatar -->--}}
-{{--                                                        <div class="avatar avatar-xs me-2">--}}
-{{--                                                            <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/03.jpg')}}" alt="">--}}
-{{--                                                        </div>--}}
-{{--                                                        <!-- Feed box  -->--}}
-{{--                                                        <form class="w-100">--}}
-{{--                                                            <textarea class="form-control pe-4 fs-3 lh-1 border-0" rows="2" placeholder="Share your thoughts..."></textarea>--}}
-{{--                                                        </form>--}}
-{{--                                                    </div>--}}
+                                        <!-- Modal feed body START -->
+                                        <div class="modal-body">
+                                            <!-- Add Feed -->
+                                            {{--                                                    <div class="d-flex mb-3">--}}
+                                            {{--                                                        <!-- Avatar -->--}}
+                                            {{--                                                        <div class="avatar avatar-xs me-2">--}}
+                                            {{--                                                            <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/03.jpg')}}" alt="">--}}
+                                            {{--                                                        </div>--}}
+                                            {{--                                                        <!-- Feed box  -->--}}
+                                            {{--                                                        <form class="w-100">--}}
+                                            {{--                                                            <textarea class="form-control pe-4 fs-3 lh-1 border-0" rows="2" placeholder="Share your thoughts..."></textarea>--}}
+                                            {{--                                                        </form>--}}
+                                            {{--                                                    </div>--}}
 
-{{--                                                    <!-- Dropzone photo START -->--}}
-{{--                                                    <div>--}}
-{{--                                                        <label class="form-label">Upload attachment</label>--}}
-{{--                                                        <div class="dropzone dropzone-default card shadow-none" data-dropzone='{"maxFiles":2}'>--}}
-{{--                                                            <div class="dz-message">--}}
-{{--                                                                <i class="bi bi-camera-reels display-3"></i>--}}
-{{--                                                                <p>Drag here or click to upload video.</p>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-                                                    <!-- Dropzone photo END -->
-                                                    <div class="modal-body text-bg-dark">
-                                                        video : <input type="file" name="videos[]" multiple id="video" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <!-- Modal feed body END -->
-
-                                                <!-- Modal feed footer -->
-                                                <div class="modal-footer">
-                                                    <!-- Button -->
-{{--                                                    <button type="button" class="btn btn-danger-soft me-2"><i class="bi bi-camera-video-fill pe-1"></i> Live video</button>--}}
-                                                    <button type="button" class="btn btn-success-soft" data-bs-dismiss="modal" >Done</button>
-                                                </div>
-                                                <!-- Modal feed footer -->
+                                            {{--                                                    <!-- Dropzone photo START -->--}}
+                                            {{--                                                    <div>--}}
+                                            {{--                                                        <label class="form-label">Upload attachment</label>--}}
+                                            {{--                                                        <div class="dropzone dropzone-default card shadow-none" data-dropzone='{"maxFiles":2}'>--}}
+                                            {{--                                                            <div class="dz-message">--}}
+                                            {{--                                                                <i class="bi bi-camera-reels display-3"></i>--}}
+                                            {{--                                                                <p>Drag here or click to upload video.</p>--}}
+                                            {{--                                                            </div>--}}
+                                            {{--                                                        </div>--}}
+                                            {{--                                                    </div>--}}
+                                            <!-- Dropzone photo END -->
+                                            <div class="modal-body text-bg-dark">
+                                                video : <input type="file" name="videos[]" multiple id="video" class="form-control" accept="video/*">
                                             </div>
                                         </div>
+                                        <!-- Modal feed body END -->
+
+                                        <!-- Modal feed footer -->
+                                        <div class="modal-footer">
+                                            <!-- Button -->
+                                            {{--                                                    <button type="button" class="btn btn-danger-soft me-2"><i class="bi bi-camera-video-fill pe-1"></i> Live video</button>--}}
+                                            <button type="button" class="btn btn-success-soft" data-bs-dismiss="modal" >Done</button>
+                                        </div>
+                                        <!-- Modal feed footer -->
                                     </div>
-                                    <!-- Modal create Feed video END -->
+                                </div>
+                            </div>
+                            <!-- Modal create Feed video END -->
 
-                                    <!-- Modal create events START -->
-                                    <div class="modal fade" id="modalCreateEvents" tabindex="-1" aria-labelledby="modalLabelCreateAlbum" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <!-- Modal feed header START -->
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalLabelCreateAlbum">Create event</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <!-- Modal feed header END -->
-
-
-                                                <!-- Modal feed body START -->
-                                                <div class="modal-body">
-                                                    <!-- Form START -->
-                                                    <form class="row g-4">
-                                                        <!-- Title -->
-                                                        <div class="col-12">
-                                                            <label class="form-label">Title</label>
-                                                            <input type="email" class="form-control" placeholder="Event name here">
-                                                        </div>
-                                                        <!-- Description -->
-                                                        <div class="col-12">
-                                                            <label class="form-label">Description</label>
-                                                            <textarea class="form-control" rows="2" placeholder="Ex: topics, schedule, etc."></textarea>
-                                                        </div>
-                                                        <!-- Date -->
-                                                        <div class="col-sm-4">
-                                                            <label class="form-label">Date</label>
-                                                            <input type="text" class="form-control flatpickr" placeholder="Select date">
-                                                        </div>
-                                                        <!-- Time -->
-                                                        <div class="col-sm-4">
-                                                            <label class="form-label">Time</label>
-                                                            <input type="text" class="form-control flatpickr" data-enableTime="true" data-noCalendar="true" placeholder="Select time">
-                                                        </div>
-                                                        <!-- Duration -->
-                                                        <div class="col-sm-4">
-                                                            <label class="form-label">Duration</label>
-                                                            <input type="email" class="form-control" placeholder="1hr 23m">
-                                                        </div>
-                                                        <!-- Location -->
-                                                        <div class="col-12">
-                                                            <label class="form-label">Location</label>
-                                                            <input type="email" class="form-control" placeholder="Logansport, IN 46947">
-                                                        </div>
-                                                        <!-- Add guests -->
-                                                        <div class="col-12">
-                                                            <label class="form-label">Add guests</label>
-                                                            <input type="email" class="form-control" placeholder="Guest email">
-                                                        </div>
-                                                        <!-- Avatar group START -->
-                                                        <div class="col-12 mt-3">
-                                                            <ul class="avatar-group list-unstyled align-items-center mb-0">
-                                                                <li class="avatar avatar-xs">
-                                                                    <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/01.jpg')}}" alt="avatar">
-                                                                </li>
-                                                                <li class="avatar avatar-xs">
-                                                                    <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/02.jpg')}}" alt="avatar">
-                                                                </li>
-                                                                <li class="avatar avatar-xs">
-                                                                    <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/03.jpg')}}" alt="avatar">
-                                                                </li>
-                                                                <li class="avatar avatar-xs">
-                                                                    <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/04.jpg')}}" alt="avatar">
-                                                                </li>
-                                                                <li class="avatar avatar-xs">
-                                                                    <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/05.jpg')}}" alt="avatar">
-                                                                </li>
-                                                                <li class="avatar avatar-xs">
-                                                                    <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/06.jpg')}}" alt="avatar">
-                                                                </li>
-                                                                <li class="avatar avatar-xs">
-                                                                    <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/07.jpg')}}" alt="avatar">
-                                                                </li>
-                                                                <li class="ms-3">
-                                                                    <small> +50 </small>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <!-- Upload Photos or Videos -->
-                                                        <!-- Dropzone photo START -->
-                                                        <div>
-                                                            <label class="form-label">Upload attachment</label>
-                                                            <div class="dropzone dropzone-default card shadow-none" data-dropzone='{"maxFiles":2}'>
-                                                                <div class="dz-message">
-                                                                    <i class="bi bi-file-earmark-text display-3"></i>
-                                                                    <p>Drop presentation and document here or click to upload.</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Dropzone photo END -->
-                                                    </form>
-                                                    <!-- Form END -->
-                                                </div>
-                                                <!-- Modal feed body END -->
+                            <!-- Modal create files START -->
+                            <div class="modal fade" id="modalCreateEvents" tabindex="-1" aria-labelledby="modalLabelCreateAlbum" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <!-- Modal feed header START -->
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalLabelCreateAlbum">Add file</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <!-- Modal feed header END -->
 
 
-                                                <!-- Modal footer -->
-                                                <!-- Button -->
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger-soft me-2" data-bs-dismiss="modal"> Cancel</button>
-                                                    <button type="button" class="btn btn-success-soft">Create now</button>
-                                                </div>
+                                        <!-- Modal feed body START -->
+                                        <div class="modal-body">
+                                            <div class="modal-body text-bg-dark">
+                                                file : <input type="file" name="files[]" multiple id="file" class="form-control">
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- Modal create events END -->
+                                        <!-- Modal feed body END -->
 
-                                    <!-- Modal create Feed START -->
-                                    <div class="modal fade" id="modalCreateFeed" tabindex="-1" aria-labelledby="modalLabelCreateFeed" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                            <div class="modal-content">
-                                                <!-- Modal feed header START -->
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalLabelCreateFeed">Create post</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <!-- Modal feed header END -->
 
-                                                <!-- Modal feed body START -->
-                                                <div class="modal-body">
-                                                    <!-- Add Feed -->
-                                                    <div class="d-flex mb-3">
-                                                        <!-- Avatar -->
-                                                        <div class="avatar avatar-xs me-2">
-                                                            <img class="avatar-img rounded-circle" src="{{assert('import/assets/images/avatar/03.jpg')}}" alt="">
-                                                        </div>
-                                                        <!-- Feed box  -->
-                                                        <form class="w-100">
-                                                            <textarea class="form-control pe-4 fs-3 lh-1 border-0" rows="4" placeholder="Share your thoughts..." autofocus></textarea>
-                                                            <div class="hstack gap-2">
-                                                                <a class="icon-md bg-success bg-opacity-10 text-success rounded-circle" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Photo"> <i class="bi bi-image-fill"></i> </a>
-                                                                <a class="icon-md bg-info bg-opacity-10 text-info rounded-circle" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Video"> <i class="bi bi-camera-reels-fill"></i> </a>
-                                                                <a class="icon-md bg-danger bg-opacity-10 text-danger rounded-circle" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Events"> <i class="bi bi-calendar2-event-fill"></i> </a>
-                                                                <a class="icon-md bg-warning bg-opacity-10 text-warning rounded-circle" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Feeling/Activity"> <i class="bi bi-emoji-smile-fill"></i> </a>
-                                                                <a class="icon-md bg-light text-secondary rounded-circle" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Check in"> <i class="bi bi-geo-alt-fill"></i> </a>
-                                                                <a class="icon-md bg-primary bg-opacity-10 text-primary rounded-circle" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Tag people on top"> <i class="bi bi-tag-fill"></i> </a>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <!-- Feed rect START -->
-
-                                                    <!-- Feed rect END -->
-                                                </div>
-                                                <!-- Modal feed body END -->
-
-                                                <!-- Modal feed footer -->
-                                                <div class="modal-footer row justify-content-between">
-                                                    <!-- Select -->
-                                                    <div class="col-lg-3">
-                                                        <select class="form-select js-choice choice-select-text-none" data-position="top" data-search-enabled="false">
-                                                            <option value="PB">Public</option>
-                                                            <option value="PV">Friends</option>
-                                                            <option value="PV">Only me</option>
-                                                            <option value="PV">Custom</option>
-                                                        </select>
-                                                        <!-- Button -->
-                                                    </div>
-                                                    <div class="col-lg-8 text-sm-end">
-                                                        <button type="button" class="btn btn-danger-soft me-2"> <i class="bi bi-camera-video-fill pe-1"></i> Live video</button>
-                                                        <button type="button" class="btn btn-success-soft">Post</button>
-                                                    </div>
-                                                </div>
-                                                <!-- Modal feed footer -->
-
-                                            </div>
+                                        <!-- Modal footer -->
+                                        <!-- Button -->
+                                        <div class="modal-footer">
+                                            {{--                                                    <button type="button" class="btn btn-danger-soft me-2" data-bs-dismiss="modal"> Cancel</button>--}}
+                                            {{--                                                    <button type="button" class="btn btn-success-soft">Create now</button>--}}
+                                            <button type="button" class="btn btn-success-soft" data-bs-dismiss="modal" >Done</button>
                                         </div>
                                     </div>
-                                    <!-- Modal create feed END -->
-                                    <!-- نهاية المودلات-->
+                                </div>
+                            </div>
+                            <!-- Modal create files END -->
+                            <!--  modals end-->
 
-					            <!-- Share feed toolbar END -->
-                            </form>
-                        </div>
-				</div>
-				<!-- مكان نشر البوست ينتهي -->
-
-
-{{--                <div id="posts-container">--}}
-                    @include('posts.load')
-{{--                </div>--}}
-
-
-
-
+                        </form>
+                        <!-- Form END -->
+				    </div>
+                </div>
+				<!-- posting place end -->
+                @include('posts.load')
             </div>
-            {{--                <!-- Load more button START -->--}}
-{{--                <a href="#!" role="button" class="btn btn-loader btn-primary-soft" data-bs-toggle="button" aria-pressed="true">--}}
-{{--						<span class="load-text"> Load more </span>--}}
-{{--						<div class="load-icon">--}}
-{{--							<div class="spinner-grow spinner-grow-sm" role="status">--}}
-{{--								<span class="visually-hidden">Loading...</span>--}}
-{{--							</div>--}}
-{{--						</div>--}}
-{{--					</a>--}}
-{{--                <!-- Load more button END -->--}}
-
-
 			<!-- Main content END -->
 
 			<!-- Right sidebar START -->
@@ -1667,8 +1491,6 @@ Header END -->
 
 
 
-
-
 <!-- =======================
 JS libraries, plugins and custom scripts -->
 
@@ -1717,6 +1539,7 @@ JS libraries, plugins and custom scripts -->
         }
     });
 </script>
+
 
 @livewireScripts
 </body>

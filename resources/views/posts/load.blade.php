@@ -60,16 +60,64 @@
                         </div>
                     </div>
                 @elseif($post->file[0]->file_type == 'files')
-                    <a href="{{asset($post->file[0]->file_path)}}" download>ahmad</a>
+                    <div class="card-footer border-0 d-flex justify-content-between align-items-center">
+                        <p class="mb-0">{{$post->user->name}}.file.{{$post->file[0]->prefix}}</p>
+                        <a class="btn btn-primary-soft btn-sm" href="{{asset($post->file[0]->file_path)}}" download> Download now </a>
+                    </div>
                 @elseif($post->file[0]->file_type == 'voice')
+                    <audio controls class="w-100">
+                        <source src="{{asset($post->file[0]->file_path)}}" type="audio/ogg">
+                        <source src="{{asset($post->file[0]->file_path)}}" type="audio/mp3">
+                        <source src="{{asset($post->file[0]->file_path)}}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
                 @endif
-            @endif
-            @if($post->file->contains('file_type','images'))
-                @foreach($post->file as $sfile)
-                    @if($sfile->file_type == 'images')
-                        <img class="card-img" src="{{asset($sfile->file_path)}}" alt="Post">
-                    @endif
-                @endforeach
+            @else
+                <div class="d-flex justify-content-between">
+                    <div class="row g-3">
+{{--                        <div class="col-6">--}}
+{{--                            <!-- Grid img -->--}}
+{{--                            <a class="h-100" href="assets/images/post/1by1/03.jpg" data-glightbox data-gallery="image-popup">--}}
+{{--                                <img class="rounded img-fluid" src="assets/images/post/1by1/03.jpg" alt="Image">--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+                        <div class="col-6">
+                            <!-- Grid img -->
+                            @if($post->file->contains('file_type','images'))
+                                @foreach($post->files as $key => $file)
+                                    @if($key < count($post->files) - 1)
+                                        <a href="assets/images/post/3by2/01.jpg" data-glightbox data-gallery="image-popup">
+                                            <img class="rounded img-fluid" src="assets/images/post/3by2/01.jpg" alt="Image">
+                                        </a>
+                                    @else
+
+                                    @endif
+                                @endforeach
+                            @endif
+
+
+                            <a href="assets/images/post/3by2/01.jpg" data-glightbox data-gallery="image-popup">
+                                <img class="rounded img-fluid" src="assets/images/post/3by2/01.jpg" alt="Image">
+                            </a>
+                            <!-- Grid img -->
+                            <div class="position-relative bg-dark mt-3 rounded">
+                                <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
+                                    <a class="btn btn-link text-white" href="#"> View all </a>
+                                </div>
+                                <a href="assets/images/post/3by2/02.jpg" data-glightbox data-gallery="image-popup">
+                                    <img class="img-fluid opacity-50 rounded" src="assets/images/post/3by2/02.jpg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if($post->file->contains('file_type','images'))
+                    @foreach($post->file as $sfile)
+                        @if($sfile->file_type == 'images')
+
+                        @endif
+                    @endforeach
+                @endif
             @endif
 
             <!-- Feed react START -->
