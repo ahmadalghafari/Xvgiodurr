@@ -8,7 +8,7 @@ use App\Http\Controllers\BlockController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 
-
+Route::view('testing','testing.test');
 Route::name('home.')->middleware('auth')->prefix('home/')->group(function (){
     Route::resource('posts',PostController::class);
     Route::resource('follows' , FollowController::class);
