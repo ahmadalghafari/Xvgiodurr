@@ -66,8 +66,8 @@ class PostController extends Controller{
 
         foreach ($fileTypes as $fileType) {
             if ($request->hasFile($fileType)) {
-                foreach ($request->file($fileType) as $file) {
-                    $fileName = $id . '.' . time() . '.' . $file->extension();
+                foreach ($request->file($fileType) as $key => $file) {
+                    $fileName = $id . '.' . time() . '.' . $key . '.' . $file->extension();
                     $filePath = 'posts_' . $fileType . '/' . $fileName;
 
                     file::create([
