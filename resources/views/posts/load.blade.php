@@ -46,6 +46,7 @@
         <div class="card-body">
             <p>{{$post->text}}</p>
             <!-- Card img -->
+
             @if($post->file->count() == 1)
                 @if($post->file[0]->file_type == 'images')
                     <img class="card-img" src="{{asset($post->file[0]->file_path)}}" alt="Post">
@@ -73,51 +74,125 @@
                     </audio>
                 @endif
             @else
-                <div class="d-flex justify-content-between">
-                    <div class="row g-3">
+                @if($post->file->where('file_type','images')->count() + $post->file->where('file_type','videos')->count() > 0)
+                    @switch($post->file->where('file_type','images')->count() + $post->file->where('file_type','videos')->count())
+                        @case(1)
+                            @if($post->file->where('file_type','images')->count() == 1)
+                                <img class="card-img" src="{{asset($post->file[0]->file_path)}}" alt="Post">
+                            @else
+                                <div class="overflow-hidden fullscreen-video w-100">
+                                    <div class="player-wrapper overflow-hidden">
+                                        <video class="player-html" controls crossorigin="anonymous"
+                                            {{--                                   poster="assets/images/videos/poster.jpg"--}}
+                                        >
+                                            <source src="{{asset($post->file[0]->file_path)}}" type="video/mp4">
+                                        </video>
+                                    </div>
+                                </div>
+                            @endif
+                        @break
+
+                        @case(2)
+                            <div class="d-flex justify-content-between">
+                                <div class="row g-3">
+                                    @foreach($post->file as $files)
+                                        @if($files->file_type == 'images')
+                                            <div class="col-6">
+                                                <!-- Grid img -->
+                                                <a class="h-100" href="{{asset($files->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                    <img class="rounded img-fluid" src="{{asset($files->file_path)}}" alt="Image">
+                                                </a>
+                                            </div>
+                                        @elseif($files->file_type == 'videos')
+                                            <div class="col-6">
+                                                <!-- Grid video -->
+                                                <a class="h-100" href="{{asset($files->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                    <div class="overflow-hidden fullscreen-video w-100">
+                                                        <div class="player-wrapper overflow-hidden">
+                                                            <video class="player-html" controls crossorigin="anonymous"
+                                                                {{--                                   poster="assets/images/videos/poster.jpg"--}}
+                                                            >
+                                                                <source src="{{asset($files->file_path)}}" type="video/mp4">
+                                                            </video>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        @break
+
+                        @case(3)
+                            <div class="d-flex justify-content-between">
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <!-- Grid img -->
+                                        <a class="h-100" href="assets/images/post/1by1/03.jpg" data-glightbox data-gallery="image-popup">
+                                            <img class="rounded img-fluid" src="assets/images/post/1by1/03.jpg" alt="Image">
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+                                        <!-- Grid img -->
+                                        <a href="assets/images/post/3by2/01.jpg" data-glightbox data-gallery="image-popup">
+                                            <img class="rounded img-fluid" src="assets/images/post/3by2/01.jpg" alt="Image">
+                                        </a>
+                                        <!-- Grid img -->
+                                        <div class="position-relative bg-dark mt-3 rounded">
+                                            <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
+                                                <a class="btn btn-link text-white" href="#"> View all </a>
+                                            </div>
+                                            <a href="assets/images/post/3by2/02.jpg" data-glightbox data-gallery="image-popup">
+                                                <img class="img-fluid opacity-50 rounded" src="assets/images/post/3by2/02.jpg" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @foreach($post->file as $key => $file)
+                                @if($key < count($post->file) - 1)
+                                    @if($file->file_type == 'images')
+
+                                    @elseif($file->file_type == 'videos')
+
+                                    @endif
+                                @else
+
+                                @endif
+                            @endforeach
+                        @break
+
+                        @default
+
+                    @endswitch
+                @endif
+
+{{--                <div class="d-flex justify-content-between">--}}
+{{--                    <div class="row g-3">--}}
 {{--                        <div class="col-6">--}}
 {{--                            <!-- Grid img -->--}}
 {{--                            <a class="h-100" href="assets/images/post/1by1/03.jpg" data-glightbox data-gallery="image-popup">--}}
 {{--                                <img class="rounded img-fluid" src="assets/images/post/1by1/03.jpg" alt="Image">--}}
 {{--                            </a>--}}
 {{--                        </div>--}}
-                        <div class="col-6">
-                            <!-- Grid img -->
-                            @if($post->file->contains('file_type','images'))
-                                @foreach($post->files as $key => $file)
-                                    @if($key < count($post->files) - 1)
-                                        <a href="assets/images/post/3by2/01.jpg" data-glightbox data-gallery="image-popup">
-                                            <img class="rounded img-fluid" src="assets/images/post/3by2/01.jpg" alt="Image">
-                                        </a>
-                                    @else
-
-                                    @endif
-                                @endforeach
-                            @endif
-
-
-                            <a href="assets/images/post/3by2/01.jpg" data-glightbox data-gallery="image-popup">
-                                <img class="rounded img-fluid" src="assets/images/post/3by2/01.jpg" alt="Image">
-                            </a>
-                            <!-- Grid img -->
-                            <div class="position-relative bg-dark mt-3 rounded">
-                                <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
-                                    <a class="btn btn-link text-white" href="#"> View all </a>
-                                </div>
-                                <a href="assets/images/post/3by2/02.jpg" data-glightbox data-gallery="image-popup">
-                                    <img class="img-fluid opacity-50 rounded" src="assets/images/post/3by2/02.jpg" alt="">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @if($post->file->contains('file_type','images'))
-                    @foreach($post->file as $sfile)
-                        @if($sfile->file_type == 'images')
-
-                        @endif
-                    @endforeach
-                @endif
+{{--                        <div class="col-6">--}}
+{{--                            <!-- Grid img -->--}}
+{{--                            <a href="assets/images/post/3by2/01.jpg" data-glightbox data-gallery="image-popup">--}}
+{{--                                <img class="rounded img-fluid" src="assets/images/post/3by2/01.jpg" alt="Image">--}}
+{{--                            </a>--}}
+{{--                            <!-- Grid img -->--}}
+{{--                            <div class="position-relative bg-dark mt-3 rounded">--}}
+{{--                                <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">--}}
+{{--                                    <a class="btn btn-link text-white" href="#"> View all </a>--}}
+{{--                                </div>--}}
+{{--                                <a href="assets/images/post/3by2/02.jpg" data-glightbox data-gallery="image-popup">--}}
+{{--                                    <img class="img-fluid opacity-50 rounded" src="assets/images/post/3by2/02.jpg" alt="">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             @endif
 
             <!-- Feed react START -->
