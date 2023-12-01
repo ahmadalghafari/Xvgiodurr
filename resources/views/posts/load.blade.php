@@ -124,75 +124,111 @@
                             </div>
                         @break
 
-                        @case(3)
+                        @default
                             <div class="d-flex justify-content-between">
                                 <div class="row g-3">
-                                    <div class="col-6">
-                                        <!-- Grid img -->
-                                        <a class="h-100" href="assets/images/post/1by1/03.jpg" data-glightbox data-gallery="image-popup">
-                                            <img class="rounded img-fluid" src="assets/images/post/1by1/03.jpg" alt="Image">
-                                        </a>
-                                    </div>
-                                    <div class="col-6">
-                                        <!-- Grid img -->
-                                        <a href="assets/images/post/3by2/01.jpg" data-glightbox data-gallery="image-popup">
-                                            <img class="rounded img-fluid" src="assets/images/post/3by2/01.jpg" alt="Image">
-                                        </a>
-                                        <!-- Grid img -->
-                                        <div class="position-relative bg-dark mt-3 rounded">
-                                            <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
-                                                <a class="btn btn-link text-white" href="#"> View all </a>
-                                            </div>
-                                            <a href="assets/images/post/3by2/02.jpg" data-glightbox data-gallery="image-popup">
-                                                <img class="img-fluid opacity-50 rounded" src="assets/images/post/3by2/02.jpg" alt="">
-                                            </a>
-                                        </div>
-                                    </div>
+                                        @foreach($post->file as $key => $file)
+                                            @if($loop->first)
+                                                @if($file->file_type == 'images')
+                                                    <div class="col-6">
+                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}" >
+                                                            <img class="rounded img-fluid" src="{{asset($file->file_path)}}" alt="Image">
+                                                        </a>
+                                                    </div>
+                                                @elseif($file->file_type == 'videos')
+                                                    <div class="col-6">
+                                                        <!-- Grid video -->
+                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                            <div class="overflow-hidden fullscreen-video w-100">
+                                                                <div class="player-wrapper overflow-hidden">
+                                                                    <video class="player-html" controls crossorigin="anonymous"
+                                                                        {{--                                   poster="assets/images/videos/poster.jpg"--}}
+                                                                    >
+                                                                        <source src="{{asset($file->file_path)}}" type="video/mp4">
+                                                                    </video>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                                @continue
+                                            @elseif($key < count($post->file) - 1)
+                                                @if($file->file_type == 'images')
+                                                    <div class="col-6" style="display: none">
+                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}" >
+                                                            <img class="rounded img-fluid" src="{{asset($file->file_path)}}" alt="Image">
+                                                        </a>
+                                                    </div>
+                                                @elseif($file->file_type == 'videos')
+                                                    <div class="col-6" style="display: none">
+                                                        <!-- Grid video -->
+                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                            <div class="overflow-hidden fullscreen-video w-100">
+                                                                <div class="player-wrapper overflow-hidden">
+                                                                    <video class="player-html" controls crossorigin="anonymous"
+                                                                        {{--                                   poster="assets/images/videos/poster.jpg"--}}
+                                                                    >
+                                                                        <source src="{{asset($file->file_path)}}" type="video/mp4">
+                                                                    </video>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                                @continue
+                                            @else
+                                                <div class="col-6">
+                                                    @if($file->file_type == 'images')
+                                                        <div class="position-relative bg-dark  rounded">
+                                                            <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
+                                                                <a class="btn btn-link text-white" href="#"> View all </a>
+                                                            </div>
+                                                            <a href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                                <img class="img-fluid opacity-50 rounded" src="{{asset($file->file_path)}}" alt="">
+                                                            </a>
+                                                        </div>
+                                                    @elseif($file->file_type == 'videos')
+                                                        <div class="position-relative bg-dark  rounded">
+                                                            <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
+                                                                <a class="btn btn-link text-white" href="#"> View all </a>
+                                                            </div>
+                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                                <div class="overflow-hidden fullscreen-video w-100">
+                                                                    <div class="player-wrapper overflow-hidden">
+                                                                        <video class="player-html" controls crossorigin="anonymous"
+                                                                            {{--                                   poster="assets/images/videos/poster.jpg"--}}
+                                                                        >
+                                                                            <source src="{{asset($file->file_path)}}" type="video/mp4">
+                                                                        </video>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                        @endforeach
+
                                 </div>
                             </div>
-                            @foreach($post->file as $key => $file)
-                                @if($key < count($post->file) - 1)
-                                    @if($file->file_type == 'images')
-
-                                    @elseif($file->file_type == 'videos')
-
-                                    @endif
-                                @else
-
-                                @endif
-                            @endforeach
-                        @break
-
-                        @default
-
                     @endswitch
                 @endif
-
-{{--                <div class="d-flex justify-content-between">--}}
-{{--                    <div class="row g-3">--}}
-{{--                        <div class="col-6">--}}
-{{--                            <!-- Grid img -->--}}
-{{--                            <a class="h-100" href="assets/images/post/1by1/03.jpg" data-glightbox data-gallery="image-popup">--}}
-{{--                                <img class="rounded img-fluid" src="assets/images/post/1by1/03.jpg" alt="Image">--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-6">--}}
-{{--                            <!-- Grid img -->--}}
-{{--                            <a href="assets/images/post/3by2/01.jpg" data-glightbox data-gallery="image-popup">--}}
-{{--                                <img class="rounded img-fluid" src="assets/images/post/3by2/01.jpg" alt="Image">--}}
-{{--                            </a>--}}
-{{--                            <!-- Grid img -->--}}
-{{--                            <div class="position-relative bg-dark mt-3 rounded">--}}
-{{--                                <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">--}}
-{{--                                    <a class="btn btn-link text-white" href="#"> View all </a>--}}
-{{--                                </div>--}}
-{{--                                <a href="assets/images/post/3by2/02.jpg" data-glightbox data-gallery="image-popup">--}}
-{{--                                    <img class="img-fluid opacity-50 rounded" src="assets/images/post/3by2/02.jpg" alt="">--}}
-{{--                                </a>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                @forelse($post->file->where('file_type','voice') as $voice)
+                        <audio controls class="w-100">
+                            <source src="{{asset($voice->file_path)}}" type="audio/ogg">
+                            <source src="{{asset($voice->file_path)}}" type="audio/mp3">
+                            <source src="{{asset($voice->file_path)}}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    @empty
+                @endforelse
+                @forelse($post->file->where('file_type','files') as $file)
+                        <div class="card-footer border-0 d-flex justify-content-between align-items-center">
+                            <p class="mb-0">{{$post->user->name}}.file.{{$file->prefix}}</p>
+                            <a class="btn btn-primary-soft btn-sm" href="{{asset($file->file_path)}}" download> Download now </a>
+                        </div>
+                    @empty
+                @endforelse
             @endif
 
             <!-- Feed react START -->
@@ -222,168 +258,166 @@
             </ul>
             <!-- Feed react END -->
 
-{{--            <!-- Add wcomment -->--}}
-{{--            <div class="d-flex mb-3">--}}
-{{--                <!-- Avatar -->--}}
-{{--                <div class="avatar avatar-xs me-2">--}}
-{{--                    <a href="#!"> <img class="avatar-img rounded-circle"--}}
-{{--                                       @if(Auth::user()->pphoto_id != null)--}}
-{{--                                        src="{{asset(Auth::user()->photo->path)}}"--}}
-{{--                                       @else--}}
-{{--                                           src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"--}}
-{{--                                       @endif > </a>--}}
-{{--                </div>--}}
-{{--                <!-- Comment box  -->--}}
-{{--                <form class="nav nav-item w-100 position-relative">--}}
-{{--                    <textarea data-autoresize class="form-control pe-5 bg-light" rows="1" placeholder="Add a comment..."></textarea>--}}
-{{--                    <button class="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0" type="submit">--}}
-{{--                        <i class="bi bi-send-fill"> </i>--}}
-{{--                    </button>--}}
-{{--                </form>--}}
-{{--            </div>--}}
+            <!-- Add wcomment -->
+            <div class="d-flex mb-3">
+                <!-- Avatar -->
+                <div class="avatar avatar-xs me-2">
+                    <a href="#!"> <img class="avatar-img rounded-circle"
+                                       @if(Auth::user()->pphoto_id != null)
+                                        src="{{asset(Auth::user()->photo->path)}}"
+                                       @else
+                                           src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
+                                       @endif > </a>
+                </div>
+                <!-- Comment box  -->
+                <form class="nav nav-item w-100 position-relative">
+                    <textarea data-autoresize class="form-control pe-5 bg-light" rows="1" placeholder="Add a comment..."></textarea>
+                    <button class="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0" type="submit">
+                        <i class="bi bi-send-fill"> </i>
+                    </button>
+                </form>
+            </div>
 
+            <!-- Comment wrap START -->
+            <ul class="comment-wrap list-unstyled">
+                <!-- Comment item START -->
+                <li class="comment-item">
+                    <div class="d-flex position-relative">
+                        <!-- Avatar -->
+                        <div class="avatar avatar-xs">
+                            <a href="#!"><img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/05.jpg')}}" alt=""></a>
+                        </div>
+                        <div class="ms-2">
+                            <!-- Comment by -->
+                            <div class="bg-light rounded-start-top-0 p-3 rounded">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a></h6>
+                                    <small class="ms-2">5hr</small>
+                                </div>
+                                <p class="small mb-0">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>
+                            </div>
+                            <!-- Comment react -->
+                            <ul class="nav nav-divider py-2 small">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#!"> Like (3)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#!"> Reply</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#!"> View 5 replies</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Comment item nested START -->
+                    <ul class="comment-item-nested list-unstyled">
+                        <!-- Comment item START -->
+                        <li class="comment-item">
+                            <div class="d-flex">
+                                <!-- Avatar -->
+                                <div class="avatar avatar-xs">
+                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/06.jpg" alt=""></a>
+                                </div>
+                                <!-- Comment by -->
+                                <div class="ms-2">
+                                    <div class="bg-light p-3 rounded">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="mb-1"> <a href="#!"> Lori Stevens </a> </h6>
+                                            <small class="ms-2">2hr</small>
+                                        </div>
+                                        <p class="small mb-0">See resolved goodness felicity shy civility domestic had but Drawings offended yet answered Jennings perceive.</p>
+                                    </div>
+                                    <!-- Comment react -->
+                                    <ul class="nav nav-divider py-2 small">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#!"> Like (5)</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#!"> Reply</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- Comment item END -->
+                        <!-- Comment item START -->
+                        <li class="comment-item">
+                            <div class="d-flex">
+                                <!-- Avatar -->
+                                <div class="avatar avatar-story avatar-xs">
+                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/07.jpg" alt=""></a>
+                                </div>
+                                <!-- Comment by -->
+                                <div class="ms-2">
+                                    <div class="bg-light p-3 rounded">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="mb-1"> <a href="#!"> Billy Vasquez </a> </h6>
+                                            <small class="ms-2">15min</small>
+                                        </div>
+                                        <p class="small mb-0">Wishing calling is warrant settled was lucky.</p>
+                                    </div>
+                                    <!-- Comment react -->
+                                    <ul class="nav nav-divider py-2 small">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#!"> Like</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#!"> Reply</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- Comment item END -->
+                    </ul>
+                    <!-- Load more replies -->
+                    <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center mb-3 ms-5" data-bs-toggle="button" aria-pressed="true">
+                        <div class="spinner-dots me-2">
+                            <span class="spinner-dot"></span>
+                            <span class="spinner-dot"></span>
+                            <span class="spinner-dot"></span>
+                        </div>
+                        Load more replies
+                    </a>
+                    <!-- Comment item nested END -->
+                </li>
+                <!-- Comment item END -->
 
-
-{{--            <!-- Comment wrap START -->--}}
-{{--            <ul class="comment-wrap list-unstyled">--}}
-{{--                <!-- Comment item START -->--}}
-{{--                <li class="comment-item">--}}
-{{--                    <div class="d-flex position-relative">--}}
-{{--                        <!-- Avatar -->--}}
-{{--                        <div class="avatar avatar-xs">--}}
-{{--                            <a href="#!"><img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/05.jpg')}}" alt=""></a>--}}
-{{--                        </div>--}}
-{{--                        <div class="ms-2">--}}
-{{--                            <!-- Comment by -->--}}
-{{--                            <div class="bg-light rounded-start-top-0 p-3 rounded">--}}
-{{--                                <div class="d-flex justify-content-between">--}}
-{{--                                    <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a></h6>--}}
-{{--                                    <small class="ms-2">5hr</small>--}}
-{{--                                </div>--}}
-{{--                                <p class="small mb-0">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>--}}
-{{--                            </div>--}}
-{{--                            <!-- Comment react -->--}}
-{{--                            <ul class="nav nav-divider py-2 small">--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link" href="#!"> Like (3)</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link" href="#!"> Reply</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link" href="#!"> View 5 replies</a>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <!-- Comment item nested START -->--}}
-{{--                    <ul class="comment-item-nested list-unstyled">--}}
-{{--                        <!-- Comment item START -->--}}
-{{--                        <li class="comment-item">--}}
-{{--                            <div class="d-flex">--}}
-{{--                                <!-- Avatar -->--}}
-{{--                                <div class="avatar avatar-xs">--}}
-{{--                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/06.jpg" alt=""></a>--}}
-{{--                                </div>--}}
-{{--                                <!-- Comment by -->--}}
-{{--                                <div class="ms-2">--}}
-{{--                                    <div class="bg-light p-3 rounded">--}}
-{{--                                        <div class="d-flex justify-content-between">--}}
-{{--                                            <h6 class="mb-1"> <a href="#!"> Lori Stevens </a> </h6>--}}
-{{--                                            <small class="ms-2">2hr</small>--}}
-{{--                                        </div>--}}
-{{--                                        <p class="small mb-0">See resolved goodness felicity shy civility domestic had but Drawings offended yet answered Jennings perceive.</p>--}}
-{{--                                    </div>--}}
-{{--                                    <!-- Comment react -->--}}
-{{--                                    <ul class="nav nav-divider py-2 small">--}}
-{{--                                        <li class="nav-item">--}}
-{{--                                            <a class="nav-link" href="#!"> Like (5)</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li class="nav-item">--}}
-{{--                                            <a class="nav-link" href="#!"> Reply</a>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </li>--}}
-{{--                        <!-- Comment item END -->--}}
-{{--                        <!-- Comment item START -->--}}
-{{--                        <li class="comment-item">--}}
-{{--                            <div class="d-flex">--}}
-{{--                                <!-- Avatar -->--}}
-{{--                                <div class="avatar avatar-story avatar-xs">--}}
-{{--                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/07.jpg" alt=""></a>--}}
-{{--                                </div>--}}
-{{--                                <!-- Comment by -->--}}
-{{--                                <div class="ms-2">--}}
-{{--                                    <div class="bg-light p-3 rounded">--}}
-{{--                                        <div class="d-flex justify-content-between">--}}
-{{--                                            <h6 class="mb-1"> <a href="#!"> Billy Vasquez </a> </h6>--}}
-{{--                                            <small class="ms-2">15min</small>--}}
-{{--                                        </div>--}}
-{{--                                        <p class="small mb-0">Wishing calling is warrant settled was lucky.</p>--}}
-{{--                                    </div>--}}
-{{--                                    <!-- Comment react -->--}}
-{{--                                    <ul class="nav nav-divider py-2 small">--}}
-{{--                                        <li class="nav-item">--}}
-{{--                                            <a class="nav-link" href="#!"> Like</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li class="nav-item">--}}
-{{--                                            <a class="nav-link" href="#!"> Reply</a>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </li>--}}
-{{--                        <!-- Comment item END -->--}}
-{{--                    </ul>--}}
-{{--                    <!-- Load more replies -->--}}
-{{--                    <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center mb-3 ms-5" data-bs-toggle="button" aria-pressed="true">--}}
-{{--                        <div class="spinner-dots me-2">--}}
-{{--                            <span class="spinner-dot"></span>--}}
-{{--                            <span class="spinner-dot"></span>--}}
-{{--                            <span class="spinner-dot"></span>--}}
-{{--                        </div>--}}
-{{--                        Load more replies--}}
-{{--                    </a>--}}
-{{--                    <!-- Comment item nested END -->--}}
-{{--                </li>--}}
-{{--                <!-- Comment item END -->--}}
-
-{{--                <!-- Comment item START -->--}}
-{{--                <li class="comment-item">--}}
-{{--                    <div class="d-flex">--}}
-{{--                        <!-- Avatar -->--}}
-{{--                        <div class="avatar avatar-xs">--}}
-{{--                            <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/05.jpg" alt=""></a>--}}
-{{--                        </div>--}}
-{{--                        <!-- Comment by -->--}}
-{{--                        <div class="ms-2">--}}
-{{--                            <div class="bg-light p-3 rounded">--}}
-{{--                                <div class="d-flex justify-content-between">--}}
-{{--                                    <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a> </h6>--}}
-{{--                                    <small class="ms-2">4min</small>--}}
-{{--                                </div>--}}
-{{--                                <p class="small mb-0">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>--}}
-{{--                            </div>--}}
-{{--                            <!-- Comment react -->--}}
-{{--                            <ul class="nav nav-divider pt-2 small">--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link" href="#!"> Like (1)</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link" href="#!"> Reply</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link" href="#!"> View 6 replies</a>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </li>--}}
-{{--                <!-- Comment item END -->--}}
-{{--            </ul>--}}
-{{--            <!-- Comment wrap END -->--}}
+                <!-- Comment item START -->
+                <li class="comment-item">
+                    <div class="d-flex">
+                        <!-- Avatar -->
+                        <div class="avatar avatar-xs">
+                            <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/05.jpg" alt=""></a>
+                        </div>
+                        <!-- Comment by -->
+                        <div class="ms-2">
+                            <div class="bg-light p-3 rounded">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a> </h6>
+                                    <small class="ms-2">4min</small>
+                                </div>
+                                <p class="small mb-0">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>
+                            </div>
+                            <!-- Comment react -->
+                            <ul class="nav nav-divider pt-2 small">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#!"> Like (1)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#!"> Reply</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#!"> View 6 replies</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <!-- Comment item END -->
+            </ul>
+            <!-- Comment wrap END -->
         </div>
         <!-- Card body END -->
 
