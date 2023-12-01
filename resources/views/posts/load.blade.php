@@ -183,7 +183,7 @@
                                                             <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
                                                                 <a class="btn btn-link text-white" href="#"> View all </a>
                                                             </div>
-                                                            <a href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
                                                                 <img class="img-fluid opacity-50 rounded" src="{{asset($file->file_path)}}" alt="">
                                                             </a>
                                                         </div>
@@ -234,7 +234,7 @@
             <!-- Feed react START -->
             <ul class="nav nav-stack py-3 small">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#!" data-bs-container="body" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-custom-class="tooltip-text-start" data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford"> <i class="bi bi-hand-thumbs-up-fill pe-1"></i>Liked (56)</a>
+                    @livewire('like-live' , ['post' => $post])
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#!"> <i class="bi bi-chat-fill pe-1"></i>Comments (12)</a>

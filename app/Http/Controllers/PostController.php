@@ -39,9 +39,9 @@ class PostController extends Controller{
 //        dd($request);
         $error_message = 'You cannot post empty content!';
         $request->validate([
-            'images.*' => 'required_without_all:files,videos,voice,text|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'required_without_all:files,videos,voice,text|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
             'files.*' => 'required_without_all:images,videos,voice,text|max:2048',
-            'videos.*' => 'required_without_all:files,voice,images,text|mimetypes:video/avi,video/mpeg,video/mp4|max:10000',
+            'videos.*' => 'required_without_all:files,voice,images,text|mimetypes:video/avi,video/mpeg,video/mp4|max:100000',
             'voice.*' => 'required_without_all:files,images,videos,text|mimetypes:audio/mpeg,audio/wav|max:10000',
             'text' => 'required_without_all:files,voice,videos,images|min:1']
             ,[
