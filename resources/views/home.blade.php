@@ -128,15 +128,27 @@ Header START nav-->
 				<div class="nav mt-3 mt-lg-0 flex-nowrap align-items-center px-4 px-lg-0">
 					<div class="nav-item w-100">
                         <div class="dropdown">
-						    <form class="rounded position-relative">
+
+						    <form class="rounded position-relative" >
 
                                 <input class="form-control ps-5 bg-light" type="search" placeholder="Search..." aria-label="Search" data-toggle="dropdown">
+
                                 <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit"><i class="bi bi-search fs-5"> </i></button>
                                     <ul class="dropdown-menu mt-2">
                                         <!-- Your search results will go here -->
                                         <li><a class="dropdown-item" href="#">Result 1</a></li>
                                         <li><a class="dropdown-item" href="#">Result 2</a></li>
                                         <li><a class="dropdown-item" href="#">Result 3</a></li>
+{{--                                        @if ($users->count() > 0)--}}
+{{--                                            <h2>Search results for "{{ $name }}"</h2>--}}
+{{--                                            <ul>--}}
+{{--                                                @foreach ($users as $user)--}}
+{{--                                                    <li>{{ $user->name }}</li>--}}
+{{--                                                @endforeach--}}
+{{--                                            </ul>--}}
+{{--                                        @else--}}
+{{--                                            <p>No results found for "{{ $name }}"</p>--}}
+{{--                                        @endif--}}
                                         <!-- Add more result items as needed -->
                                     </ul>
 
@@ -374,14 +386,20 @@ Header START nav-->
 							<div class="d-flex align-items-center position-relative">
 								<!-- Avatar -->
 								<div class="avatar me-3">
-									<img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/07.jpg')}}" alt="avatar">
+                                    <a href="#!"><img class="avatar-img rounded-circle" alt="avatar"
+                                                      @if(Auth::user()->pphoto_id != null)
+                                                          src="{{asset(Auth::user()->photo->path)}}"
+                                                      @else
+                                                          src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
+                                                      @endif
+                                                      ></a>
 								</div>
 								<div>
-									<a class="h6 stretched-link" href="#">Lori Ferguson</a>
+									<a class="h6 stretched-link" href="#"> {{Auth::user()->name}}</a>
 									<p class="small m-0">Web Developer</p>
 								</div>
 							</div>
-							<a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href="my-profile.html">View profile</a>
+							<a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href={{route('my_profile')}}>View profile</a>
 						</li>
 						<!-- Links -->
 						<li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear fa-fw me-2"></i>Settings & Privacy</a></li>
@@ -551,7 +569,7 @@ Header END -->
 								<!-- Card body END -->
 								<!-- Card footer -->
 								<div class="card-footer text-center py-2">
-									<a class="btn btn-link btn-sm" href="my-profile.html">View Profile </a>
+									<a class="btn btn-link btn-sm" href={{route('my_profile')}}>View Profile </a>
 								</div>
 							</div>
 							<!-- Card END -->
@@ -972,7 +990,7 @@ Header END -->
 		<!-- Offcanvas body START -->
 		<div class="offcanvas-body pt-0 custom-scrollbar">
 			<!-- Search contact START -->
-			<form class="rounded position-relative">
+			<form class="rounded position-relative" action="{{url('users/search/{name}' )}}" method="get">
 				<input class="form-control ps-5 bg-light" type="search" placeholder="Search..." aria-label="Search">
 				<button class="btn bg-transparent px-3 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit"><i class="bi bi-search fs-5"> </i></button>
 			</form>

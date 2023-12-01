@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class ConfirmPasswordController extends Controller
 {
@@ -37,4 +40,26 @@ class ConfirmPasswordController extends Controller
     {
         $this->middleware('auth');
     }
+
+
+    public function update(Request $request)
+    {
+        $user = $request->user();
+
+        $validatedData = $request->validate([
+            'password' => 'equired',
+            'new_password' => 'equired|confirmed',
+        ]);
+
+        if (!Hash::check($validatedData['password'], $user->password)) {
+            return back()->withErrors(['password' => 'The current password is incorrect.']);
+        }
+
+        $user->password = Hash::make($validatedData['new_password']);
+        $user->save();
+
+        return redirect()->route('settings')->with('success', 'Password changed successfully.');
+    }
 }
+
+

@@ -36,14 +36,14 @@ class PostController extends Controller{
     }
 
     public function store(Request $request){
-//        dd($request);
+
         $error_message = 'You cannot post empty content!';
         $request->validate([
             'images.*' => 'required_without_all:files,videos,voice,text|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'files.*' => 'required_without_all:images,videos,voice,text|max:2048',
             'videos.*' => 'required_without_all:files,voice,images,text|mimetypes:video/avi,video/mpeg,video/mp4|max:10000',
             'voice.*' => 'required_without_all:files,images,videos,text|mimetypes:audio/mpeg,audio/wav|max:10000',
-            'text' => 'required_without_all:files,voice,videos,images|min:1']
+            'text' => 'required_without_all:files,voice,videos,images']
             ,[
                 'images.required_without_all' =>  $error_message,
                 'files.required_without_all' => $error_message ,
@@ -90,10 +90,13 @@ class PostController extends Controller{
     public function show(post $post){
 
     }
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $post = post::find($id);
-        return view('posts/edit', compact('post'));
+        $id = auth::user()->id;
+        $post = Post::where('user_id', $id)->get();
+        $post->text = $request->text;
+//        $postid = post::find(post->id);
+        return view('posts.edit', compact('post'));
     }
 
     public function update(Request $request, $id)
@@ -101,7 +104,7 @@ class PostController extends Controller{
         $post = Post::find($id);
         $post->text = $request->text;
         $post->save();
-        return redirect()->route('home.posts.index');
+        return view('myprofile');
     }
 
     public function destroy(post $post){

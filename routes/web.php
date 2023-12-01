@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ConfirmPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FollowController;
@@ -20,6 +21,8 @@ Route::name('home.')->middleware('auth')->prefix('home/')->group(function (){
     Route::view('addpost' ,'posts.test' );
     Route::resource('blocks', BlockController::class);
 
+    Route::get('my_profile/settings/passwords' , [ConfirmPasswordController::class , 'update'])->name('passwords');
+
 
 });
 
@@ -29,7 +32,13 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get( 'home/posts/edit/{id}' ,[PostController::class , 'edit'] )->name('edit.post');
-Route::put( 'home/posts/update/{id}' ,[PostController::class , 'update'] )->name('update.post');
+Route::get( 'home/edit' ,[PostController::class ,'edit'] )->name('edit.post');
+Route::put( 'home/posts/update' ,[PostController::class , 'update'] )->name('update.post');
 
 //Route::get( 'home/posts' ,[PostController::class ] )->name('posts');
+Route::view('home/my_profile','myprofile')->name('my_profile');
+Route::view('home/my_profile/settings','users.settings')->name('settings');
+
+
+
+
