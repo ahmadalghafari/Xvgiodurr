@@ -17,27 +17,19 @@ Route::name('home.')->middleware('auth')->prefix('home/')->group(function (){
     Route::resource('users' , UserController::class);
     Route::resource('comments' , CommentController::class)->except(['index' , 'create']);
 
-    Route::get('users/search/{name}' , [UserController::class , 'search'])->name('users.search');
-    Route::view('addpost' ,'posts.test' );
+
     Route::resource('blocks', BlockController::class);
 
     Route::get('my_profile/settings/passwords' , [ConfirmPasswordController::class , 'update'])->name('passwords');
-
+    Route::view('home/my_profile/settings','users.settings')->name('settings');
 
 });
 
-Route::get( 'test' ,[PostController::class , 'index'] );
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get( 'home/edit' ,[PostController::class ,'edit'] )->name('edit.post');
-Route::put( 'home/posts/update' ,[PostController::class , 'update'] )->name('update.post');
 
-//Route::get( 'home/posts' ,[PostController::class ] )->name('posts');
-Route::view('home/my_profile','myprofile')->name('my_profile');
-Route::view('home/my_profile/settings','users.settings')->name('settings');
 
 
 

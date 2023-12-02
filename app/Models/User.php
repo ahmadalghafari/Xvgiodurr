@@ -77,7 +77,7 @@ class User extends Authenticatable
     }
 
     public function photo() : HasOne {
-        return $this->hasOne(pphoto::class , 'id' , 'pphoto_id');
+        return $this->hasOne(pphoto::class , 'user_id' , 'id');
     }
 
 }

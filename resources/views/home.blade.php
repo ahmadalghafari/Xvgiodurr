@@ -85,14 +85,14 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/vendor/tiny-slider/dist/tiny-slider.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/vendor/choices.js/public/assets/styles/choices.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/vendor/glightbox-master/dist/css/glightbox.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/vendor/dropzone/dist/dropzone.css"')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/vendor/dropzone/dist/dropzone.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/vendor/flatpickr/dist/flatpickr.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/vendor/plyr/plyr.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.css')}}">
 
 	<!-- Theme CSS -->
 	    <link rel="stylesheet" type="text/css" href="{{asset('import/assets/css/style.css')}}">
-{{--        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>--}}
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         @livewireStyles
 </head>
@@ -399,7 +399,7 @@ Header START nav-->
 									<p class="small m-0">Web Developer</p>
 								</div>
 							</div>
-							<a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href={{route('my_profile')}}>View profile</a>
+							<a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href={{route('home.users.show',Auth::user()->id)}}>View profile</a>
 						</li>
 						<!-- Links -->
 						<li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear fa-fw me-2"></i>Settings & Privacy</a></li>
@@ -569,7 +569,7 @@ Header END -->
 								<!-- Card body END -->
 								<!-- Card footer -->
 								<div class="card-footer text-center py-2">
-									<a class="btn btn-link btn-sm" href={{route('my_profile')}}>View Profile </a>
+									<a class="btn btn-link btn-sm" href={{route('home.users.show' , auth::user()->id)}}>View Profile </a>
 								</div>
 							</div>
 							<!-- Card END -->
@@ -1511,20 +1511,26 @@ Header END -->
 
 <!-- =======================
 JS libraries, plugins and custom scripts -->
-
+@livewireScripts
 <!-- Bootstrap JS -->
 <script src="{{asset('import/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
 
+<script
+    src="https://code.jquery.com/jquery-3.7.1.js"
+    integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
 <!-- Vendors -->
 <script src="{{asset('import/assets/vendor/tiny-slider/dist/tiny-slider.js')}}"></script>
 <script src="{{asset('import/assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js')}}"></script>
 <script src="{{asset('import/assets/vendor/choices.js/public/assets/scripts/choices.min.js')}}"></script>
 <script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.min.js')}}"></script>
+
 <script src="{{asset('import/assets/vendor/flatpickr/dist/flatpickr.min.js')}}"></script>
 <script src="{{asset('import/assets/vendor/plyr/plyr.js')}}"></script>
 <script src="{{asset('import/assets/vendor/dropzone/dist/min/dropzone.min.js')}}"></script>
 <script src="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.js')}}"></script>
 <script src="{{asset('import/assets/js/zuck-stories.js')}}"></script>
+
 <!-- Theme Functions -->
 <script src="{{asset('import/assets/js/functions.js')}}"></script>
 
@@ -1556,9 +1562,9 @@ JS libraries, plugins and custom scripts -->
             });
         }
     });
+
+
 </script>
 
-
-@livewireScripts
 </body>
 </html>

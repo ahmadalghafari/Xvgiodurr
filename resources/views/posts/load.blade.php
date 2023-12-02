@@ -131,14 +131,15 @@
                                             @if($loop->first)
                                                 @if($file->file_type == 'images')
                                                     <div class="col-6">
-                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}" >
+                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup" >
                                                             <img class="rounded img-fluid" src="{{asset($file->file_path)}}" alt="Image">
                                                         </a>
+
                                                     </div>
                                                 @elseif($file->file_type == 'videos')
                                                     <div class="col-6">
                                                         <!-- Grid video -->
-                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup">
                                                             <div class="overflow-hidden fullscreen-video w-100">
                                                                 <div class="player-wrapper overflow-hidden">
                                                                     <video class="player-html" controls crossorigin="anonymous"
@@ -155,14 +156,14 @@
                                             @elseif($key < count($post->file) - 1)
                                                 @if($file->file_type == 'images')
                                                     <div class="col-6" style="display: none">
-                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}" >
+                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup" >
                                                             <img class="rounded img-fluid" src="{{asset($file->file_path)}}" alt="Image">
                                                         </a>
                                                     </div>
                                                 @elseif($file->file_type == 'videos')
                                                     <div class="col-6" style="display: none">
                                                         <!-- Grid video -->
-                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup">
                                                             <div class="overflow-hidden fullscreen-video w-100">
                                                                 <div class="player-wrapper overflow-hidden">
                                                                     <video class="player-html" controls crossorigin="anonymous"
@@ -183,8 +184,8 @@
                                                             <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
                                                                 <a class="btn btn-link text-white" href="#"> View all </a>
                                                             </div>
-                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
-                                                                <img class="img-fluid opacity-50 rounded" src="{{asset($file->file_path)}}" alt="">
+                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup">
+                                                                <img class="img-fluid opacity-50 rounded" src="{{asset($file->file_path)}}" alt="Image">
                                                             </a>
                                                         </div>
                                                     @elseif($file->file_type == 'videos')
@@ -192,7 +193,7 @@
                                                             <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
                                                                 <a class="btn btn-link text-white" href="#"> View all </a>
                                                             </div>
-                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup">
                                                                 <div class="overflow-hidden fullscreen-video w-100">
                                                                     <div class="player-wrapper overflow-hidden">
                                                                         <video class="player-html" controls crossorigin="anonymous"
@@ -237,7 +238,7 @@
                     @livewire('like-live' , ['post' => $post])
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#!"> <i class="bi bi-chat-fill pe-1"></i>Comments (12)</a>
+                    <a class="nav-link" href="#!"> <i class="bi bi-chat-fill pe-1"></i>Comments ({{$post->comment()->count()}})</a>
                 </li>
                 <!-- Card share action START -->
                 <li class="nav-item dropdown ms-sm-auto">
@@ -279,165 +280,161 @@
             </div>
 
             <!-- Comment wrap START -->
-            <ul class="comment-wrap list-unstyled">
-                <!-- Comment item START -->
-                <li class="comment-item">
-                    <div class="d-flex position-relative">
-                        <!-- Avatar -->
-                        <div class="avatar avatar-xs">
-                            <a href="#!"><img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/05.jpg')}}" alt=""></a>
-                        </div>
-                        <div class="ms-2">
-                            <!-- Comment by -->
-                            <div class="bg-light rounded-start-top-0 p-3 rounded">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a></h6>
-                                    <small class="ms-2">5hr</small>
-                                </div>
-                                <p class="small mb-0">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>
-                            </div>
-                            <!-- Comment react -->
-                            <ul class="nav nav-divider py-2 small">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#!"> Like (3)</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#!"> Reply</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#!"> View 5 replies</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Comment item nested START -->
-                    <ul class="comment-item-nested list-unstyled">
-                        <!-- Comment item START -->
-                        <li class="comment-item">
-                            <div class="d-flex">
-                                <!-- Avatar -->
-                                <div class="avatar avatar-xs">
-                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/06.jpg" alt=""></a>
-                                </div>
-                                <!-- Comment by -->
-                                <div class="ms-2">
-                                    <div class="bg-light p-3 rounded">
-                                        <div class="d-flex justify-content-between">
-                                            <h6 class="mb-1"> <a href="#!"> Lori Stevens </a> </h6>
-                                            <small class="ms-2">2hr</small>
-                                        </div>
-                                        <p class="small mb-0">See resolved goodness felicity shy civility domestic had but Drawings offended yet answered Jennings perceive.</p>
-                                    </div>
-                                    <!-- Comment react -->
-                                    <ul class="nav nav-divider py-2 small">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#!"> Like (5)</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#!"> Reply</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Comment item END -->
-                        <!-- Comment item START -->
-                        <li class="comment-item">
-                            <div class="d-flex">
-                                <!-- Avatar -->
-                                <div class="avatar avatar-story avatar-xs">
-                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/07.jpg" alt=""></a>
-                                </div>
-                                <!-- Comment by -->
-                                <div class="ms-2">
-                                    <div class="bg-light p-3 rounded">
-                                        <div class="d-flex justify-content-between">
-                                            <h6 class="mb-1"> <a href="#!"> Billy Vasquez </a> </h6>
-                                            <small class="ms-2">15min</small>
-                                        </div>
-                                        <p class="small mb-0">Wishing calling is warrant settled was lucky.</p>
-                                    </div>
-                                    <!-- Comment react -->
-                                    <ul class="nav nav-divider py-2 small">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#!"> Like</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#!"> Reply</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Comment item END -->
-                    </ul>
-                    <!-- Load more replies -->
-                    <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center mb-3 ms-5" data-bs-toggle="button" aria-pressed="true">
-                        <div class="spinner-dots me-2">
-                            <span class="spinner-dot"></span>
-                            <span class="spinner-dot"></span>
-                            <span class="spinner-dot"></span>
-                        </div>
-                        Load more replies
-                    </a>
-                    <!-- Comment item nested END -->
-                </li>
-                <!-- Comment item END -->
+{{--                        <ul class="comment-wrap list-unstyled">--}}
+{{--                <!-- Comment item START -->--}}
+{{--                <li class="comment-item">--}}
+{{--                    <div class="d-flex position-relative">--}}
+{{--                        <!-- Avatar -->--}}
+{{--                        <div class="avatar avatar-xs">--}}
+{{--                            <a href="#!"><img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/05.jpg')}}" alt=""></a>--}}
+{{--                        </div>--}}
+{{--                        <div class="ms-2">--}}
+{{--                            <!-- Comment by -->--}}
+{{--                            <div class="bg-light rounded-start-top-0 p-3 rounded">--}}
+{{--                                <div class="d-flex justify-content-between">--}}
+{{--                                    <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a></h6>--}}
+{{--                                    <small class="ms-2">5hr</small>--}}
+{{--                                </div>--}}
+{{--                                <p class="small mb-0">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>--}}
+{{--                            </div>--}}
+{{--                            <!-- Comment react -->--}}
+{{--                            <ul class="nav nav-divider py-2 small">--}}
+{{--                                <li class="nav-item">--}}
+{{--                                    <a class="nav-link" href="#!"> Like (3)</a>--}}
+{{--                                </li>--}}
+{{--                                <li class="nav-item">--}}
+{{--                                    <a class="nav-link" href="#!"> Reply</a>--}}
+{{--                                </li>--}}
+{{--                                <li class="nav-item">--}}
+{{--                                    <a class="nav-link" href="#!"> View 5 replies</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <!-- Comment item nested START -->--}}
+{{--                    <ul class="comment-item-nested list-unstyled">--}}
+{{--                        <!-- Comment item START -->--}}
+{{--                        <li class="comment-item">--}}
+{{--                            <div class="d-flex">--}}
+{{--                                <!-- Avatar -->--}}
+{{--                                <div class="avatar avatar-xs">--}}
+{{--                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/06.jpg" alt=""></a>--}}
+{{--                                </div>--}}
+{{--                                <!-- Comment by -->--}}
+{{--                                <div class="ms-2">--}}
+{{--                                    <div class="bg-light p-3 rounded">--}}
+{{--                                        <div class="d-flex justify-content-between">--}}
+{{--                                            <h6 class="mb-1"> <a href="#!"> Lori Stevens </a> </h6>--}}
+{{--                                            <small class="ms-2">2hr</small>--}}
+{{--                                        </div>--}}
+{{--                                        <p class="small mb-0">See resolved goodness felicity shy civility domestic had but Drawings offended yet answered Jennings perceive.</p>--}}
+{{--                                    </div>--}}
+{{--                                    <!-- Comment react -->--}}
+{{--                                    <ul class="nav nav-divider py-2 small">--}}
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link" href="#!"> Like (5)</a>--}}
+{{--                                        </li>--}}
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link" href="#!"> Reply</a>--}}
+{{--                                        </li>--}}
+{{--                                    </ul>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                        <!-- Comment item END -->--}}
+{{--                        <!-- Comment item START -->--}}
+{{--                        <li class="comment-item">--}}
+{{--                            <div class="d-flex">--}}
+{{--                                <!-- Avatar -->--}}
+{{--                                <div class="avatar avatar-story avatar-xs">--}}
+{{--                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/07.jpg" alt=""></a>--}}
+{{--                                </div>--}}
+{{--                                <!-- Comment by -->--}}
+{{--                                <div class="ms-2">--}}
+{{--                                    <div class="bg-light p-3 rounded">--}}
+{{--                                        <div class="d-flex justify-content-between">--}}
+{{--                                            <h6 class="mb-1"> <a href="#!"> Billy Vasquez </a> </h6>--}}
+{{--                                            <small class="ms-2">15min</small>--}}
+{{--                                        </div>--}}
+{{--                                        <p class="small mb-0">Wishing calling is warrant settled was lucky.</p>--}}
+{{--                                    </div>--}}
+{{--                                    <!-- Comment react -->--}}
+{{--                                    <ul class="nav nav-divider py-2 small">--}}
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link" href="#!"> Like</a>--}}
+{{--                                        </li>--}}
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link" href="#!"> Reply</a>--}}
+{{--                                        </li>--}}
+{{--                                    </ul>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                        <!-- Comment item END -->--}}
+{{--                    </ul>--}}
+{{--                    <!-- Load more replies -->--}}
+{{--                    <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center mb-3 ms-5" data-bs-toggle="button" aria-pressed="true">--}}
+{{--                        <div class="spinner-dots me-2">--}}
+{{--                            <span class="spinner-dot"></span>--}}
+{{--                            <span class="spinner-dot"></span>--}}
+{{--                            <span class="spinner-dot"></span>--}}
+{{--                        </div>--}}
+{{--                        Load more replies--}}
+{{--                    </a>--}}
+{{--                    <!-- Comment item nested END -->--}}
+{{--                </li>--}}
+{{--                <!-- Comment item END -->--}}
 
-                <!-- Comment item START -->
-                <li class="comment-item">
-                    <div class="d-flex">
-                        <!-- Avatar -->
-                        <div class="avatar avatar-xs">
-                            <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/05.jpg" alt=""></a>
-                        </div>
-                        <!-- Comment by -->
-                        <div class="ms-2">
-                            <div class="bg-light p-3 rounded">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a> </h6>
-                                    <small class="ms-2">4min</small>
-                                </div>
-                                <p class="small mb-0">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>
-                            </div>
-                            <!-- Comment react -->
-                            <ul class="nav nav-divider pt-2 small">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#!"> Like (1)</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#!"> Reply</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#!"> View 6 replies</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <!-- Comment item END -->
-            </ul>
+{{--                <!-- Comment item START -->--}}
+{{--                <li class="comment-item">--}}
+{{--                    <div class="d-flex">--}}
+{{--                        <!-- Avatar -->--}}
+{{--                        <div class="avatar avatar-xs">--}}
+{{--                            <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/05.jpg" alt=""></a>--}}
+{{--                        </div>--}}
+{{--                        <!-- Comment by -->--}}
+{{--                        <div class="ms-2">--}}
+{{--                            <div class="bg-light p-3 rounded">--}}
+{{--                                <div class="d-flex justify-content-between">--}}
+{{--                                    <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a> </h6>--}}
+{{--                                    <small class="ms-2">4min</small>--}}
+{{--                                </div>--}}
+{{--                                <p class="small mb-0">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>--}}
+{{--                            </div>--}}
+{{--                            <!-- Comment react -->--}}
+{{--                            <ul class="nav nav-divider pt-2 small">--}}
+{{--                                <li class="nav-item">--}}
+{{--                                    <a class="nav-link" href="#!"> Like (1)</a>--}}
+{{--                                </li>--}}
+{{--                                <li class="nav-item">--}}
+{{--                                    <a class="nav-link" href="#!"> Reply</a>--}}
+{{--                                </li>--}}
+{{--                                <li class="nav-item">--}}
+{{--                                    <a class="nav-link" href="#!"> View 6 replies</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </li>--}}
+{{--                <!-- Comment item END -->--}}
+{{--            </ul>--}}
             <!-- Comment wrap END -->
         </div>
         <!-- Card body END -->
 
         <!-- Card footer START -->
-        <div class="card-footer border-0 pt-0">
-            <!-- Load more comments -->
-            <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center" data-bs-toggle="button" aria-pressed="true">
-                <div class="spinner-dots me-2">
-                    <span class="spinner-dot"></span>
-                    <span class="spinner-dot"></span>
-                    <span class="spinner-dot"></span>
-                </div>
-                Load more comments
-            </a>
-        </div>
+{{--                <div class="card-footer border-0 pt-0">--}}
+{{--            <!-- Load more comments -->--}}
+{{--            <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center" data-bs-toggle="button" aria-pressed="true">--}}
+{{--                <div class="spinner-dots me-2">--}}
+{{--                    <span class="spinner-dot"></span>--}}
+{{--                    <span class="spinner-dot"></span>--}}
+{{--                    <span class="spinner-dot"></span>--}}
+{{--                </div>--}}
+{{--                Load more comments--}}
+{{--            </a>--}}
+{{--        </div>--}}
         <!-- Card footer END -->
 
     </div>
 @endforeach
-
-{{--<div class="d-non">--}}
-{{--    {{ $posts->links() }}--}}
-{{--</div>--}}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\post;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\User;
@@ -56,9 +57,9 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(user $user){
-        $posts = $user->post()->simplePaginate(5);
-        return view('users.show' , compact('user','posts'));
+    public function show($id){
+        $posts = Post::where('user_id',$id)->get();
+        return view('myprofile' , compact('posts'));
     }
 
     /**
