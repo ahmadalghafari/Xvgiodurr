@@ -82,12 +82,12 @@ class PostController extends Controller{
             }
         }
 
-        // Return a success message
+
         return redirect()->back();//route('home.posts.index');
 
     }
 
-    public function show(Request $request){
+    public function show(){
 
     }
     public function edit(post $post)
@@ -95,7 +95,7 @@ class PostController extends Controller{
 //        $id = auth::user()->id;
 //        $post = Post::where('user_id', $id)->get();
 //        $post->text = $request->text;
-////        $postid = post::find(post->id);
+//        $postid = post::find(post->id);
 //        return view('posts.edit', compact('post'));
     }
 

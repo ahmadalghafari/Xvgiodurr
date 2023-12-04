@@ -92,9 +92,9 @@
 
 	<!-- Theme CSS -->
 	    <link rel="stylesheet" type="text/css" href="{{asset('import/assets/css/style.css')}}">
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        @livewireStyles
+{{--        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>--}}
+{{--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>--}}
+{{--        @livewireStyles--}}
 </head>
 <body>
 
@@ -129,37 +129,46 @@ Header START nav-->
 					<div class="nav-item w-100">
                         <div class="dropdown">
 
-						    <form class="rounded position-relative" >
 
-                                <input class="form-control ps-5 bg-light" type="search" placeholder="Search..." aria-label="Search" data-toggle="dropdown">
+                            <a class="nav-link bg-light py-1 px-2 mb-0" href="#!" data-bs-toggle="modal" data-bs-target="#searchUsers">
+{{--                                <form class="rounded position-relative" >--}}
+{{--                                </form>--}}
+                                <input class="form-control ps-5 bg-light" type="search" placeholder="Search..." >
 
                                 <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit"><i class="bi bi-search fs-5"> </i></button>
-                                    <ul class="dropdown-menu mt-2">
-                                        <!-- Your search results will go here -->
-                                        <li><a class="dropdown-item" href="#">Result 1</a></li>
-                                        <li><a class="dropdown-item" href="#">Result 2</a></li>
-                                        <li><a class="dropdown-item" href="#">Result 3</a></li>
-{{--                                        @if ($users->count() > 0)--}}
-{{--                                            <h2>Search results for "{{ $name }}"</h2>--}}
-{{--                                            <ul>--}}
-{{--                                                @foreach ($users as $user)--}}
-{{--                                                    <li>{{ $user->name }}</li>--}}
-{{--                                                @endforeach--}}
-{{--                                            </ul>--}}
-{{--                                        @else--}}
-{{--                                            <p>No results found for "{{ $name }}"</p>--}}
-{{--                                        @endif--}}
-                                        <!-- Add more result items as needed -->
-                                    </ul>
 
-						    </form>
+                            </a>
                         </div>
 					</div>
 				</div>
-                <ul class="dropdown-menu">
 
-                        <li><a class="dropdown-item" href="#">Result 3</a><</li>
-                    </ul>
+                <div class="modal fade" id="searchUsers" tabindex="-1" aria-labelledby="searchUsersLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <!-- Modal feed header START -->
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="searchUsersLabel">Search Users</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <!-- Modal feed header END -->
+
+                            <!-- Modal feed body START -->
+                            <div class="modal-body">
+                                test
+                            </div>
+                            <!-- Modal feed body END -->
+
+                            <!-- Modal feed footer -->
+                            <div class="modal-footer ">
+                                <!-- Button -->
+                                <button type="button" class="btn btn-success-soft" data-bs-dismiss="modal">Done</button>
+                            </div>
+                            <!-- Modal feed footer -->
+
+                        </div>
+                    </div>
+                </div>
+
 
 				<!-- Nav Search END -->
 
@@ -509,7 +518,7 @@ Header END -->
                                                               alt="your personal photo "></a>
 										</div>
 										<!-- Info -->
-										<h5 class="mb-0"> <a href="#!">{{Auth::user()->name}}</a> </h5>
+										<h5 class="mb-0"> <a href="{{route('home.users.show' , Auth::user()->id )}}">{{Auth::user()->name}}</a> </h5>
 										<small>Web Developer at Webestica</small>
 										<p class="mt-3">I'd love to change the world, but they won’t give me the source code.</p>
 
@@ -785,6 +794,7 @@ Header END -->
 				    </div>
                 </div>
 				<!-- posting place end -->
+
                 @include('posts.load')
             </div>
 			<!-- Main content END -->
@@ -1511,29 +1521,20 @@ Header END -->
 
 <!-- =======================
 JS libraries, plugins and custom scripts -->
-@livewireScripts
-<!-- Bootstrap JS -->
 <script src="{{asset('import/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-
-<script
-    src="https://code.jquery.com/jquery-3.7.1.js"
-    integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
-<!-- Vendors -->
 <script src="{{asset('import/assets/vendor/tiny-slider/dist/tiny-slider.js')}}"></script>
 <script src="{{asset('import/assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js')}}"></script>
 <script src="{{asset('import/assets/vendor/choices.js/public/assets/scripts/choices.min.js')}}"></script>
 <script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.min.js')}}"></script>
-
+<script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.js')}}"></script>
 <script src="{{asset('import/assets/vendor/flatpickr/dist/flatpickr.min.js')}}"></script>
 <script src="{{asset('import/assets/vendor/plyr/plyr.js')}}"></script>
 <script src="{{asset('import/assets/vendor/dropzone/dist/min/dropzone.min.js')}}"></script>
 <script src="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.js')}}"></script>
 <script src="{{asset('import/assets/js/zuck-stories.js')}}"></script>
 
-<!-- Theme Functions -->
+<!-- Theme Functions -->S
 <script src="{{asset('import/assets/js/functions.js')}}"></script>
-
 <script>
     $(document).ready(function () {
 
@@ -1565,6 +1566,7 @@ JS libraries, plugins and custom scripts -->
 
 
 </script>
+
 
 </body>
 </html>

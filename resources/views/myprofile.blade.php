@@ -430,14 +430,8 @@ Header END -->
                 <!-- My profile START -->
                 <div class="card">
                     <!-- Cover image -->
-                    <div class="h-200px rounded-top" >
-                        <a href="#!"><img class="h-200px rounded-top" alt="avatar"
-                                          @if(Auth::user()->pphoto_id != null)
-                                              src="{{asset(Auth::user()->photo->path)}}"
-                                          @else
-                                              src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                                @endif
-                            ></a>
+                    <div class="h-200px rounded-top" style="background-image:url({{asset('import/assets/images/bg/05.jpg')}}); background-position: center; background-size: cover; background-repeat: no-repeat;">
+
                     </div>
 
                     <!-- Card body START -->
@@ -712,7 +706,8 @@ Header END -->
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
                                         <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark fa-fw pe-2"></i>Save post</a></li>
                                         <li><a class="dropdown-item" href="#"> <i class="bi bi-person-x fa-fw pe-2"></i>Unfollow lori ferguson </a></li>
-                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-x-circle fa-fw pe-2"></i>Hide post</a></li>
+{{--                                        <li><a href="#" class="dropdown-item"><i class="bi bi-x-circle fa-fw pe-2"></i>Delete post</a></li>--}}
+                                        <li><form action="{{route('home.posts.destroy' , $post)}}" method="POST">@csrf @method('DELETE')<button class="dropdown-item" type="submit"><i class="bi bi-x-circle fa-fw pe-2"></i>Delete post</button></form></li>
                                         <li><a class="dropdown-item" href="#"> <i class="bi bi-slash-circle fa-fw pe-2"></i>Block</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="#"> <i class="bi bi-flag fa-fw pe-2"></i>Report post</a></li>
@@ -1165,7 +1160,7 @@ Header END -->
                                 <div class="d-flex">
                                     <!-- Avatar -->
                                     <div class="avatar me-3">
-                                        <a href="#!"> <img class="avatar-img rounded-circle" src="assets/images/logo/08.svg" alt=""> </a>
+                                        <a href="#!"> <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/logo/08.svg')}}" alt=""> </a>
                                     </div>
                                     <!-- Info -->
                                     <div>
@@ -1179,7 +1174,7 @@ Header END -->
                                 <div class="d-flex">
                                     <!-- Avatar -->
                                     <div class="avatar me-3">
-                                        <a href="#!"> <img class="avatar-img rounded-circle" src="assets/images/logo/09.svg" alt=""> </a>
+                                        <a href="#!"> <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/logo/09.svg')}}" alt=""> </a>
                                     </div>
                                     <!-- Info -->
                                     <div>
@@ -1193,7 +1188,7 @@ Header END -->
                                 <div class="d-flex">
                                     <!-- Avatar -->
                                     <div class="avatar me-3">
-                                        <a href="#!"> <img class="avatar-img rounded-circle" src="assets/images/logo/10.svg" alt=""> </a>
+                                        <a href="#!"> <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/logo/10.svg')}}" alt=""> </a>
                                     </div>
                                     <!-- Info -->
                                     <div>
@@ -1223,32 +1218,32 @@ Header END -->
                                 <div class="row g-2">
                                     <!-- Photos item -->
                                     <div class="col-6">
-                                        <a href="assets/images/albums/01.jpg" data-gallery="image-popup" data-glightbox="">
-                                            <img class="rounded img-fluid" src="assets/images/albums/01.jpg" alt="">
+                                        <a href="{{asset('import/assets/images/albums/01.jpg')}}" data-gallery="image-popup" data-glightbox="">
+                                            <img class="rounded img-fluid" src="{{asset('import/assets/images/albums/01.jpg')}}" alt="">
                                         </a>
                                     </div>
                                     <!-- Photos item -->
                                     <div class="col-6">
-                                        <a href="assets/images/albums/02.jpg" data-gallery="image-popup" data-glightbox="">
-                                            <img class="rounded img-fluid" src="assets/images/albums/02.jpg" alt="">
+                                        <a href="{{asset('import/assets/images/albums/02.jpg')}}" data-gallery="image-popup" data-glightbox="">
+                                            <img class="rounded img-fluid" src="{{asset('import/assets/images/albums/02.jpg')}}" alt="">
                                         </a>
                                     </div>
                                     <!-- Photos item -->
                                     <div class="col-4">
-                                        <a href="assets/images/albums/03.jpg" data-gallery="image-popup" data-glightbox="">
-                                            <img class="rounded img-fluid" src="assets/images/albums/03.jpg" alt="">
+                                        <a href="{{asset('import/assets/images/albums/03.jpg')}}" data-gallery="image-popup" data-glightbox="">
+                                            <img class="rounded img-fluid" src="{{asset('import/assets/images/albums/03.jpg')}}" alt="">
                                         </a>
                                     </div>
                                     <!-- Photos item -->
                                     <div class="col-4">
-                                        <a href="assets/images/albums/04.jpg" data-gallery="image-popup" data-glightbox="">
-                                            <img class="rounded img-fluid" src="assets/images/albums/04.jpg" alt="">
+                                        <a href="{{asset('import/assets/images/albums/04.jpg')}}" data-gallery="image-popup" data-glightbox="">
+                                            <img class="rounded img-fluid" src="{{asset('import/assets/images/albums/04.jpg')}}" alt="">
                                         </a>
                                     </div>
                                     <!-- Photos item -->
                                     <div class="col-4">
-                                        <a href="assets/images/albums/05.jpg" data-gallery="image-popup" data-glightbox="">
-                                            <img class="rounded img-fluid" src="assets/images/albums/05.jpg" alt="">
+                                        <a href="{{asset('import/assets/images/albums/05.jpg')}}" data-gallery="image-popup" data-glightbox="">
+                                            <img class="rounded img-fluid" src="{{asset('import/assets/images/albums/05.jpg')}}" alt="">
                                         </a>
                                         <!-- glightbox Albums left bar END  -->
                                     </div>
@@ -1278,7 +1273,7 @@ Header END -->
                                             <!-- Card body -->
                                             <div class="card-body p-2 pb-0">
                                                 <div class="avatar avatar-story avatar-xl">
-                                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/02.jpg" alt=""></a>
+                                                    <a href="#!"><img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/02.jpg')}}" alt=""></a>
                                                 </div>
                                                 <h6 class="card-title mb-1 mt-3"> <a href="#!"> Amanda Reed </a></h6>
                                                 <p class="mb-0 small lh-sm">16 mutual connections</p>
@@ -1298,7 +1293,7 @@ Header END -->
                                             <!-- Card body -->
                                             <div class="card-body p-2 pb-0">
                                                 <div class="avatar avatar-xl">
-                                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/03.jpg" alt=""></a>
+                                                    <a href="#!"><img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/03.jpg')}}" alt=""></a>
                                                 </div>
                                                 <h6 class="card-title mb-1 mt-3"> <a href="#!"> Samuel Bishop </a></h6>
                                                 <p class="mb-0 small lh-sm">22 mutual connections</p>
@@ -1318,7 +1313,7 @@ Header END -->
                                             <!-- Card body -->
                                             <div class="card-body p-2 pb-0">
                                                 <div class="avatar avatar-xl">
-                                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/04.jpg" alt=""></a>
+                                                    <a href="#!"><img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/04.jpg')}}" alt=""></a>
                                                 </div>
                                                 <h6 class="card-title mb-1 mt-3"> <a href="#"> Bryan Knight </a></h6>
                                                 <p class="mb-0 small lh-sm">1 mutual connection</p>
@@ -1338,7 +1333,7 @@ Header END -->
                                             <!-- Card body -->
                                             <div class="card-body p-2 pb-0">
                                                 <div class="avatar avatar-xl">
-                                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/05.jpg" alt=""></a>
+                                                    <a href="#!"><img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/05.jpg')}}" alt=""></a>
                                                 </div>
                                                 <h6 class="card-title mb-1 mt-3"> <a href="#!"> Amanda Reed </a></h6>
                                                 <p class="mb-0 small lh-sm">15 mutual connections</p>

@@ -1,5 +1,5 @@
 @foreach($posts as $post)
-    <div class="card">
+    <div class="card" >
         <!-- Card header START -->
         <div class="card-header border-0 pb-0">
             <div class="d-flex align-items-center justify-content-between">
@@ -99,14 +99,14 @@
                                         @if($files->file_type == 'images')
                                             <div class="col-6">
                                                 <!-- Grid img -->
-                                                <a class="h-100" href="{{asset($files->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                <a class="" href="{{asset($files->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
                                                     <img class="rounded img-fluid" src="{{asset($files->file_path)}}" alt="Image">
                                                 </a>
                                             </div>
                                         @elseif($files->file_type == 'videos')
                                             <div class="col-6">
                                                 <!-- Grid video -->
-                                                <a class="h-100" href="{{asset($files->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
+                                                <a class="" href="{{asset($files->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
                                                     <div class="overflow-hidden fullscreen-video w-100">
                                                         <div class="player-wrapper overflow-hidden">
                                                             <video class="player-html" controls crossorigin="anonymous"
@@ -131,7 +131,7 @@
                                             @if($loop->first)
                                                 @if($file->file_type == 'images')
                                                     <div class="col-6">
-                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup" >
+                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}" >
                                                             <img class="rounded img-fluid" src="{{asset($file->file_path)}}" alt="Image">
                                                         </a>
 
@@ -139,7 +139,7 @@
                                                 @elseif($file->file_type == 'videos')
                                                     <div class="col-6">
                                                         <!-- Grid video -->
-                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup">
+                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
                                                             <div class="overflow-hidden fullscreen-video w-100">
                                                                 <div class="player-wrapper overflow-hidden">
                                                                     <video class="player-html" controls crossorigin="anonymous"
@@ -156,14 +156,14 @@
                                             @elseif($key < count($post->file) - 1)
                                                 @if($file->file_type == 'images')
                                                     <div class="col-6" style="display: none">
-                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup" >
+                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}" >
                                                             <img class="rounded img-fluid" src="{{asset($file->file_path)}}" alt="Image">
                                                         </a>
                                                     </div>
                                                 @elseif($file->file_type == 'videos')
                                                     <div class="col-6" style="display: none">
                                                         <!-- Grid video -->
-                                                        <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup">
+                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
                                                             <div class="overflow-hidden fullscreen-video w-100">
                                                                 <div class="player-wrapper overflow-hidden">
                                                                     <video class="player-html" controls crossorigin="anonymous"
@@ -184,7 +184,7 @@
                                                             <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
                                                                 <a class="btn btn-link text-white" href="#"> View all </a>
                                                             </div>
-                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup">
+                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
                                                                 <img class="img-fluid opacity-50 rounded" src="{{asset($file->file_path)}}" alt="Image">
                                                             </a>
                                                         </div>
@@ -193,7 +193,7 @@
                                                             <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
                                                                 <a class="btn btn-link text-white" href="#"> View all </a>
                                                             </div>
-                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup">
+                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
                                                                 <div class="overflow-hidden fullscreen-video w-100">
                                                                     <div class="player-wrapper overflow-hidden">
                                                                         <video class="player-html" controls crossorigin="anonymous"
@@ -437,4 +437,12 @@
         <!-- Card footer END -->
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const postGallery = GLightbox({
+                selector: '[data-gallery="image-popup{{$post->id}}"]',
+            });
+        });
+    </script>
 @endforeach
+
