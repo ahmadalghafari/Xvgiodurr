@@ -49,17 +49,22 @@
 
             @if($post->file->count() == 1)
                 @if($post->file[0]->file_type == 'images')
-                    <img class="card-img" src="{{asset($post->file[0]->file_path)}}" alt="Post">
+                    <a class="" href="{{asset($post->file[0]->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
+                        <img class="card-img" src="{{asset($post->file[0]->file_path)}}" alt="Post">
+                    </a>
+
                 @elseif($post->file[0]->file_type == 'videos')
-                    <div class="overflow-hidden fullscreen-video w-100">
-                        <div class="player-wrapper overflow-hidden">
-                            <video class="player-html" controls crossorigin="anonymous"
-{{--                                   poster="assets/images/videos/poster.jpg"--}}
-                            >
-                                <source src="{{asset($post->file[0]->file_path)}}" type="video/mp4">
-                            </video>
+
+                        <div class="overflow-hidden fullscreen-video w-100">
+                            <div class="player-wrapper overflow-hidden">
+                                <video class="player-html" controls crossorigin="anonymous"
+    {{--                                   poster="assets/images/videos/poster.jpg"--}}
+                                >
+                                    <source src="{{asset($post->file[0]->file_path)}}" type="video/mp4">
+                                </video>
+                            </div>
                         </div>
-                    </div>
+
                 @elseif($post->file[0]->file_type == 'files')
                     <div class="card-footer border-0 d-flex justify-content-between align-items-center">
                         <p class="mb-0">{{$post->user->name}}.file.{{$post->file[0]->prefix}}</p>
@@ -78,7 +83,10 @@
                     @switch($post->file->where('file_type','images')->count() + $post->file->where('file_type','videos')->count())
                         @case(1)
                             @if($post->file->where('file_type','images')->count() == 1)
-                                <img class="card-img" src="{{asset($post->file[0]->file_path)}}" alt="Post">
+                                <a class="" href="{{asset($post->file[0]->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
+                                    <img class="card-img" src="{{asset($post->file[0]->file_path)}}" alt="Post">
+                                </a>
+
                             @else
                                 <div class="overflow-hidden fullscreen-video w-100">
                                     <div class="player-wrapper overflow-hidden">
