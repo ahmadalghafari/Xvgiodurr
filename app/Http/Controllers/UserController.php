@@ -59,7 +59,7 @@ class UserController extends Controller
      */
     public function show($id){
         $posts = Post::where('user_id',$id)->latest()->get();
-        return view('myprofile' , compact('posts'));
+        return view('users.profile' , compact('posts'));
     }
 
     /**
