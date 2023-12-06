@@ -80,4 +80,8 @@ class User extends Authenticatable
         return $this->hasOne(pphoto::class , 'user_id' , 'id');
     }
 
+    public function info() :HasOne {
+        return $this->hasOne(info::class);
+    }
+
 }

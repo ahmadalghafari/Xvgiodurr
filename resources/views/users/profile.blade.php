@@ -105,7 +105,11 @@ Header END -->
 
 <!-- **************** MAIN CONTENT START **************** -->
 <main>
-
+    <div class="preloader">
+        <div class="preloader-item">
+            <div class="spinner-grow text-primary"></div>
+        </div>
+    </div>
     <!-- Container START -->
     <div class="container">
         <div class="row g-4">

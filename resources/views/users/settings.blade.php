@@ -211,7 +211,7 @@ Header END -->
                             <!-- Title START -->
                             <div class="card-header border-0 pb-0">
                                 <h1 class="h5 card-title">Account Settings</h1>
-                                <p class="mb-0">He moonlights difficult engrossed it, sportsmen. Interested has all Devonshire difficulty gay assistance joy. Unaffected at ye of compliment alteration to.</p>
+                                <p class="mb-0">Personalize your profile with ease on our settings page. Update your bio, profile picture, and contact details. Tailor privacy preferences, manage notifications, and choose display options. Enhance your user experience with versatile profile settings.</p>
                             </div>
                             <!-- Card header START -->
                             <!-- Card body START -->
@@ -220,60 +220,114 @@ Header END -->
                                 <form class="row g-3" method="POST" action="{{route('home.users.settings.post')}}">
                                     @csrf
                                     @method('POST')
-                                    <!-- First name -->
-{{--                                    <div class="col-sm-6 col-lg-4">--}}
-{{--                                        <label class="form-label">First name</label>--}}
-{{--                                        <input type="text" class="form-control" placeholder="" value={{Auth::user()->name}}>--}}
-{{--                                    </div>--}}
-{{--                                    <!-- Last name -->--}}
-{{--                                    <div class="col-sm-6 col-lg-4">--}}
-{{--                                        <label class="form-label">Last name</label>--}}
-{{--                                        <input type="text" class="form-control" placeholder="" value={{Auth::user()->name}}>--}}
-{{--                                    </div>--}}
-{{--                                    <!-- Additional name -->--}}
-{{--                                    <div class="col-sm-6 col-lg-4">--}}
-{{--                                        <label class="form-label">Additional name</label>--}}
-{{--                                        <input type="text" class="form-control" placeholder="">--}}
-{{--                                    </div>--}}
+
                                     <!-- User name -->
                                     <div class="col-sm-6">
                                         <label class="form-label">User name</label>
                                         <input type="text" class="form-control" placeholder="" name="name" value={{Auth::user()->name}}>
+                                        @error('name')
+                                        <span class="feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <!-- Email -->
+                                    <div class="col-sm-6">
+                                        <label class="form-label">Email</label>
+                                        <input type="text" class="form-control" placeholder="user@test.com" name="email" value="{{Auth::user()->email}}">
+                                        @error('email')
+                                        <span class="feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Phone number -->
+                                    <div class="col-sm-6">
+                                        <label class="form-label">Phone number</label>
+                                        <input type="text" class="form-control" placeholder="Optional" name="phone" value="@if(Auth::user()->info()->exists()) {{Auth::user()->info->phone}} @endif">
+                                        @error('phone')
+                                        <span class="feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                     <!-- Birthday -->
                                     <div class="col-lg-6">
                                         <label class="form-label">Birthday </label>
-                                        <input type="text" class="form-control flatpickr" value="">
+                                        <input type="date" class="form-control flatpickr" name="birth" value="@if(Auth::user()->info()->exists()) {{Auth::user()->info->birth}} @endif">
+                                        @error('birth')
+                                        <span class="feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
-                                    <!-- Allow checkbox -->
+                                    <!-- Job -->
+                                    <div class="col-sm-6">
+                                        <label class="form-label">Job</label>
+                                        <input type="text" class="form-control" placeholder="dr , eng ..." name="job" value="@if(Auth::user()->info()->exists()) {{Auth::user()->info->job}} @endif">
+                                        @error('job')
+                                        <span class="feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label">Status</label>
+                                        <select name="community_status"  value="@if(Auth::user()->info()->exists()) {{Auth::user()->info->community_status}} @endif" class="form-control">
+                                            @if(Auth::user()->info()->exists())
+                                                <option value="single" @if(Auth::user()->info->community_status == 'single')selected @endif>Single</option>
+                                                <option value="married" @if(Auth::user()->info->community_status == 'married')selected @endif>Married</option>
+                                                <option value="divorced" @if(Auth::user()->info->community_status == 'divorced')selected @endif>Divorced</option>
+                                                <option value="in a relationship" @if(Auth::user()->info->community_status == 'in a relationship')selected @endif>In A Relationship</option>
+                                                <option value="taken" @if(Auth::user()->info->community_status == 'taken')selected @endif>Taken</option>
+                                                <option ></option>
+                                            @else
+                                                <option selected></option>
+                                                <option value="single"  >Single</option>
+                                                <option value="married" >Married</option>
+                                                <option value="divorced" >Divorced</option>
+                                                <option value="in a relationship" >In A Relationship</option>
+                                                <option value="taken" >Taken</option>
+                                            @endif
+
+                                        </select>
+                                        @error('community_status')
+                                        <span class="feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     <div class="col-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="allowChecked" checked>
-                                            <label class="form-check-label" for="allowChecked">
-                                                Allow anyone to add you to their team
-                                            </label>
-                                        </div>
+                                        <label class="form-label">Address</label>
+                                        <input type="text" class="form-control"  placeholder="Syria , damascus , mazzah ..." name="address" value="@if(Auth::user()->info()->exists()) {{Auth::user()->info->address}} @endif">
+                                        @error('address')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
-                                    <!-- Phone number -->
-                                    <div class="col-sm-6">
-                                        <label class="form-label">Phone number</label>
-                                        <input type="text" class="form-control" placeholder="" value="optional">
-                                        <!-- Add new number -->
-                                        <a class="btn btn-sm btn-dashed rounded mt-2" href="#!"> <i class="bi bi-plus-circle-dotted me-1"></i>Add new phone number</a>
-                                    </div>
-                                    <!-- Phone number -->
-                                    <div class="col-sm-6">
-                                        <label class="form-label">Email</label>
-                                        <input type="text" class="form-control" placeholder="" name="email" value={{Auth::user()->email}}>
-                                        <!-- Add new email -->
-                                        <a class="btn btn-sm btn-dashed rounded mt-2" href="#!"> <i class="bi bi-plus-circle-dotted me-1"></i>Add new email address</a>
-                                    </div>
+
                                     <!-- Page information -->
                                     <div class="col-12">
                                         <label class="form-label">Overview</label>
-                                        <textarea class="form-control" rows="4" name="Description" placeholder="Description (Required)">Interested has all Devonshire difficulty gay assistance joy. Handsome met debating sir dwelling age material. As style lived he worse dried. Offered related so visitors we private removed. Moderate do subjects to distance.</textarea>
-                                        <small>Character limit: 300</small>
+                                        <textarea class="form-control" rows="4" name="overview" maxlength="200" placeholder="Description" >@if(Auth::user()->info()->exists()) {{Auth::user()->info->overview}} @endif</textarea>
+                                        @error('overview')
+                                        <span class="feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <small>Character limit: 200</small>
                                     </div>
+
+                                    @if(session('success'))
+                                        <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+                                            <strong>{{session('success')}}</strong>
+
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    @endif
+
                                     <!-- Button  -->
                                     <div class="col-12 text-end">
                                         <button type="submit" class="btn btn-sm btn-primary mb-0">Save changes</button>
@@ -949,7 +1003,7 @@ Header END -->
 JS libraries, plugins and custom scripts -->
 
 <!-- Bootstrap JS -->
-<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{asset('import/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
 
 <!-- Vendors -->
 <script src="{{asset('import/assets/vendor/choices.js/public/assets/scripts/choices.min.js')}}"></script>

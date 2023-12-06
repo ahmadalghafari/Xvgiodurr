@@ -88,8 +88,36 @@ class UserController extends Controller
     }
 
     public function settings(Request $request){
-        dd($request);
-        return 'fuck';
-//        return route('home.users.show' , Auth::user()) ;
+        $user = Auth::user();
+
+        $request->validate([
+            'name' => 'required|unique:App\Models\User,name,'.$user->id,
+            'email' => 'required|unique:App\Models\User,email,'.$user->id,
+            'phone' => 'nullable|numeric',
+            'overview' => 'nullable|max:200',
+            'community_status' => 'nullable|in:single,married,divorced,in a relationship,taken',
+            'job' => 'nullable|max:20',
+            'birth' => 'nullable|date',
+            'address' => 'nullable',
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        $user->info()->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'phone' => $request->phone,
+                'overview' => $request->overview,
+                'community_status' => $request->community_status,
+                'job' => $request->job,
+                'birth' => $request->birth,
+                'address' => $request->address,
+            ]
+        );
+
+        return redirect()->back()->with(['success' => 'Updated Successfully!']);
     }
 }
