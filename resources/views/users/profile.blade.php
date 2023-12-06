@@ -125,23 +125,33 @@ Header END -->
                             <div>
                                 <!-- Avatar -->
                                 <div class="avatar avatar-xxl mt-n5 mb-3">
-                                    <a href="#!"><img class="avatar-img rounded-circle border border-white border-3" alt=" "
-                                                      @if(Auth::user()->pphoto_id != null)
-                                                          src="{{asset(Auth::user()->photo->path)}}"
+                                    <a href="
+                                        @if($user->photo->path != null)
+                                            {{asset($user->photo->path)}}
+                                        @else
+                                            {{asset('import/assets/images/avatar/placeholder.jpg')}}
+                                        @endif " data-glightbox="post-gallery" data-gallery="image-popup{{$user->id}}">
+                                        <img class="avatar-img rounded-circle border border-white border-3" alt=" "
+                                                      @if($user->photo->path != null)
+                                                          src="{{asset($user->photo->path)}}"
                                                       @else
                                                           src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                                            @endif
-                                        ></a>
+                                            @endif>
+                                    </a>
                                 </div>
                             </div>
                             <div class="ms-sm-4 mt-sm-3">
                                 <!-- Info -->
-                                <h1 class="mb-0 h5">{{Auth::user()->name}}<i class="bi bi-patch-check-fill text-success small"></i></h1>
+                                <h1 class="mb-0 h5">{{$user->name}}<i class="bi bi-patch-check-fill text-success small"></i></h1>
                                 <p>250 connections</p>
                             </div>
                             <!-- Button -->
                             <div class="d-flex mt-3 justify-content-center ms-sm-auto">
-                                <button class="btn btn-danger-soft me-2" type="button"> <i class="bi bi-pencil-fill pe-1"></i> Edit profile </button>
+                                @if($user->id == Auth::user()->id)
+                                    <button class="btn btn-danger-soft me-2" type="button"> <i class="bi bi-pencil-fill pe-1"></i> Edit profile </button>
+                                @else
+                                    @livewire('follow-live' , ['user' => $user])
+                                @endif
                                 <div class="dropdown">
                                     <!-- Card share action menu -->
                                     <button class="icon-md btn btn-light" type="button" id="profileAction2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -162,7 +172,7 @@ Header END -->
                         <ul class="list-inline mb-0 text-center text-sm-start mt-3 mt-sm-0">
                             <li class="list-inline-item"><i class="bi bi-briefcase me-1"></i> Lead Developer</li>
                             <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i> New Hampshire</li>
-                            <li class="list-inline-item"><i class="bi bi-calendar2-plus me-1"></i> Joined on Nov 26, 2019</li>
+                            <li class="list-inline-item"><i class="bi bi-calendar2-plus me-1"></i> Joined on {{$user->created_at->format('M d, Y')}}</li>
                         </ul>
                     </div>
                     <!-- Card body END -->
@@ -182,7 +192,9 @@ Header END -->
                 <!-- My profile END -->
 
                 <!-- Share feed START -->
-                @include('layouts.place-posting')
+                @if($user->id == Auth::user()->id)
+                    @include('layouts.place-posting')
+                @endif
                 <!-- Share feed END -->
 
                 @foreach($posts as $post)
@@ -193,12 +205,13 @@ Header END -->
                                 <div class="d-flex align-items-center">
                                     <!-- Avatar -->
                                     <div class="avatar avatar-story me-2">
-                                        <a href="#!"> <img class="avatar-img rounded-circle" \
-                                                           @if($post->user->pphoto_id != null)
+
+                                         <img class="avatar-img rounded-circle" \
+                                                           @if($post->user->photo->path != null)
                                                                src="{{asset($post->user->photo->path)}}"
                                                            @else
                                                                src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                                                @endif > </a>
+                                                @endif >
                                     </div>
                                     <!-- Info -->
                                     <div>
@@ -641,6 +654,13 @@ Header END -->
                         });
                     </script>
                 @endforeach
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const postGallery = GLightbox({
+                            selector: '[data-gallery="image-popup{{$user->id}}"]',
+                        });
+                    });
+                </script>
 
             </div>
             <!-- Main content END -->

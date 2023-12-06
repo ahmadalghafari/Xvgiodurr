@@ -14,14 +14,16 @@ Route::name('home.')->middleware('auth')->prefix('home/')->group(function (){
     Route::resource('posts',PostController::class);
     Route::resource('follows' , FollowController::class);
     Route::resource('likes' , LikeController::class)->except(['index','show','create','update','edit']);
-    Route::resource('users' , UserController::class);
+
+    Route::resource('users', UserController::class);
+    Route::post('users/settings' , [UserController::class , 'settings'])->name('users.settings.post');//->middleware('checkUserSettings');
+    Route::view('users/settings/{user}','users.settings')->name('users.settings')->middleware('checkUserSettings');
+
     Route::resource('comments' , CommentController::class)->except(['index' , 'create']);
-
-
     Route::resource('blocks', BlockController::class);
 
-    Route::get('my_profile/settings/passwords' , [ConfirmPasswordController::class , 'update'])->name('passwords');
-    Route::view('home/my_profile/settings','users.settings')->name('settings');
+
+
 
 });
 

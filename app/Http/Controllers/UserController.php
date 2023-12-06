@@ -57,9 +57,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id){
-        $posts = Post::where('user_id',$id)->latest()->get();
-        return view('users.profile' , compact('posts'));
+    public function show(User $user){
+//        dd($user);
+        $posts = Post::where('user_id',$user->id)->latest()->get();
+        return view('users.profile' , compact('posts' , 'user'));
     }
 
     /**
@@ -84,5 +85,11 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function settings(Request $request){
+        dd($request);
+        return 'fuck';
+//        return route('home.users.show' , Auth::user()) ;
     }
 }

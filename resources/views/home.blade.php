@@ -149,7 +149,7 @@ Header END -->
 										<!-- Avatar -->
 										<div class="avatar avatar-lg mt-n5 mb-3">
 											<a href="#!"><img class="avatar-img rounded border border-white border-3"
-                                                              @if(Auth::user()->pphoto_id != null)
+                                                              @if(Auth::user()->photo->path != null)
                                                               src="{{asset(Auth::user()->photo->path)}}"
                                                               @else
                                                               src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
@@ -171,7 +171,10 @@ Header END -->
 											<!-- Divider -->
 											<div class="vr"></div>
 											<!-- User stat item -->
-											@livewire('following')
+                                            <div>
+                                                <h6 class="mb-0">{{Auth::user()->followMe->count()}}</h6>
+                                                <small>Followers</small>
+                                            </div>
                                             <!-- Divider -->
                                             <div class="vr"></div>
                                             <!-- User stat item -->
@@ -245,7 +248,7 @@ Header END -->
 							</ul>
 							<!-- Helper link END -->
 							<!-- Copyright -->
-							<p class="small text-center mt-1">©2023 <a class="text-reset" target="_blank" href="https://www.webestica.com/"> Webestica </a></p>
+							<p class="small text-center mt-1">©{{date('Y')}} <a class="text-reset" target="_blank" href=""> Webestica </a></p>
 						</div>
 					</div>
 				</nav>
@@ -998,7 +1001,7 @@ JS libraries, plugins and custom scripts -->
 <script src="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.js')}}"></script>
 <script src="{{asset('import/assets/js/zuck-stories.js')}}"></script>
 
-<!-- Theme Functions -->S
+<!-- Theme Functions -->
 <script src="{{asset('import/assets/js/functions.js')}}"></script>
 <script>
     $(document).ready(function () {

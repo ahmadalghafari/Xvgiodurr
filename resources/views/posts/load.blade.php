@@ -6,8 +6,8 @@
                 <div class="d-flex align-items-center">
                     <!-- Avatar -->
                     <div class="avatar avatar-story me-2">
-                        <a href="#!"> <img class="avatar-img rounded-circle" \
-                                           @if($post->user->pphoto_id != null)
+                        <a href="{{route('home.users.show' , $post->user->id)}}"> <img class="avatar-img rounded-circle" \
+                                           @if($post->user->photo->path != null)
                                                src="{{asset($post->user->photo->path)}}"
                                            @else
                                                src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
@@ -16,7 +16,7 @@
                     <!-- Info -->
                     <div>
                         <div class="nav nav-divider">
-                            <h6 class="nav-item card-title mb-0"> <a href="#!">{{$post->user->name}}</a></h6>
+                            <h6 class="nav-item card-title mb-0"> <a href="{{route('home.users.show' , $post->user->id)}}">{{$post->user->name}}</a></h6>
                             <span class="nav-item small"> {{ $post->created_at->diffForHumans() }}</span>
                         </div>
                         <p class="mb-0 small">Web Developer at Webestica</p>

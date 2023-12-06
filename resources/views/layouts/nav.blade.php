@@ -109,7 +109,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account </a>
                     <ul class="dropdown-menu" aria-labelledby="postMenu">
                         <li> <a class="dropdown-item" href="create-page.html">Create a page</a></li>
-                        <li> <a class="dropdown-item" href={{route('home.settings')}} >Settings</a> </li>
+{{--                        <li> <a class="dropdown-item" href={{route('home.users.settings' , Auth::user()->id)}} >Settings</a> </li>--}}
                         <li> <a class="dropdown-item" href="notifications.html">Notifications</a> </li>
                         <li> <a class="dropdown-item" href="help.html">Help center</a> </li>
                         <li> <a class="dropdown-item" href="help-details.html">Help details</a> </li>
@@ -148,7 +148,7 @@
                 </a>
             </li>
             <li class="nav-item ms-2">
-                <a class="nav-link bg-light icon-md btn btn-light p-0" href="settings.html">
+                <a class="nav-link bg-light icon-md btn btn-light p-0" href="{{route('home.users.settings' , Auth::user()->id)}}">
                     <i class="bi bi-gear-fill fs-6"> </i>
                 </a>
             </li>
@@ -235,9 +235,9 @@
             <!-- Notification dropdown END -->
 
             <li class="nav-item ms-2 dropdown">
-                <a class="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link btn icon-md p-0" href="{{route('home.users.show' , Auth::user()->id)}}" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
                     <img class="avatar-img rounded-2" alt=""
-                         @if(Auth::user()->pphoto_id != null)
+                         @if(Auth::user()->photo->path != null)
                              src="{{asset(Auth::user()->photo->path)}}"
                          @else
                              src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
@@ -251,7 +251,7 @@
                             <!-- Avatar -->
                             <div class="avatar me-3">
                                 <a href="#"><img class="avatar-img rounded-circle" alt=""
-                                                 @if(Auth::user()->pphoto_id != null)
+                                                 @if(Auth::user()->photo->path != null)
                                                      src="{{asset(Auth::user()->photo->path)}}"
                                                  @else
                                                      src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
@@ -263,7 +263,7 @@
                                 <p class="small m-0">Web Developer</p>
                             </div>
                         </div>
-                        <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href={{route('home.users.show',Auth::user()->id)}}>View profile</a>
+                        <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href={{route('home.users.show',Auth::user())}}>View profile</a>
                     </li>
                     <!-- Links -->
                     <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear fa-fw me-2"></i>Settings & Privacy</a></li>

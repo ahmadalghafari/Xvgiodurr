@@ -2,21 +2,21 @@
     <div class="d-flex mb-3">
         <!-- Avatar -->
         <div class="avatar avatar-xs me-2">
-            <a href="">
+            <a href="{{route('home.users.show' , Auth::user()->id)}}">
                 <img class="avatar-img rounded-circle"
-                     @if(Auth::user()->pphoto_id != null)
-                         src="{{asset(Auth::user()->photo->path)}}"
-                     @else
-                         src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                    @endif>
+                        @if(Auth::user()->photo->path != null)
+                            src="{{asset(Auth::user()->photo->path)}}"
+                        @else
+                            src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
+                        @endif>
+
             </a>
         </div>
+
         <!-- Form Start -->
         <form class="w-100" action="{{route('home.posts.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            @foreach($errors->all() as $error)
-                <div >{{ $error }}</div>
-            @endforeach
+
             <textarea class="form-control pe-4 border-0"  name="text" id="post_text" rows="2" data-autoresize placeholder="Share your thoughts..."></textarea><br>
 
             <!-- Share feed toolbar START -->
@@ -28,7 +28,10 @@
                     <a class="nav-link bg-light py-1 px-2 mb-0" href="#!" data-bs-toggle="modal" data-bs-target="#feedActionVideo"> <i class="bi bi-camera-reels-fill text-info pe-2"></i>Video</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link bg-light py-1 px-2 mb-0" data-bs-toggle="modal" data-bs-target="#modalCreateEvents"> <i class="bi bi-card-list text-danger pe-2 "></i>File </a>
+                    <a  class="nav-link bg-light py-1 px-2 mb-0" href="#" data-bs-toggle="modal" data-bs-target="#modalCreateEvents"> <i class="bi bi-card-list text-danger pe-2 "></i>File </a>
+                </li>
+                <li class="nav-item">
+                    <a  class="nav-link bg-light py-1 px-2 mb-0" href="#" data-bs-toggle="modal" data-bs-target="#modalCreateVoice"> <i class="bi bi-card-list text-warning pe-2 "></i>Voice </a>
                 </li>
                 <li class="nav-item">
                     <button type="submit" name="submit" value="Post" class="nav-link bg-light py-1 px-2 mb-0">
@@ -48,9 +51,12 @@
                     </ul>
                 </li>
             </ul>
+            @foreach($errors->all() as $error)
+                <div >{{ $error }}</div>
+            @endforeach
 
             <!-- Modals start-->
-            <!-- Modal create Feed photo START -->
+            <!-- Modal Add photo START -->
             <div class="modal fade" id="feedActionPhoto" tabindex="-1" aria-labelledby="feedActionPhotoLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -79,9 +85,9 @@
                     </div>
                 </div>
             </div>
-            <!-- Modal create Feed photo END -->
+            <!-- Modal Add photo END -->
 
-            <!-- Modal create Feed video START -->
+            <!-- Modal Add video START -->
             <div class="modal fade" id="feedActionVideo" tabindex="-1" aria-labelledby="feedActionVideoLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -133,9 +139,9 @@
                     </div>
                 </div>
             </div>
-            <!-- Modal create Feed video END -->
+            <!-- Modal Add video END -->
 
-            <!-- Modal create files START -->
+            <!-- Modal Add file START -->
             <div class="modal fade" id="modalCreateEvents" tabindex="-1" aria-labelledby="modalLabelCreateAlbum" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -166,7 +172,38 @@
                     </div>
                 </div>
             </div>
-            <!-- Modal create files END -->
+            <!-- Modal Add file END -->
+
+            <!-- Modal Add voice START -->
+            <div class="modal fade" id="modalCreateVoice" tabindex="-1" aria-labelledby="modalLabelCreateVoice" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- Modal feed header START -->
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabelCreateVoice">Add voice</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <!-- Modal feed header END -->
+
+
+                        <!-- Modal feed body START -->
+                        <div class="modal-body">
+                            <div class="modal-body text-bg-dark">
+                                Voice : <input type="file" name="voice[]" multiple id="voice" class="form-control">
+                            </div>
+                        </div>
+                        <!-- Modal feed body END -->
+
+
+                        <!-- Modal footer -->
+                        <!-- Button -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success-soft" data-bs-dismiss="modal" >Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Add voice END -->
             <!--  modals end-->
 
         </form>
