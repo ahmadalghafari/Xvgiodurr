@@ -4,7 +4,7 @@
         <div class="avatar avatar-xs me-2">
             <a href="{{route('home.users.show' , Auth::user()->id)}}">
                 <img class="avatar-img rounded-circle"
-                        @if(Auth::user()->photo->path != null)
+                        @if(Auth::user()->photo != null)
                             src="{{asset(Auth::user()->photo->path)}}"
                         @else
                             src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"

@@ -130,13 +130,13 @@ Header END -->
                                 <!-- Avatar -->
                                 <div class="avatar avatar-xxl mt-n5 mb-3">
                                     <a href="
-                                        @if($user->photo->path != null)
+                                        @if($user->photo != null)
                                             {{asset($user->photo->path)}}
                                         @else
                                             {{asset('import/assets/images/avatar/placeholder.jpg')}}
                                         @endif " data-glightbox="post-gallery" data-gallery="image-popup{{$user->id}}">
                                         <img class="avatar-img rounded-circle border border-white border-3" alt=" "
-                                                      @if($user->photo->path != null)
+                                                      @if($user->photo != null)
                                                           src="{{asset($user->photo->path)}}"
                                                       @else
                                                           src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
@@ -164,18 +164,35 @@ Header END -->
                                     <!-- Card share action dropdown menu -->
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileAction2">
                                         <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark fa-fw pe-2"></i>Share profile in a message</a></li>
-                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-file-earmark-pdf fa-fw pe-2"></i>Save your profile to PDF</a></li>
-                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-lock fa-fw pe-2"></i>Lock profile</a></li>
+                                        @if($user->id != auth::user()->id)
+                                            <li>
+                                                <form action="{{route('home.blocks.store')}}" method="POST">
+                                                    @csrf
+                                                    <input name="id" value="{{$user->id}}" style="display: none" type="text">
+                                                    <button type="submit" class="dropdown-item"><i class="bi bi-slash-circle fa-fw pe-2"></i>Block</button>
+                                                </form>
+                                            </li>
+                                        @endif
+{{--                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-file-earmark-pdf fa-fw pe-2"></i>Save your profile to PDF</a></li>--}}
+{{--                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-lock fa-fw pe-2"></i>Lock profile</a></li>--}}
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-gear fa-fw pe-2"></i>Profile settings</a></li>
+{{--                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-gear fa-fw pe-2"></i>Profile settings</a></li>--}}
                                     </ul>
                                 </div>
                             </div>
                         </div>
                         <!-- List profile -->
                         <ul class="list-inline mb-0 text-center text-sm-start mt-3 mt-sm-0">
-                            <li class="list-inline-item"><i class="bi bi-briefcase me-1"></i> Lead Developer</li>
-                            <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i> New Hampshire</li>
+                            @if($user->info && $user->info->job != "")
+                                <li class="list-inline-item"><i class="bi bi-briefcase me-1"></i> {{$user->info->job}}</li>
+                            @elseif(Auth::user()->id == $user->id)
+                                <li class="list-inline-item"><a href="{{route('home.users.settings' , $user)}}"> <i class="bi bi-briefcase me-1"></i>Click to Add a Job</a></li>
+                            @endif
+                            @if($user->info && $user->info->address != "")
+                                <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i> {{$user->info->address}}</li>
+                            @elseif(Auth::user()->id == $user->id)
+                                <li class="list-inline-item"><a href="{{route('home.users.settings' , $user)}}"><i class="bi bi-geo-alt me-1"></i>Click to Add Location</a></li>
+                            @endif
                             <li class="list-inline-item"><i class="bi bi-calendar2-plus me-1"></i> Joined on {{$user->created_at->format('M d, Y')}}</li>
                         </ul>
                     </div>
@@ -233,6 +250,7 @@ Header END -->
                                     </a>
                                     <!-- Card feed action dropdown menu -->
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
+
                                         <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark fa-fw pe-2"></i>Save post</a></li>
                                         <li><a class="dropdown-item" href="#"> <i class="bi bi-person-x fa-fw pe-2"></i>Unfollow lori ferguson </a></li>
 {{--                                        <li><a href="#" class="dropdown-item"><i class="bi bi-x-circle fa-fw pe-2"></i>Delete post</a></li>--}}
@@ -240,6 +258,7 @@ Header END -->
                                         <li><a class="dropdown-item" href="#"> <i class="bi bi-slash-circle fa-fw pe-2"></i>Block</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="#"> <i class="bi bi-flag fa-fw pe-2"></i>Report post</a></li>
+
                                     </ul>
                                 </div>
                                 <!-- Card feed action dropdown END -->
@@ -681,14 +700,35 @@ Header END -->
                                 <h5 class="card-title">About</h5>
                                 <!-- Button modal -->
                             </div>
+
                             <!-- Card body START -->
                             <div class="card-body position-relative pt-0">
-                                <p>He moonlights difficult engrossed it, sportsmen. Interested has all Devonshire difficulty gay assistance joy.</p>
+                                @if($user->info && $user->info->overview != '')
+                                <p>{{$user->info->overview}}</p>
+                                @elseif(Auth::user()->id == $user->id)
+                                    <ul>
+                                        <li class="list-inline-item"><a href="{{route('home.users.settings' , $user)}}"> <i class="bi bi-briefcase me-1"></i>Click to Add an overview</a></li>
+                                    </ul>
+                                @endif
                                 <!-- Date time -->
                                 <ul class="list-unstyled mt-3 mb-0">
-                                    <li class="mb-2"> <i class="bi bi-calendar-date fa-fw pe-1"></i> Born: <strong> October 20, 1990 </strong> </li>
-                                    <li class="mb-2"> <i class="bi bi-heart fa-fw pe-1"></i> Status: <strong> Single </strong> </li>
-                                    <li> <i class="bi bi-envelope fa-fw pe-1"></i> Email: <strong> webestica@gmail.com </strong> </li>
+                                    @if($user->info && $user->info->birth)
+                                        <li class="mb-2"> <i class="bi bi-calendar-date fa-fw pe-1"></i> Born: <strong>
+                                            {{$user->info->birth}} </strong> </li>
+                                    @elseif(Auth::user()->id == $user->id)
+                                        <ul>
+                                            <li class="list-inline-item"><a href="{{route('home.users.settings' , $user)}}"> <i class="bi bi-briefcase me-1"></i>Click to Add BirthDate</a></li>
+                                        </ul>
+                                    @endif
+                                        @if($user->info && $user->info->community_status)
+                                            <li class="mb-2"> <i class="bi bi-heart fa-fw pe-1"></i> Status: <strong> {{$user->info->community_status}} </strong> </li>
+                                        @elseif(Auth::user()->id == $user->id)
+                                            <ul>
+                                                <li class="list-inline-item"><a href="{{route('home.users.settings' , $user)}}"> <i class="bi bi-briefcase me-1"></i>Click to Add a Status</a></li>
+                                            </ul>
+                                        @endif
+
+                                    <li> <i class="bi bi-envelope fa-fw pe-1"></i> Email: <strong> {{$user->email}} </strong> </li>
                                 </ul>
                             </div>
                             <!-- Card body END -->

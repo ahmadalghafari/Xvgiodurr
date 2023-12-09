@@ -205,6 +205,32 @@ Header END -->
 
                     <!-- Account setting tab START -->
                     <div class="tab-pane show active fade" id="nav-setting-tab-1">
+                        <!-- photo settings START -->
+                        <div class="card mb-4">
+
+                            <!-- Title START -->
+                            <div class="card-header border-0 pb-0">
+                                <h1 class="h5 card-title">Personal Photo Settings</h1>
+                                <p class="mb-0">You can choice an image or leave it as placeholder or you can choice an image that setied awy.</p>
+                            </div>
+                            <!-- Card header START -->
+                            <!-- Card body START -->
+                            <div class="card-body">
+                                <!-- Form settings START -->
+                                @if(Auth::user()->photo != null)
+                                    <div class="avatar avatar-xxxl">
+                                        <img class="avatar-img rounded-circle" src="{{asset(Auth::user()->photo->path)}}" alt="avatar">
+                                    </div>
+                                @else
+                                    <div class="avatar avatar-xxxl">
+                                        <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" alt="avatar">
+                                    </div>
+                                @endif
+                            </div>
+                            <!-- Card body END -->
+                        </div>
+                        <!-- photo settings End -->
+
                         <!-- Account settings START -->
                         <div class="card mb-4">
 
@@ -281,9 +307,9 @@ Header END -->
                                                 <option value="divorced" @if(Auth::user()->info->community_status == 'divorced')selected @endif>Divorced</option>
                                                 <option value="in a relationship" @if(Auth::user()->info->community_status == 'in a relationship')selected @endif>In A Relationship</option>
                                                 <option value="taken" @if(Auth::user()->info->community_status == 'taken')selected @endif>Taken</option>
-                                                <option ></option>
+                                                <option value="empty" @if(Auth::user()->info->community_status == '')selected @endif>empty</option>
                                             @else
-                                                <option selected></option>
+                                                <option selected>empty</option>
                                                 <option value="single"  >Single</option>
                                                 <option value="married" >Married</option>
                                                 <option value="divorced" >Divorced</option>

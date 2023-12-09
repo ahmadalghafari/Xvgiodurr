@@ -75,6 +75,9 @@ class User extends Authenticatable
     public function block():HasMany {
         return $this->hasMany(block::class , 'user_blocker','id');
     }
+    public function blockMe() :HasMany {
+        return $this->hasMany(block::class , 'user_blocked' , 'id');
+    }
 
     public function photo() : HasOne {
         return $this->hasOne(pphoto::class , 'user_id' , 'id');

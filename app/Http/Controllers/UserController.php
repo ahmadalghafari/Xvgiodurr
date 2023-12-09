@@ -95,7 +95,7 @@ class UserController extends Controller
             'email' => 'required|unique:App\Models\User,email,'.$user->id,
             'phone' => 'nullable|numeric',
             'overview' => 'nullable|max:200',
-            'community_status' => 'nullable|in:single,married,divorced,in a relationship,taken',
+            'community_status' => 'nullable|in:single,married,divorced,in a relationship,taken,empty',
             'job' => 'nullable|max:20',
             'birth' => 'nullable|date',
             'address' => 'nullable',
@@ -105,18 +105,32 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
         ]);
+        if($request->community_status == 'empty'){
+            $user->info()->updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'phone' => $request->phone,
+                    'overview' => $request->overview,
+                    'community_status' => null,
+                    'job' => $request->job,
+                    'birth' => $request->birth,
+                    'address' => $request->address,
+                ]
+            );
+        }else{
+            $user->info()->updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'phone' => $request->phone,
+                    'overview' => $request->overview,
+                    'community_status' => $request->community_status,
+                    'job' => $request->job,
+                    'birth' => $request->birth,
+                    'address' => $request->address,
+                ]
+            );
+        }
 
-        $user->info()->updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'phone' => $request->phone,
-                'overview' => $request->overview,
-                'community_status' => $request->community_status,
-                'job' => $request->job,
-                'birth' => $request->birth,
-                'address' => $request->address,
-            ]
-        );
 
         return redirect()->back()->with(['success' => 'Updated Successfully!']);
     }

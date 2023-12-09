@@ -153,7 +153,7 @@ Header END -->
 										<!-- Avatar -->
 										<div class="avatar avatar-lg mt-n5 mb-3">
 											<a href="#!"><img class="avatar-img rounded border border-white border-3"
-                                                              @if(Auth::user()->photo->path != null)
+                                                              @if(Auth::user()->photo != null)
                                                               src="{{asset(Auth::user()->photo->path)}}"
                                                               @else
                                                               src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"

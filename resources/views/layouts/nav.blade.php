@@ -237,7 +237,8 @@
             <li class="nav-item ms-2 dropdown">
                 <a class="nav-link btn icon-md p-0" href="{{route('home.users.show' , Auth::user()->id)}}" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
                     <img class="avatar-img rounded-2" alt=""
-                         @if(Auth::user()->photo->path != null)
+
+                         @if(Auth::user()->photo != null)
                              src="{{asset(Auth::user()->photo->path)}}"
                          @else
                              src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
@@ -251,7 +252,7 @@
                             <!-- Avatar -->
                             <div class="avatar me-3">
                                 <a href="#"><img class="avatar-img rounded-circle" alt=""
-                                                 @if(Auth::user()->photo->path != null)
+                                                 @if(Auth::user()->photo != null)
                                                      src="{{asset(Auth::user()->photo->path)}}"
                                                  @else
                                                      src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
@@ -278,7 +279,12 @@
                         </a>
                     </li>
                     <li class="dropdown-divider"></li>
-                    <li><a class="dropdown-item bg-danger-soft-hover" href="sign-in-advance.html"><i class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST" class="">
+                            @csrf
+                            <button type="submit" class="dropdown-item bg-danger-soft-hover"><i class="bi bi-power fa-fw me-2"></i>Sign Out</button>
+                        </form>
+                    </li>
                     <li> <hr class="dropdown-divider"></li>
                     <!-- Dark mode options START -->
                     <li>

@@ -27,15 +27,16 @@ class BlockController extends Controller
     }
 
     public function store(Request $request){
-        $userid2 = user::where('name' ,  $request->name)->first();
+        $userid2 = User::find($request->id);
+//        dd($userid2);
         if(auth::user()->id == $userid2->id){
             //spam code!!
-            return back()->with('error_block','you can not block your self!');
+            return back()->with(['error_block'=>'you can not block your self!']);
         }
 
         if (Auth::user()->block->contains('user_blocked',$userid2->id)) {
             //spam code!!
-            return back()->with('error_block','you can not block him twice!');
+            return back()->with(['error_block'=>'you can not block him twice!']);
         }
 
         if(Auth::user()->follow->contains('user_follower',$userid2->id)){
@@ -50,7 +51,7 @@ class BlockController extends Controller
             'user_blocker' => auth::user()->id,
             'user_blocked' => $userid2->id ,
         ]);
-        return back();
+        return redirect()->route('home.posts.index');
     }
     public function show(block $block)
     {
@@ -76,8 +77,8 @@ class BlockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(block $block)
-    {
-        //
+    public function destroy(User $user){
+        $user->blockMe()->where('user_blocker' , Auth::user()->id)->delete();
+        return redirect()->route('home.users.show' , $user);
     }
 }
