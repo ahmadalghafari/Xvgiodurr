@@ -97,11 +97,11 @@
 {{--        @livewireStyles--}}
 </head>
 <body>
-<div class="preloader">
-    <div class="preloader-item">
-        <div class="spinner-grow text-primary"></div>
-    </div>
-</div>
+{{--<div class="preloader">--}}
+{{--    <div class="preloader-item">--}}
+{{--        <div class="spinner-grow text-primary"></div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 <!-- =======================
 Header START nav-->
 <header class="navbar-light fixed-top header-static bg-mode">
@@ -993,20 +993,20 @@ Header END -->
 
 <!-- =======================
 JS libraries, plugins and custom scripts -->
-<script src="{{asset('import/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('import/assets/vendor/tiny-slider/dist/tiny-slider.js')}}"></script>
-<script src="{{asset('import/assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js')}}"></script>
-<script src="{{asset('import/assets/vendor/choices.js/public/assets/scripts/choices.min.js')}}"></script>
-<script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.min.js')}}"></script>
-<script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.js')}}"></script>
-<script src="{{asset('import/assets/vendor/flatpickr/dist/flatpickr.min.js')}}"></script>
-<script src="{{asset('import/assets/vendor/plyr/plyr.js')}}"></script>
-<script src="{{asset('import/assets/vendor/dropzone/dist/min/dropzone.min.js')}}"></script>
-<script src="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.js')}}"></script>
-<script src="{{asset('import/assets/js/zuck-stories.js')}}"></script>
+<script src="{{asset('import/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/tiny-slider/dist/tiny-slider.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/choices.js/public/assets/scripts/choices.min.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.min.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/flatpickr/dist/flatpickr.min.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/plyr/plyr.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/dropzone/dist/min/dropzone.min.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.js')}}" defer></script>
+<script src="{{asset('import/assets/js/zuck-stories.js')}}" defer></script>
 
 <!-- Theme Functions -->
-<script src="{{asset('import/assets/js/functions.js')}}"></script>
+<script src="{{asset('import/assets/js/functions.js')}}" defer></script>
 <script>
     $(document).ready(function () {
 

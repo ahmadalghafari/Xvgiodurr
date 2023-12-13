@@ -28,17 +28,17 @@ class UserController extends Controller
     }
 
     public function search($name){
-//        $userid = auth::user()->id;
-//
-//        $users = User::where('id', '!=', $userid)
-//            ->where('name', '=' , $name)
-//            ->whereNotIn('id', function ($query) {
-//                $query->select('user_blocker')
-//                    ->from('blocks')
-//                    ->where('user_blocked', 3);
-//            })
-//            ->get();
-//        return view('users.index' , compact('users'));
+        $userid = auth::user()->id;
+
+        $users = User::where('id', '!=', $userid)
+            ->where('name', '=' , $name)
+            ->whereNotIn('id', function ($query) {
+                $query->select('user_blocker')
+                    ->from('blocks')
+                    ->where('user_blocked', 3);
+            })
+            ->get();
+        return view('users.index' , compact('users'));
 
     }
     public function create()

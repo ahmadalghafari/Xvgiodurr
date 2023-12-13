@@ -12,11 +12,11 @@ use App\Http\Controllers\CommentController;
 
 Route::view('testing','testing.test');
 Route::name('home.')->middleware('auth')->prefix('home/')->group(function (){
-    Route::resource('posts',PostController::class);
-    Route::resource('follows' , FollowController::class);
-    Route::resource('likes' , LikeController::class)->except(['index','show','create','update','edit']);
 
-//    Route::resource('users', UserController::class)->except('show');
+    Route::resource('posts',PostController::class)->except('show');
+    Route::get('posts/show/{post}' ,[PostController::class , 'show'])->name('posts.show')->middleware('blockPost');
+    Route::view('search' ,'search')->name('search');
+
     Route::get('users/show/{user}' ,[UserController::class , 'show'])->name('users.show')->middleware('block');
     Route::post('users/settings' , [UserController::class , 'settings'])->name('users.settings.post');
     Route::view('users/settings/{user}','users.settings')->name('users.settings')->middleware('checkUserSettings');
