@@ -130,13 +130,13 @@ Header END -->
                                 <!-- Avatar -->
                                 <div class="avatar avatar-xxl mt-n5 mb-3">
                                     <a href="
-                                        @if($user->photo->path != null)
+                                        @if($user->photo != null)
                                             {{asset($user->photo->path)}}
                                         @else
                                             {{asset('import/assets/images/avatar/placeholder.jpg')}}
                                         @endif " data-glightbox="post-gallery" data-gallery="image-popup{{$user->id}}">
                                         <img class="avatar-img rounded-circle border border-white border-3" alt=" "
-                                             @if($user->photo->path != null)
+                                             @if($user->photo != null)
                                                  src="{{asset($user->photo->path)}}"
                                              @else
                                                  src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"

@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 class comment extends Model
 {
     use HasFactory;
@@ -16,5 +19,9 @@ class comment extends Model
 
     public function user():BelongsTo{
         return $this->belongsTo(user::class , 'user_id');
+    }
+
+    public function file() :HasOne {
+        return $this->hasOne(commentfile::class , 'comment_id' , 'id');
     }
 }
