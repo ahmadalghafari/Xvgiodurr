@@ -108,8 +108,39 @@ class PostController extends Controller{
         return view('myprofile');
     }
 
-    public function destroy(post $post){
+//    public function destroy(post $post){
+//        $post->delete();
+//        return back();
+//    }
+
+    public function destroy($id){
+        // Check if the post exists
+        $post = Post::find($id);
+        if (!$post) {
+            return redirect()->back()->with('error', 'Post not found');
+        }
+
+        // Check if the current user is the owner of the post
+
+        if ($post->user->id != Auth::user()->id) {
+            return redirect()->back()->with('error', 'You do not have permission to delete this post');
+        }
+
+        // Delete associated files
+        $files = File::where('post_id', $post->id)->get();
+
+        foreach ($files as $file) {
+            $filePath = public_path($file->file_path);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+
+            $file->delete();
+        }
+
         $post->delete();
-        return back();
+
+        return redirect()->back()->with('success', 'Post deleted successfully');
     }
+
 }

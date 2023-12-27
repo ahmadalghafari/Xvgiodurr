@@ -7,7 +7,7 @@
                     <!-- Avatar -->
                     <div class="avatar avatar-story me-2">
                         <a href="{{route('home.users.show' , $post->user->id)}}"> <img class="avatar-img rounded-circle" \
-                                           @if($post->user->photo->path != null)
+                                           @if($post->user->photo != null)
                                                src="{{asset($post->user->photo->path)}}"
                                            @else
                                                src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"

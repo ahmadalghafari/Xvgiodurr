@@ -6,7 +6,7 @@
                 <div class="col-md-6 text-center">
                     <!-- Title -->
                     <h1 class="text-white">Change your social presence.</h1>
-                    <p class="mb-4 text-white">For who thoroughly her boy estimating conviction.</p>
+                    <p class="mb-4 text-white">For those worth looking for.</p>
                     <!-- Search form START -->
                     <form class="rounded position-relative">
                         <input wire:model.live="search" class="form-control form-control-lg ps-5" type="search" placeholder="Search..." aria-label="Search">
@@ -61,14 +61,25 @@
                                                 <a class="h6  text-wrap fs-2" href="{{route('home.users.show' ,$user)}}">{{$user->name}}</a>
                                             </td>
                                             <td>
-                                                @livewire('follow-live' , ['user' => $user])
+                                                <button wire:click="toggleFollow({{$user}})"
+                                                        @if(Auth::user()->follow()->where('user_follower',$user->id)->exists())
+                                                            class="btn btn-secondary me-2"
+                                                        @else
+                                                            class="btn btn-primary-soft me-2"
+                                                        @endif
+                                                        type="button" href="#!">
+                                                    @if(Auth::user()->follow()->where('user_follower',$user->id)->exists())
+                                                        Following
+                                                    @else
+                                                        Follow
+                                                    @endif
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </table>
                             </div>
                         </div>
-
                         <!-- Main content END -->
                     </div> <!-- Row END -->
                 </div>
@@ -217,7 +228,6 @@
                             @endif
 
                         @endforeach
-
                         <!-- Main content END -->
                     </div> <!-- Row END -->
                 </div>

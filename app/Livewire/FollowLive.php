@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\follow;
 
-class FollowLive extends Component
-{
+class FollowLive extends Component{
     public $user;
     public function mount($user){
         $this->user = $user ;

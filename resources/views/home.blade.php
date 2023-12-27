@@ -152,7 +152,7 @@ Header END -->
 										<div class="text-center">
 										<!-- Avatar -->
 										<div class="avatar avatar-lg mt-n5 mb-3">
-											<a href="#!"><img class="avatar-img rounded border border-white border-3"
+											<a href="{{route('home.users.show' , Auth::user()->id )}}"><img class="avatar-img rounded border border-white border-3"
                                                               @if(Auth::user()->photo != null)
                                                               src="{{asset(Auth::user()->photo->path)}}"
                                                               @else

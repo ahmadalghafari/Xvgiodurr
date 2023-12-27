@@ -20,7 +20,6 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'pphoto_id' => NULL ,
             'role'=> 1,
             'status'=> 1,
             'email_verified_at' => NULL,

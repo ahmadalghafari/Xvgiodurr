@@ -206,7 +206,7 @@ Header END -->
                     <!-- Account setting tab START -->
                     <div class="tab-pane show active fade" id="nav-setting-tab-1">
                         <!-- photo settings START -->
-                        <div class="card mb-4">
+                        <div class="card  mb-4">
 
                             <!-- Title START -->
                             <div class="card-header border-0 pb-0">
@@ -227,6 +227,11 @@ Header END -->
                                     </div>
                                 @endif
                             </div>
+{{--                            <div class="vr"></div>--}}
+                            <div class=" text-end m-3">
+                                <button type="submit" class="btn btn-sm btn-primary  text-end">Save changes</button>
+                            </div>
+
                             <!-- Card body END -->
                         </div>
                         <!-- photo settings End -->

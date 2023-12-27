@@ -10,7 +10,18 @@ class Search extends Component
 {
     public $search = '';
 
+    public function toggleFollow(User $user) :void{
+        if(Auth::user()->follow->contains('user_follower' , $user->id)){
+            Auth::user()->follow()->where('user_follower' , $user->id)->delete();
+        }else{
+//            follow::create([
+//                'user_follow' => Auth::user()->id ,
+//                'user_follower' => $this->user->id ,
+//            ]);
+            Auth::user()->follow()->create(['user_follower' => $user->id]);
+        }
 
+    }
     public function render(){
         $userid = Auth::user()->id ;
 
@@ -18,7 +29,7 @@ class Search extends Component
             $query->select('user_blocker')
                 ->from('blocks')
                 ->where('user_blocked', $userid);
-        })->where('text' , 'like' , '%'.$this->search.'%')->latest()->get();
+        })->where('text' , 'like' , '%'.$this->search.'%')->latest()->take(20)->get();
 
         $users = User::where('id', '!=', $userid)
             ->where('name', 'like' , '%'.$this->search.'%')
@@ -26,7 +37,8 @@ class Search extends Component
                 $query->select('user_blocker')
                     ->from('blocks')
                     ->where('user_blocked', $userid);
-            })->get();
+            })->latest()->take(20)->get();
+//        $this->search = '';
         return view('livewire.search'  , ['posts' => $posts , 'users'=> $users]);
     }
 }
