@@ -11,7 +11,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 
 Route::view('testing','testing.test');
-Route::name('home.')->middleware('auth')->prefix('home/')->group(function (){
+Route::name('home.')->middleware(['auth','verified'])->prefix('home/')->group(function (){
 
     Route::resource('posts',PostController::class)->except('show');
     Route::get('posts/show/{post}' ,[PostController::class , 'show'])->name('posts.show')->middleware('blockPost');
@@ -26,7 +26,7 @@ Route::name('home.')->middleware('auth')->prefix('home/')->group(function (){
     Route::delete('blocks/{user}' , [BlockController::class , 'destroy'])->name('blocks.destroy');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 
 
