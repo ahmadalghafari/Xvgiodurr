@@ -93,11 +93,7 @@ class PostController extends Controller{
     }
     public function edit(post $post)
     {
-//        $id = auth::user()->id;
-//        $post = Post::where('user_id', $id)->get();
-//        $post->text = $request->text;
-//        $postid = post::find(post->id);
-//        return view('posts.edit', compact('post'));
+
     }
 
     public function update(Request $request, $id)
@@ -108,10 +104,6 @@ class PostController extends Controller{
         return view('myprofile');
     }
 
-//    public function destroy(post $post){
-//        $post->delete();
-//        return back();
-//    }
 
     public function destroy($id){
         // Check if the post exists

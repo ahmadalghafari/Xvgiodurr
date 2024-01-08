@@ -113,12 +113,7 @@ Header END -->
                       <div class="d-flex align-items-center">
                           <!-- Avatar -->
                           <div class="avatar avatar-story me-2">
-                              <a href="{{route('home.users.show' , $post->user->id)}}"> <img class="avatar-img rounded-circle" \
-                                                                                             @if($post->user->photo->path != null)
-                                                                                                 src="{{asset($post->user->photo->path)}}"
-                                                                                             @else
-                                                                                                 src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                                      @endif > </a>
+                              <a href="{{route('home.users.show' , $post->user->id)}}"> <img class="avatar-img rounded-circle"  @if($post->user->photo != null)  src="{{asset($post->user->photo->path)}}"  @else src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" @endif ></a>
                           </div>
                           <!-- Info -->
                           <div>
@@ -136,12 +131,40 @@ Header END -->
                           </a>
                           <!-- Card feed action dropdown menu -->
                           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-                              <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark fa-fw pe-2"></i>Save post</a></li>
-                              <li><a class="dropdown-item" href="#"> <i class="bi bi-person-x fa-fw pe-2"></i>Unfollow lori ferguson </a></li>
-                              <li><a class="dropdown-item" href="#"> <i class="bi bi-x-circle fa-fw pe-2"></i>Hide post</a></li>
-                              <li><a class="dropdown-item" href="#"> <i class="bi bi-slash-circle fa-fw pe-2"></i>Block</a></li>
-                              <li><hr class="dropdown-divider"></li>
-                              <li><a class="dropdown-item" href="#"> <i class="bi bi-flag fa-fw pe-2"></i>Report post</a></li>
+                                <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark fa-fw pe-2"></i>Save post</a></li>
+                                @if(Auth::user()->id != $post->user->id)
+                                    <li>
+                                        <form action="{{route('home.follows.destroy' , $post->user)}}" method="POST">
+                                            @csrf 
+                                            @method('DELETE')
+                                            <button class="dropdown-item" type="submit">
+                                                <i class="bi bi-person-x fa-fw pe-2"></i>Unfollow {{$post->user->name}} 
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#"> <i class="bi bi-slash-circle fa-fw pe-2"></i>Block
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if(Auth::user()->id == $post->user->id)
+                                    <li>
+                                        <form action="{{route('home.posts.destroy' , $post)}}" method="POST">
+                                            @csrf 
+                                            @method('DELETE')
+                                            <button class="dropdown-item" type="submit">
+                                                <i class="bi bi-x-circle fa-fw pe-2"></i>Delete post
+                                            </button>
+                                        </form>
+                                    </li>
+                                @endif
+                                @if(Auth::user()->id != $post->user->id)
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#"> <i class="bi bi-flag fa-fw pe-2"></i>Report post</a>
+                                    </li>
+                                @endif
                           </ul>
                       </div>
                       <!-- Card feed action dropdown END -->

@@ -219,19 +219,43 @@ Header END -->
                                 <!-- Form settings START -->
                                 @if(Auth::user()->photo != null)
                                     <div class="avatar avatar-xxxl">
-                                        <img class="avatar-img rounded-circle" src="{{asset(Auth::user()->photo->path)}}" alt="avatar">
+                                        <a class="" href="{{asset(Auth::user()->photo->path)}}" data-glightbox="post-gallery" data-gallery="image-popup" >
+                                            <img class="avatar-img rounded-circle" src="{{asset(Auth::user()->photo->path)}}" alt="avatar">
+                                        </a>
                                     </div>
                                 @else
                                     <div class="avatar avatar-xxxl">
-                                        <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" alt="avatar">
+                                        <a class="" href="{{asset('import/assets/images/avatar/placeholder.jpg')}}" data-glightbox="post-gallery" data-gallery="image-popup" >
+                                            <img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" alt="avatar">
+                                        </a>
                                     </div>
                                 @endif
+                                <div class="mt-5">
+                                    <button type="button" class="btn btn-success-soft btn-sm mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#chanephotoModal">
+                                        Change photo
+                                    </button>
+                                    <form  class="d-inline" method="POST" action="{{route('home.users.photo.destroy' , Auth::user()->id)}}">@csrf @method('DELETE') <input type="submit" value="Delete my photo" class="btn btn-danger btn-sm mb-0"></form>
+                                </div>
+                                  <!-- Modal -->
+                                <div class="modal fade" id="chanephotoModal" tabindex="-1" aria-labelledby="chanephotoModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h1 class="modal-title fs-5" id="chanephotoModalLabel">Modal title</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{route('home.users.photo.store' )}}" method="POST" enctype="multipart/form-data">@csrf
+                                            <div class="modal-body text-bg-dark">
+                                                <input type="file" name="image"  id="photo" class="form-control " accept="image" >
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="submit" class="btn btn-primary" value="Save changes">
+                                            </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                </div>
                             </div>
-{{--                            <div class="vr"></div>--}}
-                            <div class=" text-end m-3">
-                                <button type="submit" class="btn btn-sm btn-primary  text-end">Save changes</button>
-                            </div>
-
                             <!-- Card body END -->
                         </div>
                         <!-- photo settings End -->

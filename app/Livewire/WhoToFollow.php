@@ -29,9 +29,13 @@ class WhoToFollow extends Component
             ->latest()->take(5)->get();
 
         if($users->count() < 5){
-            $newUsers = User::latest()->take(5 - $users->count())->get();
+            $newUsers = User::where('id' , '!=' , $me)->whereNotIn('id', function ($q) use ($me) {$q->select('user_follower')->from('follows')->where('user_follow', $me);})
+            ->whereNotIn('id', function ($q) use ($me) {$q->select('user_follow')->from('follows')->where('user_follower', $me);})->latest()->take(5 - $users->count())->get();
+            return view('livewire.who-to-follow' , ['users' => $users , 'newUsers' => $newUsers]);
+
         }
         
-        return view('livewire.who-to-follow' , ['users' => $users , 'newUsers' => $newUsers]);
+        $newUsers = [] ;
+        return view('livewire.who-to-follow' , ['users' => $users  ,'newUsers' => $newUsers]);
     }
 }

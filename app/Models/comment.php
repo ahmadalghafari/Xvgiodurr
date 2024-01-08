@@ -24,4 +24,10 @@ class comment extends Model
     public function file() :HasOne {
         return $this->hasOne(commentfile::class , 'comment_id' , 'id');
     }
+
+    public function like() : HasMany {
+        return $this->hasMany(commentlike::class , 'comment_id' , 'id');
+    }
+
+
 }

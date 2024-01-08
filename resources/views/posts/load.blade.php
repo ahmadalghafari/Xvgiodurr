@@ -6,12 +6,7 @@
                 <div class="d-flex align-items-center">
                     <!-- Avatar -->
                     <div class="avatar avatar-story me-2">
-                        <a href="{{route('home.users.show' , $post->user->id)}}"> <img class="avatar-img rounded-circle" \
-                                           @if($post->user->photo != null)
-                                               src="{{asset($post->user->photo->path)}}"
-                                           @else
-                                               src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                                @endif > </a>
+                        <a href="{{route('home.users.show' , $post->user->id)}}"> <img class="avatar-img rounded-circle"  @if($post->user->photo != null)   src="{{asset($post->user->photo->path)}}"  @else src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" @endif ></a>
                     </div>
                     <!-- Info -->
                     <div>
@@ -19,7 +14,7 @@
                             <h6 class="nav-item card-title mb-0"> <a href="{{route('home.users.show' , $post->user->id)}}">{{$post->user->name}}</a></h6>
                             <span class="nav-item small"> {{ $post->created_at->diffForHumans() }}</span>
                         </div>
-                        <p class="mb-0 small">Web Developer at Webestica</p>
+                        <p class="mb-0 small">{{$post->user->info->job}}</p>
                     </div>
                 </div>
                 <!-- Card feed action dropdown START -->
@@ -60,9 +55,7 @@
 
                         <div class="overflow-hidden fullscreen-video w-100">
                             <div class="player-wrapper overflow-hidden">
-                                <video class="player-html" controls crossorigin="anonymous"
-    {{--                                   poster="assets/images/videos/poster.jpg"--}}
-                                >
+                                <video class="player-html" controls crossorigin="anonymous" >
                                     <source src="{{asset($post->file[0]->file_path)}}" type="video/mp4">
                                 </video>
                             </div>
@@ -82,8 +75,8 @@
                     </audio>
                 @endif
             @else
-                @if($post->file->where('file_type','images')->count() + $post->file->where('file_type','videos')->count() > 0)
-                    @switch($post->file->where('file_type','images')->count() + $post->file->where('file_type','videos')->count())
+                @if($post->file->whereIn('file_type',['images' ,'video'])->count() > 0)
+                    @switch($post->file->whereIn('file_type',['images' ,'video'])->count())
                         @case(1)
                             @if($post->file->where('file_type','images')->count() == 1)
                                 <a class="" href="{{asset($post->file[0]->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
@@ -138,7 +131,10 @@
                         @default
                             <div class="d-flex justify-content-between">
                                 <div class="row g-3">
-                                        @foreach($post->file as $key => $file)
+                                    @php
+                                        $filteredFiles = $post->file->whereIn('file_type', ['images', 'videos']);
+                                    @endphp
+                                        @foreach($filteredFiles as $key => $file)
                                             @if($loop->first)
                                                 @if($file->file_type == 'images')
                                                     <div class="col-6">
@@ -153,9 +149,7 @@
                                                         <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
                                                             <div class="overflow-hidden fullscreen-video w-100">
                                                                 <div class="player-wrapper overflow-hidden">
-                                                                    <video class="player-html" controls crossorigin="anonymous"
-                                                                        {{--                                   poster="assets/images/videos/poster.jpg"--}}
-                                                                    >
+                                                                    <video class="player-html" controls crossorigin="anonymous">
                                                                         <source src="{{asset($file->file_path)}}" type="video/mp4">
                                                                     </video>
                                                                 </div>
@@ -164,11 +158,11 @@
                                                     </div>
                                                 @endif
                                                 @continue
-                                            @elseif($key < count($post->file) - 1)
+                                            @elseif($key < count($filteredFiles) - 1)
                                                 @if($file->file_type == 'images')
                                                     <div class="col-6" style="display: none">
                                                         <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}" >
-                                                            <img class="rounded img-fluid" src="{{asset($file->file_path)}}" alt="Image">
+                                                            <img class="rounded img-fluid" src="{{asset($file->file_path)}}">
                                                         </a>
                                                     </div>
                                                 @elseif($file->file_type == 'videos')
@@ -193,7 +187,7 @@
                                                     @if($file->file_type == 'images')
                                                         <div class="position-relative bg-dark  rounded">
                                                             <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
-                                                                <a class="btn btn-link text-white" href="#"> View all </a>
+                                                                <a class="btn btn-link text-white" href="#" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}"> View all </a>
                                                             </div>
                                                             <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
                                                                 <img class="img-fluid opacity-50 rounded" src="{{asset($file->file_path)}}" alt="Image">
@@ -207,9 +201,7 @@
                                                             <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
                                                                 <div class="overflow-hidden fullscreen-video w-100">
                                                                     <div class="player-wrapper overflow-hidden">
-                                                                        <video class="player-html" controls crossorigin="anonymous"
-                                                                            {{--                                   poster="assets/images/videos/poster.jpg"--}}
-                                                                        >
+                                                                        <video class="player-html" controls crossorigin="anonymous">
                                                                             <source src="{{asset($file->file_path)}}" type="video/mp4">
                                                                         </video>
                                                                     </div>
@@ -225,6 +217,7 @@
                             </div>
                     @endswitch
                 @endif
+                <br>
                 @forelse($post->file->where('file_type','voice') as $voice)
                         <audio controls class="w-100">
                             <source src="{{asset($voice->file_path)}}" type="audio/ogg">
@@ -249,11 +242,12 @@
                     @livewire('like-live' , ['post' => $post])
                 </li>
                 <li class="nav-item">
-                    <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#Modal{{$post->id}}">
                         <i class="bi bi-chat-fill pe-1"></i>Comments ({{$post->comment()->count()}})
                     </button>
+                    @if($post->comment()->count() != 0)
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="Modal{{$post->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -268,13 +262,7 @@
                                             <div class="d-flex">
                                                 <!-- Avatar -->
                                                 <div class="avatar avatar-xs">
-                                                    <a href="{{route('home.users.show' , $comment->user)}}"><img class="avatar-img rounded-circle"
-                                                                                                                 @if($comment->user->photo != null)
-                                                                                                                     src="{{asset($comment->user->photo->path)}}"
-                                                                                                                 @else
-                                                                                                                 src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                                                                                                                 @endif
-                                                                                                                 ></a>
+                                                    <a href="{{route('home.users.show' , $comment->user)}}"><img class="avatar-img rounded-circle" @if($comment->user->photo != null) src="{{asset($comment->user->photo->path)}}"  @else src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" @endif ></a>
                                                 </div>
                                                 <!-- Comment by -->
                                                 <div class="ms-2 " style="width: 100%;">
@@ -330,7 +318,7 @@
                                                     <!-- Comment react -->
                                                     <ul class="nav nav-divider pt-2 small">
                                                         <li class="nav-item">
-                                                            <a class="nav-link" href="#!"> Like (1)</a>
+                                                            @livewire('like-comment-live' , ['comment' => $comment])
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -346,8 +334,10 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- end Modal -->
+                    @endif
                 </li>
+
                 <!-- Card share action START -->
                 <li class="nav-item dropdown ms-sm-auto">
                     <a class="nav-link mb-0" href="#" id="cardShareAction" data-bs-toggle="dropdown" aria-expanded="false">
@@ -367,29 +357,7 @@
             </ul>
             <!-- Feed react END -->
 
-            <!-- Add comment -->
-            <div class="d-flex mb-3">
-                <!-- Avatar -->
-                <div class="avatar avatar-xs me-2">
-                    <a href="#!"> <img class="avatar-img rounded-circle"
-                                       @if(Auth::user()->pphoto_id != null)
-                                        src="{{asset(Auth::user()->photo->path)}}"
-                                       @else
-                                           src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                                       @endif > </a>
-                </div>
-                <!-- Comment box  -->
-                <form class="nav nav-item w-100 position-relative">
-                    <textarea data-autoresize class="form-control pe-5 bg-light" rows="1" placeholder="Add a comment..."></textarea>
-                    <button class="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0" type="submit">
-                        <i class="bi bi-send-fill"> </i>
-                    </button>
-                </form>
-            </div>
-
-            <!-- Comment wrap START -->
-
-            <!-- Comment wrap END -->
+           @livewire('comment-live', ['post' => $post])
         </div>
         <!-- Card body END -->
     </div>

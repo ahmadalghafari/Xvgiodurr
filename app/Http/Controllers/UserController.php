@@ -10,81 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-//        $userid = auth::user()->id;
-//        $users = User::where('id', '!=', $userid)
-//            ->whereNotIn('id', function ($query) use ($userid) {
-//                $query->select('user_blocker')
-//                    ->from('blocks')
-//                    ->where('user_blocked', $userid);
-//            })
-//            ->get();
-//
-//        return view('users.index' , compact('users'));
-    }
-
-    public function search($name){
-        $userid = auth::user()->id;
-
-        $users = User::where('id', '!=', $userid)
-            ->where('name', '=' , $name)
-            ->whereNotIn('id', function ($query) {
-                $query->select('user_blocker')
-                    ->from('blocks')
-                    ->where('user_blocked', 3);
-            })
-            ->get();
-        return view('users.index' , compact('users'));
-
-    }
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(User $user){
-//        dd($user);
         $posts = Post::where('user_id',$user->id)->latest()->get();
         return view('users.profile' , compact('posts' , 'user'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     public function settings(Request $request){
@@ -100,7 +28,7 @@ class UserController extends Controller
             'birth' => 'nullable|date',
             'address' => 'nullable',
         ]);
-
+        // dd($request->name);
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
@@ -134,4 +62,41 @@ class UserController extends Controller
 
         return redirect()->back()->with(['success' => 'Updated Successfully!']);
     }
+    
+    public function addphoto(Request $request){
+        $request->validate([
+            'image' => "required|image|mimes:jpeg,png,jpg,svg|max:3000"
+        ]);
+
+        if(Auth::user()->photo != null){
+            $image =  public_path(Auth::user()->photo->path);
+            if (file_exists($image)) {
+                unlink($image);
+            }
+        }
+
+        $image = $request->file('image');
+        $imageName = Auth::user()->id . Auth::user()->name . $image->extension();
+        $path = 'import/assets/images/avatar/' . $imageName ;
+
+        Auth::user()->photo()->updateOrCreate(['path' => $path]);
+
+        $request->file('image')->move(public_path('import/assets/images/avatar' ), $imageName);
+
+
+        return redirect()->route('home.users.show' , Auth::user());
+    }
+
+    public function deletephoto($id){
+        if(Auth::user()->photo != null){
+            $image =  public_path(Auth::user()->photo->path);
+            if (file_exists($image)) {
+                unlink($image);
+            }
+            Auth::user()->photo()->delete();
+        }
+        return redirect()->route('home.users.show' , Auth::user());
+
+    }
+
 }

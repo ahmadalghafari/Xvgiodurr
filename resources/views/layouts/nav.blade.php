@@ -33,7 +33,7 @@
             </div>
             <!-- Nav Search END -->
 
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+            {{-- <ul class="navbar-nav navbar-nav-scroll ms-auto">
                 <!-- Nav item 1 Demos -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="homeMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demo</a>
@@ -112,7 +112,6 @@
                     <a class="nav-link dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account </a>
                     <ul class="dropdown-menu" aria-labelledby="postMenu">
                         <li> <a class="dropdown-item" href="create-page.html">Create a page</a></li>
-{{--                        <li> <a class="dropdown-item" href={{route('home.users.settings' , Auth::user()->id)}} >Settings</a> </li>--}}
                         <li> <a class="dropdown-item" href="notifications.html">Notifications</a> </li>
                         <li> <a class="dropdown-item" href="help.html">Help center</a> </li>
                         <li> <a class="dropdown-item" href="help-details.html">Help details</a> </li>
@@ -139,7 +138,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="my-profile-connections.html">My network</a>
                 </li>
-            </ul>
+            </ul> --}}
         </div>
         <!-- Main navbar END -->
 
@@ -238,7 +237,7 @@
             <!-- Notification dropdown END -->
 
             <li class="nav-item ms-2 dropdown">
-                <a class="nav-link btn icon-md p-0" href="{{route('home.users.show' , Auth::user()->id)}}" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
                     <img class="avatar-img rounded-2" alt=""
 
                          @if(Auth::user()->photo != null)

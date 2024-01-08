@@ -105,11 +105,11 @@ Header END -->
 
 <!-- **************** MAIN CONTENT START **************** -->
 <main>
-    <div class="preloader">
+    {{-- <div class="preloader">
         <div class="preloader-item">
             <div class="spinner-grow text-primary"></div>
         </div>
-    </div>
+    </div> --}}
     <!-- Container START -->
     <div class="container">
         <div class="row g-4">
@@ -119,10 +119,7 @@ Header END -->
                 <!-- My profile START -->
                 <div class="card">
                     <!-- Cover image -->
-                    <div class="h-200px rounded-top" style="background-image:url({{asset('import/assets/images/bg/05.jpg')}}); background-position: center; background-size: cover; background-repeat: no-repeat;">
-
-                    </div>
-
+                    <div class="h-200px rounded-top" style="background-image:url({{asset('import/assets/images/bg/05.jpg')}}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                     <!-- Card body START -->
                     <div class="card-body py-0">
                         <div class="d-sm-flex align-items-start text-center text-sm-start">
@@ -173,10 +170,8 @@ Header END -->
                                                 </form>
                                             </li>
                                         @endif
-{{--                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-file-earmark-pdf fa-fw pe-2"></i>Save your profile to PDF</a></li>--}}
-{{--                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-lock fa-fw pe-2"></i>Lock profile</a></li>--}}
+
                                         <li><hr class="dropdown-divider"></li>
-{{--                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-gear fa-fw pe-2"></i>Profile settings</a></li>--}}
                                     </ul>
                                 </div>
                             </div>
@@ -226,13 +221,7 @@ Header END -->
                                 <div class="d-flex align-items-center">
                                     <!-- Avatar -->
                                     <div class="avatar avatar-story me-2">
-
-                                         <img class="avatar-img rounded-circle" \
-                                                           @if($post->user->photo != null)
-                                                               src="{{asset($post->user->photo->path)}}"
-                                                           @else
-                                                               src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                                                @endif >
+                                         <img class="avatar-img rounded-circle" @if($post->user->photo != null) src="{{asset($post->user->photo->path)}}" @else src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" @endif >
                                     </div>
                                     <!-- Info -->
                                     <div>
@@ -240,7 +229,7 @@ Header END -->
                                             <h6 class="nav-item card-title mb-0"> <a href="#!">{{$post->user->name}}</a></h6>
                                             <span class="nav-item small"> {{ $post->created_at->diffForHumans() }}</span>
                                         </div>
-                                        <p class="mb-0 small">Web Developer at Webestica</p>
+                                        <p class="mb-0 small">@if($post->user->info != null){{$post->user->info->job}}@endif</p>
                                     </div>
                                 </div>
                                 <!-- Card feed action dropdown START -->
@@ -250,15 +239,10 @@ Header END -->
                                     </a>
                                     <!-- Card feed action dropdown menu -->
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
-
+                                        @if(Auth::user()->id == $user->id)<li><form action="{{route('home.posts.destroy' , $post)}}" method="POST">@csrf @method('DELETE')<button class="dropdown-item" type="submit"><i class="bi bi-x-circle fa-fw pe-2"></i>Delete post</button></form></li>@endif
                                         <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark fa-fw pe-2"></i>Save post</a></li>
-                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-person-x fa-fw pe-2"></i>Unfollow lori ferguson </a></li>
-{{--                                        <li><a href="#" class="dropdown-item"><i class="bi bi-x-circle fa-fw pe-2"></i>Delete post</a></li>--}}
-                                        <li><form action="{{route('home.posts.destroy' , $post)}}" method="POST">@csrf @method('DELETE')<button class="dropdown-item" type="submit"><i class="bi bi-x-circle fa-fw pe-2"></i>Delete post</button></form></li>
-                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-slash-circle fa-fw pe-2"></i>Block</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="#"> <i class="bi bi-flag fa-fw pe-2"></i>Report post</a></li>
-
+                                        {{-- <li><hr class="dropdown-divider"></li> --}}
+                                        @if(Auth::user()->id != $user->id)<li><a class="dropdown-item" href="#"> <i class="bi bi-flag fa-fw pe-2"></i>Report post</a></li>@endif
                                     </ul>
                                 </div>
                                 <!-- Card feed action dropdown END -->
@@ -268,9 +252,13 @@ Header END -->
 
                         <!-- Card body START --- the post content -->
                         <div class="card-body">
-                            <p>{{$post->text}}</p>
-                            <!-- Card img -->
-
+                            {{-- <p>{{$post->text}}</p> --}}
+                            <h6 class="nav-item card-title mb-0">
+                                <a href="{{route('home.posts.show' , $post)}}">
+                                    <p>{{$post->text}}</p>
+                                </a>
+                            </h6>
+                            <!-- Card img-vid-voice-file -->
                             @if($post->file->count() == 1)
                                 @if($post->file[0]->file_type == 'images')
 
@@ -303,8 +291,8 @@ Header END -->
                                     </audio>
                                 @endif
                             @else
-                                @if($post->file->where('file_type','images')->count() + $post->file->where('file_type','videos')->count() > 0)
-                                    @switch($post->file->where('file_type','images')->count() + $post->file->where('file_type','videos')->count())
+                                @if($post->file->whereIn('file_type',['images' ,'video'])->count() > 0)
+                                    @switch($post->file->whereIn('file_type',['images' ,'video'])->count())
                                         @case(1)
                                             @if($post->file->where('file_type','images')->count() == 1)
                                                 <a class="" href="{{asset($post->file[0]->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
@@ -359,7 +347,10 @@ Header END -->
                                         @default
                                             <div class="d-flex justify-content-between">
                                                 <div class="row g-3">
-                                                    @foreach($post->file as $key => $file)
+                                                    @php
+                                                    $filteredFiles = $post->file->whereIn('file_type', ['images', 'videos']);
+                                                    @endphp
+                                                    @foreach($filteredFiles as $key => $file)
                                                         @if($loop->first)
                                                             @if($file->file_type == 'images')
                                                                 <div class="col-6">
@@ -385,7 +376,7 @@ Header END -->
                                                                 </div>
                                                             @endif
                                                             @continue
-                                                        @elseif($key < count($post->file) - 1)
+                                                        @elseif($key < count($filteredFiles) - 1)
                                                             @if($file->file_type == 'images')
                                                                 <div class="col-6" style="display: none">
                                                                     <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}" >
@@ -414,7 +405,7 @@ Header END -->
                                                                 @if($file->file_type == 'images')
                                                                     <div class="position-relative bg-dark  rounded">
                                                                         <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
-                                                                            <a class="btn btn-link text-white" href="#"> View all </a>
+                                                                            <a class="btn btn-link text-white" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}"> View all </a>
                                                                         </div>
                                                                         <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
                                                                             <img class="img-fluid opacity-50 rounded" src="{{asset($file->file_path)}}" alt="Image">
@@ -446,6 +437,7 @@ Header END -->
                                             </div>
                                     @endswitch
                                 @endif
+                                <br>
                                 @forelse($post->file->where('file_type','voice') as $voice)
                                     <audio controls class="w-100">
                                         <source src="{{asset($voice->file_path)}}" type="audio/ogg">
@@ -470,7 +462,100 @@ Header END -->
                                     @livewire('like-live' , ['post' => $post])
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#!"> <i class="bi bi-chat-fill pe-1"></i>Comments ({{$post->comment()->count()}})</a>
+                                    <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#Modal{{$post->id}}">
+                                        <i class="bi bi-chat-fill pe-1"></i>Comments ({{$post->comment()->count()}})
+                                    </button>
+                                    @if($post->comment()->count() != 0)
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="Modal{{$post->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Comments</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="comment-wrap list-unstyled">
+                                                        <!-- Comments item START -->
+                                                        @foreach($post->comment as $comment)
+                                                        <li class="comment-item">
+                                                            <div class="d-flex">
+                                                                <!-- Avatar -->
+                                                                <div class="avatar avatar-xs">
+                                                                    <a href="{{route('home.users.show' , $comment->user)}}"><img class="avatar-img rounded-circle" @if($comment->user->photo != null) src="{{asset($comment->user->photo->path)}}"  @else src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" @endif ></a>
+                                                                </div>
+                                                                <!-- Comment by -->
+                                                                <div class="ms-2 " style="width: 100%;">
+                                                                    <div class="bg-light p-3 rounded" >
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <h6 class="mb-1"> <a href="{{route('home.users.show' , $comment->user)}}"> {{$comment->user->name}} </a> </h6>
+                                                                            <small class="ms-2">{{$comment->created_at->diffForHumans()}}</small>
+                                                                        </div>
+                                                                        <div class="card" >
+                                                                        <div class="card-body">
+                                                                            <p class="mb-0">{{$comment->text}}</p>
+                
+                                                                            @if($comment->file != null)
+                                                                                @switch($comment->file->file_type)
+                                                                                    @case('images')
+                                                                                        <hr>
+                                                                                        <a href="{{asset($comment->file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$comment->id}}">
+                                                                                            <img class="card-img" src="{{asset($comment->file->file_path)}}" alt="Image">
+                                                                                        </a>
+                                                                                        @break
+                
+                                                                                    @case('videos')
+                                                                                        <hr>
+                                                                                        <div class="overflow-hidden fullscreen-video w-100">
+                                                                                            <div class="player-wrapper overflow-hidden">
+                                                                                                <video class="player-html" controls crossorigin="anonymous">
+                                                                                                    <source src="{{asset($comment->file->file_path)}}" type="video/mp4">
+                                                                                                </video>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        @break
+                                                                                    @case('files')
+                                                                                        <hr>
+                                                                                        <div class="card-footer border-0 d-flex justify-content-between align-items-center">
+                                                                                            <p class="mb-0">{{$comment->user->name}}.file.{{$comment->file->prefix}}</p>
+                                                                                            <a class="btn btn-primary-soft btn-sm" href="{{asset($comment->file->file_path)}}" download> Download now </a>
+                                                                                        </div>
+                                                                                        @break
+                                                                                    @case('voice')
+                                                                                        <hr>
+                                                                                        <audio controls class="w-100">
+                                                                                            <source src="{{asset($comment->file->file_path)}}" type="audio/ogg">
+                                                                                            <source src="{{asset($comment->file->file_path)}}" type="audio/mp3">
+                                                                                            <source src="{{asset($comment->file->file_path)}}" type="audio/mpeg">
+                                                                                            Your browser does not support the audio element.
+                                                                                        </audio>
+                                                                                        @break
+                                                                                @endswitch
+                                                                            @endif
+                                                                        </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Comment react -->
+                                                                    <ul class="nav nav-divider pt-2 small">
+                                                                        <li class="nav-item">
+                                                                            @livewire('like-comment-live' , ['comment' => $comment])
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        @endforeach
+                                                        <!-- Comments item END -->
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end Modal -->
+                                    @endif
                                 </li>
                                 <!-- Card share action START -->
                                 <li class="nav-item dropdown ms-sm-auto">
@@ -495,12 +580,7 @@ Header END -->
                             <div class="d-flex mb-3">
                                 <!-- Avatar -->
                                 <div class="avatar avatar-xs me-2">
-                                    <a href="#!"> <img class="avatar-img rounded-circle"
-                                                       @if(Auth::user()->pphoto_id != null)
-                                                           src="{{asset(Auth::user()->photo->path)}}"
-                                                       @else
-                                                           src="{{asset('import/assets/images/avatar/placeholder.jpg')}}"
-                                            @endif > </a>
+                                    <a href="#!"> <img class="avatar-img rounded-circle"  @if(Auth::user()->pphoto_id != null)  src="{{asset(Auth::user()->photo->path)}}" @else src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" @endif ></a>
                                 </div>
                                 <!-- Comment box  -->
                                 <form class="nav nav-item w-100 position-relative">
@@ -510,164 +590,45 @@ Header END -->
                                     </button>
                                 </form>
                             </div>
-
+                        
                             <!-- Comment wrap START -->
-                            {{--                        <ul class="comment-wrap list-unstyled">--}}
-                            {{--                <!-- Comment item START -->--}}
-                            {{--                <li class="comment-item">--}}
-                            {{--                    <div class="d-flex position-relative">--}}
-                            {{--                        <!-- Avatar -->--}}
-                            {{--                        <div class="avatar avatar-xs">--}}
-                            {{--                            <a href="#!"><img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/05.jpg')}}" alt=""></a>--}}
-                            {{--                        </div>--}}
-                            {{--                        <div class="ms-2">--}}
-                            {{--                            <!-- Comment by -->--}}
-                            {{--                            <div class="bg-light rounded-start-top-0 p-3 rounded">--}}
-                            {{--                                <div class="d-flex justify-content-between">--}}
-                            {{--                                    <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a></h6>--}}
-                            {{--                                    <small class="ms-2">5hr</small>--}}
-                            {{--                                </div>--}}
-                            {{--                                <p class="small mb-0">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>--}}
-                            {{--                            </div>--}}
-                            {{--                            <!-- Comment react -->--}}
-                            {{--                            <ul class="nav nav-divider py-2 small">--}}
-                            {{--                                <li class="nav-item">--}}
-                            {{--                                    <a class="nav-link" href="#!"> Like (3)</a>--}}
-                            {{--                                </li>--}}
-                            {{--                                <li class="nav-item">--}}
-                            {{--                                    <a class="nav-link" href="#!"> Reply</a>--}}
-                            {{--                                </li>--}}
-                            {{--                                <li class="nav-item">--}}
-                            {{--                                    <a class="nav-link" href="#!"> View 5 replies</a>--}}
-                            {{--                                </li>--}}
-                            {{--                            </ul>--}}
-                            {{--                        </div>--}}
-                            {{--                    </div>--}}
-                            {{--                    <!-- Comment item nested START -->--}}
-                            {{--                    <ul class="comment-item-nested list-unstyled">--}}
-                            {{--                        <!-- Comment item START -->--}}
-                            {{--                        <li class="comment-item">--}}
-                            {{--                            <div class="d-flex">--}}
-                            {{--                                <!-- Avatar -->--}}
-                            {{--                                <div class="avatar avatar-xs">--}}
-                            {{--                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/06.jpg" alt=""></a>--}}
-                            {{--                                </div>--}}
-                            {{--                                <!-- Comment by -->--}}
-                            {{--                                <div class="ms-2">--}}
-                            {{--                                    <div class="bg-light p-3 rounded">--}}
-                            {{--                                        <div class="d-flex justify-content-between">--}}
-                            {{--                                            <h6 class="mb-1"> <a href="#!"> Lori Stevens </a> </h6>--}}
-                            {{--                                            <small class="ms-2">2hr</small>--}}
-                            {{--                                        </div>--}}
-                            {{--                                        <p class="small mb-0">See resolved goodness felicity shy civility domestic had but Drawings offended yet answered Jennings perceive.</p>--}}
-                            {{--                                    </div>--}}
-                            {{--                                    <!-- Comment react -->--}}
-                            {{--                                    <ul class="nav nav-divider py-2 small">--}}
-                            {{--                                        <li class="nav-item">--}}
-                            {{--                                            <a class="nav-link" href="#!"> Like (5)</a>--}}
-                            {{--                                        </li>--}}
-                            {{--                                        <li class="nav-item">--}}
-                            {{--                                            <a class="nav-link" href="#!"> Reply</a>--}}
-                            {{--                                        </li>--}}
-                            {{--                                    </ul>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
-                            {{--                        </li>--}}
-                            {{--                        <!-- Comment item END -->--}}
-                            {{--                        <!-- Comment item START -->--}}
-                            {{--                        <li class="comment-item">--}}
-                            {{--                            <div class="d-flex">--}}
-                            {{--                                <!-- Avatar -->--}}
-                            {{--                                <div class="avatar avatar-story avatar-xs">--}}
-                            {{--                                    <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/07.jpg" alt=""></a>--}}
-                            {{--                                </div>--}}
-                            {{--                                <!-- Comment by -->--}}
-                            {{--                                <div class="ms-2">--}}
-                            {{--                                    <div class="bg-light p-3 rounded">--}}
-                            {{--                                        <div class="d-flex justify-content-between">--}}
-                            {{--                                            <h6 class="mb-1"> <a href="#!"> Billy Vasquez </a> </h6>--}}
-                            {{--                                            <small class="ms-2">15min</small>--}}
-                            {{--                                        </div>--}}
-                            {{--                                        <p class="small mb-0">Wishing calling is warrant settled was lucky.</p>--}}
-                            {{--                                    </div>--}}
-                            {{--                                    <!-- Comment react -->--}}
-                            {{--                                    <ul class="nav nav-divider py-2 small">--}}
-                            {{--                                        <li class="nav-item">--}}
-                            {{--                                            <a class="nav-link" href="#!"> Like</a>--}}
-                            {{--                                        </li>--}}
-                            {{--                                        <li class="nav-item">--}}
-                            {{--                                            <a class="nav-link" href="#!"> Reply</a>--}}
-                            {{--                                        </li>--}}
-                            {{--                                    </ul>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
-                            {{--                        </li>--}}
-                            {{--                        <!-- Comment item END -->--}}
-                            {{--                    </ul>--}}
-                            {{--                    <!-- Load more replies -->--}}
-                            {{--                    <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center mb-3 ms-5" data-bs-toggle="button" aria-pressed="true">--}}
-                            {{--                        <div class="spinner-dots me-2">--}}
-                            {{--                            <span class="spinner-dot"></span>--}}
-                            {{--                            <span class="spinner-dot"></span>--}}
-                            {{--                            <span class="spinner-dot"></span>--}}
-                            {{--                        </div>--}}
-                            {{--                        Load more replies--}}
-                            {{--                    </a>--}}
-                            {{--                    <!-- Comment item nested END -->--}}
-                            {{--                </li>--}}
-                            {{--                <!-- Comment item END -->--}}
-
-                            {{--                <!-- Comment item START -->--}}
-                            {{--                <li class="comment-item">--}}
-                            {{--                    <div class="d-flex">--}}
-                            {{--                        <!-- Avatar -->--}}
-                            {{--                        <div class="avatar avatar-xs">--}}
-                            {{--                            <a href="#!"><img class="avatar-img rounded-circle" src="assets/images/avatar/05.jpg" alt=""></a>--}}
-                            {{--                        </div>--}}
-                            {{--                        <!-- Comment by -->--}}
-                            {{--                        <div class="ms-2">--}}
-                            {{--                            <div class="bg-light p-3 rounded">--}}
-                            {{--                                <div class="d-flex justify-content-between">--}}
-                            {{--                                    <h6 class="mb-1"> <a href="#!"> Frances Guerrero </a> </h6>--}}
-                            {{--                                    <small class="ms-2">4min</small>--}}
-                            {{--                                </div>--}}
-                            {{--                                <p class="small mb-0">Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.</p>--}}
-                            {{--                            </div>--}}
-                            {{--                            <!-- Comment react -->--}}
-                            {{--                            <ul class="nav nav-divider pt-2 small">--}}
-                            {{--                                <li class="nav-item">--}}
-                            {{--                                    <a class="nav-link" href="#!"> Like (1)</a>--}}
-                            {{--                                </li>--}}
-                            {{--                                <li class="nav-item">--}}
-                            {{--                                    <a class="nav-link" href="#!"> Reply</a>--}}
-                            {{--                                </li>--}}
-                            {{--                                <li class="nav-item">--}}
-                            {{--                                    <a class="nav-link" href="#!"> View 6 replies</a>--}}
-                            {{--                                </li>--}}
-                            {{--                            </ul>--}}
-                            {{--                        </div>--}}
-                            {{--                    </div>--}}
-                            {{--                </li>--}}
-                            {{--                <!-- Comment item END -->--}}
-                            {{--            </ul>--}}
+                            @if($post->comment()->count() != 0)
+                            @php
+                            $comment = $post->comment[0]; 
+                            @endphp
+                            <ul class="comment-wrap list-unstyled">
+                                <!-- Comment item START -->
+                                <li class="comment-item">
+                                    <div class="d-flex">
+                                        <!-- Avatar -->
+                                        <div class="avatar avatar-xs">
+                                            <a href="{{route('home.users.show' , $comment->user)}}"><img class="avatar-img rounded-circle" @if($comment->user->photo != null) src="{{asset($comment->user->photo->path)}}" @else src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" @endif  ></a>
+                                        </div>
+                                        <!-- Comment by -->
+                                        <div class="ms-2">
+                                            <div class="bg-light p-3 rounded">
+                                                <div class="d-flex justify-content-between">
+                                                    <h6 class="mb-1"> <a href="#!"> {{$comment->user->name}} </a> </h6>
+                                                    <small class="ms-2">{{$comment->created_at->diffForHumans()}}</small>
+                                                </div>
+                                                <p class="small mb-0">{{$comment->text}}</p>
+                                            </div>
+                                            <!-- Comment react -->
+                                            <ul class="nav nav-divider pt-2 small">
+                                                <li class="nav-item">
+                                                    {{-- <a class="nav-link" href="#!"> Like (1)</a> --}}
+                                                    @livewire('like-comment-live' , ['comment' => $comment ])
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- Comment item END -->
+                            </ul>
+                            @endif  
                             <!-- Comment wrap END -->
-                        </div>
+                        </div>        
                         <!-- Card body END -->
-
-                        <!-- Card footer START -->
-                        {{--                <div class="card-footer border-0 pt-0">--}}
-                        {{--            <!-- Load more comments -->--}}
-                        {{--            <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center" data-bs-toggle="button" aria-pressed="true">--}}
-                        {{--                <div class="spinner-dots me-2">--}}
-                        {{--                    <span class="spinner-dot"></span>--}}
-                        {{--                    <span class="spinner-dot"></span>--}}
-                        {{--                    <span class="spinner-dot"></span>--}}
-                        {{--                </div>--}}
-                        {{--                Load more comments--}}
-                        {{--            </a>--}}
-                        {{--        </div>--}}
-                        <!-- Card footer END -->
-
                     </div>
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
@@ -684,7 +645,6 @@ Header END -->
                         });
                     });
                 </script>
-
             </div>
             <!-- Main content END -->
 

@@ -9,8 +9,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
+use App\Models\User;
 
-Route::view('testing','testing.test');
+Route::view('testing','auth.passwords.confirm');
+
 Route::name('home.')->middleware(['auth','verified'])->prefix('home/')->group(function (){
 
     Route::resource('posts',PostController::class)->except('show');
@@ -24,6 +26,12 @@ Route::name('home.')->middleware(['auth','verified'])->prefix('home/')->group(fu
     Route::resource('comments' , CommentController::class)->except(['index' , 'create']);
     Route::resource('blocks', BlockController::class)->except('destroy');
     Route::delete('blocks/{user}' , [BlockController::class , 'destroy'])->name('blocks.destroy');
+
+    Route::delete('follows/{user}' , [FollowController::class, 'destroy'])->name('follows.destroy');
+
+    Route::post('users/photo' ,[UserController::class , 'addphoto'])->name('users.photo.store');
+    Route::delete('users/photo/{user}' ,[UserController::class , 'deletephoto'])->name('users.photo.destroy');
+
 });
 
 Auth::routes(['verify' => true]);

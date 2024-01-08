@@ -109,7 +109,7 @@
           <!-- Form START -->
           <form class="mt-sm-4" method="POST" action="{{ route('login') }}">
             <!-- Email -->
-			@csrf
+			    @csrf
             <div class="mb-3 input-group-lg">
               <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Enter email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 			  	@error('email')

@@ -15,10 +15,6 @@ class FollowLive extends Component{
         if(Auth::user()->follow->contains('user_follower' , $this->user->id)){
             Auth::user()->follow()->where('user_follower' , $this->user->id)->delete();
         }else{
-//            follow::create([
-//                'user_follow' => Auth::user()->id ,
-//                'user_follower' => $this->user->id ,
-//            ]);
             Auth::user()->follow()->create(['user_follower' => $this->user->id]);
         }
         $this->user = $this->user->fresh() ;

@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Livewire;
-use App\Models\Post;
-use App\Models\like;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
