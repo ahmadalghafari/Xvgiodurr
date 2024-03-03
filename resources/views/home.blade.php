@@ -163,7 +163,7 @@ Header END -->
 										<!-- Info -->
 										<h5 class="mb-0"> <a href="{{route('home.users.show' , Auth::user()->id )}}">{{Auth::user()->name}}</a> </h5>
 										<small>Web Developer at Webestica</small>
-{{--										<p class="mt-3">I'd love to change the world, but they won’t give me the source code.</p>--}}
+										{{--										<p class="mt-3">I'd love to change the world, but they won’t give me the source code.</p>--}}
                                             <hr>
 										<!-- User stat START -->
 										<div class="hstack gap-2 gap-xl-3 justify-content-center">

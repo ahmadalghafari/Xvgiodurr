@@ -405,7 +405,7 @@ Header END -->
                                                                 @if($file->file_type == 'images')
                                                                     <div class="position-relative bg-dark  rounded">
                                                                         <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
-                                                                            <a class="btn btn-link text-white" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}"> View all </a>
+                                                                            <a class="btn btn-link text-white" href="#" > View all </a>
                                                                         </div>
                                                                         <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox data-gallery="image-popup{{$post->id}}">
                                                                             <img class="img-fluid opacity-50 rounded" src="{{asset($file->file_path)}}" alt="Image">

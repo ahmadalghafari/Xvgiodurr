@@ -14,7 +14,7 @@
                             <h6 class="nav-item card-title mb-0"> <a href="{{route('home.users.show' , $post->user->id)}}">{{$post->user->name}}</a></h6>
                             <span class="nav-item small"> {{ $post->created_at->diffForHumans() }}</span>
                         </div>
-                        <p class="mb-0 small">{{$post->user->info->job}}</p>
+                        <p class="mb-0 small">{{$post->user->info ? $post->user->info->job : ""}}</p>
                     </div>
                 </div>
                 <!-- Card feed action dropdown START -->
@@ -187,7 +187,7 @@
                                                     @if($file->file_type == 'images')
                                                         <div class="position-relative bg-dark  rounded">
                                                             <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
-                                                                <a class="btn btn-link text-white" href="#" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}"> View all </a>
+                                                                <a class="btn btn-link text-white" href="#"> View all </a>
                                                             </div>
                                                             <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
                                                                 <img class="img-fluid opacity-50 rounded" src="{{asset($file->file_path)}}" alt="Image">
@@ -279,8 +279,8 @@
                                                                 @switch($comment->file->file_type)
                                                                     @case('images')
                                                                         <hr>
-                                                                        <a href="{{asset($comment->file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$comment->id}}">
-                                                                            <img class="card-img" src="{{asset($comment->file->file_path)}}" alt="Image">
+                                                                        <a href="{{asset("storage/".$comment->file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$comment->id}}">
+                                                                            <img class="card-img" src="{{asset("storage/".$comment->file->file_path)}}" alt="Image">
                                                                         </a>
                                                                         @break
 
@@ -289,7 +289,7 @@
                                                                         <div class="overflow-hidden fullscreen-video w-100">
                                                                             <div class="player-wrapper overflow-hidden">
                                                                                 <video class="player-html" controls crossorigin="anonymous">
-                                                                                    <source src="{{asset($comment->file->file_path)}}" type="video/mp4">
+                                                                                    <source src="{{asset("storage/".$comment->file->file_path)}}" type="video/mp4">
                                                                                 </video>
                                                                             </div>
                                                                         </div>
@@ -298,15 +298,15 @@
                                                                         <hr>
                                                                         <div class="card-footer border-0 d-flex justify-content-between align-items-center">
                                                                             <p class="mb-0">{{$comment->user->name}}.file.{{$comment->file->prefix}}</p>
-                                                                            <a class="btn btn-primary-soft btn-sm" href="{{asset($comment->file->file_path)}}" download> Download now </a>
+                                                                            <a class="btn btn-primary-soft btn-sm" href="{{asset("storage/".$comment->file->file_path)}}" download> Download now </a>
                                                                         </div>
                                                                         @break
                                                                     @case('voice')
                                                                         <hr>
                                                                         <audio controls class="w-100">
-                                                                            <source src="{{asset($comment->file->file_path)}}" type="audio/ogg">
-                                                                            <source src="{{asset($comment->file->file_path)}}" type="audio/mp3">
-                                                                            <source src="{{asset($comment->file->file_path)}}" type="audio/mpeg">
+                                                                            <source src="{{asset("storage/".$comment->file->file_path)}}" type="audio/ogg">
+                                                                            <source src="{{asset("storage/".$comment->file->file_path)}}" type="audio/mp3">
+                                                                            <source src="{{asset("storage/".$comment->file->file_path)}}" type="audio/mpeg">
                                                                             Your browser does not support the audio element.
                                                                         </audio>
                                                                         @break

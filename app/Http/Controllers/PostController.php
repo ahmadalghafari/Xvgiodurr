@@ -22,17 +22,13 @@ class PostController extends Controller{
                 $query->select('user_follower')
                     ->from('follows')
                     ->where('user_follow', $userid);
-            })->latest()->Paginate(5);
+            })->latest()->Paginate(2);
 
         if($request->ajax()){
             $view = view('posts.load', compact('posts'))->render();
             return response()->json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl()]);
         }
         return view('home' , compact('posts'));
-    }
-
-    public function create(){
-
     }
 
     public function store(Request $request){
@@ -54,7 +50,7 @@ class PostController extends Controller{
         );
 
 
-        $text = $request->text ?: '';
+        $text = $request->text ?  : '';
         $id =auth::user()->id;
 
         $post = post::create([
@@ -98,10 +94,10 @@ class PostController extends Controller{
 
     public function update(Request $request, $id)
     {
-        $post = Post::find($id);
-        $post->text = $request->text;
-        $post->save();
-        return view('myprofile');
+        // $post = Post::find($id);
+        // $post->text = $request->text;
+        // $post->save();
+        // return view('myprofile');
     }
 
 
