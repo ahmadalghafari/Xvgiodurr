@@ -1,20 +1,37 @@
 @foreach($posts as $post)
     <div class="card" >
         <!-- Card header START -->
+        @if($post->user_id != $post->post->user_id)
+        <div class="card-header border-0 pb-0">
+            <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-arrow-clockwise"></i>
+                    <span class="me-1">Reposted by</span>
+                    <div>
+                        <div class="nav nav-divider">
+                            <h6 class="nav-item card-title mb-0"> <a href="{{route('home.users.show' , $post->user_id)}}">{{$post->user->name}}</a></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        @endif
+
         <div class="card-header border-0 pb-0">
             <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                     <!-- Avatar -->
                     <div class="avatar avatar-story me-2">
-                        <a href="{{route('home.users.show' , $post->user->id)}}"> <img class="avatar-img rounded-circle"  @if($post->user->photo != null)   src="{{asset($post->user->photo->path)}}"  @else src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" @endif ></a>
+                        <a href="{{route('home.users.show' , $post->post->user_id)}}"> <img class="avatar-img rounded-circle"  @if($post->post->user->photo != null)   src="{{asset($post->post->user->photo->path)}}"  @else src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" @endif ></a>
                     </div>
                     <!-- Info -->
                     <div>
                         <div class="nav nav-divider">
-                            <h6 class="nav-item card-title mb-0"> <a href="{{route('home.users.show' , $post->user->id)}}">{{$post->user->name}}</a></h6>
-                            <span class="nav-item small"> {{ $post->created_at->diffForHumans() }}</span>
+                            <h6 class="nav-item card-title mb-0"> <a href="{{route('home.users.show' , $post->post->user->id)}}">{{$post->post->user->name}}</a></h6>
+                            <span class="nav-item small"> {{ $post->post->created_at->diffForHumans() }}</span>
                         </div>
-                        <p class="mb-0 small">{{$post->user->info ? $post->user->info->job : ""}}</p>
+                        <p class="mb-0 small">{{$post->post->user->info ? $post->post->user->info->job : ""}}</p>
                     </div>
                 </div>
                 <!-- Card feed action dropdown START -->
@@ -41,46 +58,46 @@
         <div class="card-body">
             <h6 class="nav-item card-title mb-0">
                 <a href="{{route('home.posts.show' , $post)}}">
-                    <p>{{$post->text}}</p>
+                    <p>{{$post->post->text}}</p>
                 </a>
             </h6>
 
-            @if($post->file->count() == 1)
-                @if($post->file[0]->file_type == 'images')
-                    <a class="" href="{{asset($post->file[0]->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
-                        <img class="card-img" src="{{asset($post->file[0]->file_path)}}" alt="Post">
+            @if($post->post->file->count() == 1)
+                @if($post->post->file[0]->file_type == 'images')
+                    <a class="" href="{{asset($post->post->file[0]->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->post->id}}">
+                        <img class="card-img" src="{{asset($post->post->file[0]->file_path)}}" alt="Post">
                     </a>
 
-                @elseif($post->file[0]->file_type == 'videos')
+                @elseif($post->post->file[0]->file_type == 'videos')
 
                         <div class="overflow-hidden fullscreen-video w-100">
                             <div class="player-wrapper overflow-hidden">
                                 <video class="player-html" controls crossorigin="anonymous" >
-                                    <source src="{{asset($post->file[0]->file_path)}}" type="video/mp4">
+                                    <source src="{{asset($post->post->file[0]->file_path)}}" type="video/mp4">
                                 </video>
                             </div>
                         </div>
 
-                @elseif($post->file[0]->file_type == 'files')
+                @elseif($post->post->file[0]->file_type == 'files')
                     <div class="card-footer border-0 d-flex justify-content-between align-items-center">
-                        <p class="mb-0">{{$post->user->name}}.file.{{$post->file[0]->prefix}}</p>
-                        <a class="btn btn-primary-soft btn-sm" href="{{asset($post->file[0]->file_path)}}" download> Download now </a>
+                        <p class="mb-0">{{$post->user->name}}.file.{{$post->post->file[0]->prefix}}</p>
+                        <a class="btn btn-primary-soft btn-sm" href="{{asset($post->post->file[0]->file_path)}}" download> Download now </a>
                     </div>
-                @elseif($post->file[0]->file_type == 'voice')
+                @elseif($post->post->file[0]->file_type == 'voice')
                     <audio controls class="w-100">
-                        <source src="{{asset($post->file[0]->file_path)}}" type="audio/ogg">
-                        <source src="{{asset($post->file[0]->file_path)}}" type="audio/mp3">
-                        <source src="{{asset($post->file[0]->file_path)}}" type="audio/mpeg">
+                        <source src="{{asset($post->post->file[0]->file_path)}}" type="audio/ogg">
+                        <source src="{{asset($post->post->file[0]->file_path)}}" type="audio/mp3">
+                        <source src="{{asset($post->post->file[0]->file_path)}}" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
                 @endif
             @else
-                @if($post->file->whereIn('file_type',['images' ,'video'])->count() > 0)
-                    @switch($post->file->whereIn('file_type',['images' ,'video'])->count())
+                @if($post->post->file->whereIn('file_type',['images' ,'video'])->count() > 0)
+                    @switch($post->post->file->whereIn('file_type',['images' ,'video'])->count())
                         @case(1)
-                            @if($post->file->where('file_type','images')->count() == 1)
-                                <a class="" href="{{asset($post->file[0]->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
-                                    <img class="card-img" src="{{asset($post->file[0]->file_path)}}" alt="Post">
+                            @if($post->post->file->where('file_type','images')->count() == 1)
+                                <a class="" href="{{asset($post->post->file[0]->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->post->id}}">
+                                    <img class="card-img" src="{{asset($post->post->file[0]->file_path)}}" alt="Post">
                                 </a>
 
                             @else
@@ -89,7 +106,7 @@
                                         <video class="player-html" controls crossorigin="anonymous"
                                             {{--                                   poster="assets/images/videos/poster.jpg"--}}
                                         >
-                                            <source src="{{asset($post->file[0]->file_path)}}" type="video/mp4">
+                                            <source src="{{asset($post->post->file[0]->file_path)}}" type="video/mp4">
                                         </video>
                                     </div>
                                 </div>
@@ -99,18 +116,18 @@
                         @case(2)
                             <div class="d-flex justify-content-between">
                                 <div class="row g-3">
-                                    @foreach($post->file as $files)
+                                    @foreach($post->post->file as $files)
                                         @if($files->file_type == 'images')
                                             <div class="col-6">
                                                 <!-- Grid img -->
-                                                <a class="" href="{{asset($files->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
+                                                <a class="" href="{{asset($files->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->post->id}}">
                                                     <img class="rounded img-fluid" src="{{asset($files->file_path)}}" alt="Image">
                                                 </a>
                                             </div>
                                         @elseif($files->file_type == 'videos')
                                             <div class="col-6">
                                                 <!-- Grid video -->
-                                                <a class="" href="{{asset($files->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
+                                                <a class="" href="{{asset($files->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->post->id}}">
                                                     <div class="overflow-hidden fullscreen-video w-100">
                                                         <div class="player-wrapper overflow-hidden">
                                                             <video class="player-html" controls crossorigin="anonymous"
@@ -132,13 +149,13 @@
                             <div class="d-flex justify-content-between">
                                 <div class="row g-3">
                                     @php
-                                        $filteredFiles = $post->file->whereIn('file_type', ['images', 'videos']);
+                                        $filteredFiles = $post->post->file->whereIn('file_type', ['images', 'videos']);
                                     @endphp
                                         @foreach($filteredFiles as $key => $file)
                                             @if($loop->first)
                                                 @if($file->file_type == 'images')
                                                     <div class="col-6">
-                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}" >
+                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->post->id}}" >
                                                             <img class="rounded img-fluid" src="{{asset($file->file_path)}}" alt="Image">
                                                         </a>
 
@@ -146,7 +163,7 @@
                                                 @elseif($file->file_type == 'videos')
                                                     <div class="col-6">
                                                         <!-- Grid video -->
-                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
+                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->post->id}}">
                                                             <div class="overflow-hidden fullscreen-video w-100">
                                                                 <div class="player-wrapper overflow-hidden">
                                                                     <video class="player-html" controls crossorigin="anonymous">
@@ -161,14 +178,14 @@
                                             @elseif($key < count($filteredFiles) - 1)
                                                 @if($file->file_type == 'images')
                                                     <div class="col-6" style="display: none">
-                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}" >
+                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->post->id}}" >
                                                             <img class="rounded img-fluid" src="{{asset($file->file_path)}}">
                                                         </a>
                                                     </div>
                                                 @elseif($file->file_type == 'videos')
                                                     <div class="col-6" style="display: none">
                                                         <!-- Grid video -->
-                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
+                                                        <a class="" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->post->id}}">
                                                             <div class="overflow-hidden fullscreen-video w-100">
                                                                 <div class="player-wrapper overflow-hidden">
                                                                     <video class="player-html" controls crossorigin="anonymous"
@@ -189,7 +206,7 @@
                                                             <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
                                                                 <a class="btn btn-link text-white" href="#"> View all </a>
                                                             </div>
-                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
+                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->post->id}}">
                                                                 <img class="img-fluid opacity-50 rounded" src="{{asset($file->file_path)}}" alt="Image">
                                                             </a>
                                                         </div>
@@ -198,7 +215,7 @@
                                                             <div class="hover-actions-item position-absolute top-50 start-50 translate-middle z-index-9">
                                                                 <a class="btn btn-link text-white" href="#"> View all </a>
                                                             </div>
-                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->id}}">
+                                                            <a class="h-100" href="{{asset($file->file_path)}}" data-glightbox="post-gallery" data-gallery="image-popup{{$post->post->id}}">
                                                                 <div class="overflow-hidden fullscreen-video w-100">
                                                                     <div class="player-wrapper overflow-hidden">
                                                                         <video class="player-html" controls crossorigin="anonymous">
@@ -218,7 +235,7 @@
                     @endswitch
                 @endif
                 <br>
-                @forelse($post->file->where('file_type','voice') as $voice)
+                @forelse($post->post->file->where('file_type','voice') as $voice)
                         <audio controls class="w-100">
                             <source src="{{asset($voice->file_path)}}" type="audio/ogg">
                             <source src="{{asset($voice->file_path)}}" type="audio/mp3">
@@ -227,7 +244,7 @@
                         </audio>
                     @empty
                 @endforelse
-                @forelse($post->file->where('file_type','files') as $file)
+                @forelse($post->post->file->where('file_type','files') as $file)
                         <div class="card-footer border-0 d-flex justify-content-between align-items-center">
                             <p class="mb-0">{{$post->user->name}}.file.{{$file->prefix}}</p>
                             <a class="btn btn-primary-soft btn-sm" href="{{asset($file->file_path)}}" download> Download now </a>
@@ -239,15 +256,16 @@
             <!-- Feed react START -->
             <ul class="nav nav-stack py-3 small">
                 <li class="nav-item">
-                    @livewire('like-live' , ['post' => $post])
+                    @livewire('like-live' , ['post' => $post->post])
                 </li>
                 <li class="nav-item">
-                    <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#Modal{{$post->id}}">
-                        <i class="bi bi-chat-fill pe-1"></i>Comments ({{$post->comment()->count()}})
+                    <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#Modal{{$post->post->id}}">
+                        <i class="bi bi-chat-fill pe-1"></i>Comments 
+                        {{-- ({{$post->post->comments_number}}) --}}
                     </button>
-                    @if($post->comment()->count() != 0)
+                    @if($post->post->comment()->count() != 0)
                     <!-- Modal -->
-                    <div class="modal fade" id="Modal{{$post->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="Modal{{$post->post->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -257,7 +275,7 @@
                                 <div class="modal-body">
                                     <ul class="comment-wrap list-unstyled">
                                         <!-- Comments item START -->
-                                        @foreach($post->comment as $comment)
+                                        @foreach($post->post->comment as $comment)
                                         <li class="comment-item">
                                             <div class="d-flex">
                                                 <!-- Avatar -->
@@ -340,31 +358,31 @@
 
                 <!-- Card share action START -->
                 <li class="nav-item dropdown ms-sm-auto">
-                    <a class="nav-link mb-0" href="#" id="cardShareAction" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-reply-fill flip-horizontal ps-1"></i>Share (3)
-                    </a>
+                    @if($post->post->user_id != Auth::user()->id)
+                    @livewire('sharelive', ['post' => $post->post])
+                    @endif
                     <!-- Card share action dropdown menu -->
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardShareAction">
+                    {{-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardShareAction">
                         <li><a class="dropdown-item" href="#"> <i class="bi bi-envelope fa-fw pe-2"></i>Send via Direct Message</a></li>
                         <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark-check fa-fw pe-2"></i>Bookmark </a></li>
                         <li><a class="dropdown-item" href="#"> <i class="bi bi-link fa-fw pe-2"></i>Copy link to post</a></li>
                         <li><a class="dropdown-item" href="#"> <i class="bi bi-share fa-fw pe-2"></i>Share post via …</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Share to News Feed</a></li>
-                    </ul>
+                    </ul> --}}
                 </li>
                 <!-- Card share action END -->
             </ul>
             <!-- Feed react END -->
 
-           @livewire('comment-live', ['post' => $post])
+           @livewire('comment-live', ['post' => $post->post])
         </div>
         <!-- Card body END -->
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const postGallery = GLightbox({
-                selector: '[data-gallery="image-popup{{$post->id}}"]',
+                selector: '[data-gallery="image-popup{{$post->post->id}}"]',
             });
         });
     </script>
@@ -376,4 +394,3 @@
         });
     </script>
 @endforeach
-

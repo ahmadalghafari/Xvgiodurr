@@ -11,5 +11,5 @@ active
         <i class="bi bi-hand-thumbs-up pe-1"></i>
         Like
     @endif
-         ({{$post->like->count()}})
+         ({{$post->likes_number}})
 </button>

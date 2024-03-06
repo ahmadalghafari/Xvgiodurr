@@ -3,27 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\post;
-use http\Client\Response;
+use App\Models\share;
 use Illuminate\Http\Request;
-use App\Rules\EmptyFields;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use App\Models\file;
 
 class PostController extends Controller{
     public function index(Request $request){
         $userid = auth::user()->id;
-
-        $posts = Post::whereNotIn('user_id', function ($query) use ($userid) {
-                $query->select('user_blocker')
-                    ->from('blocks')
-                    ->where('user_blocked', $userid);
+        $posts = Share::whereNotIn('user_id', function ($query) use ($userid) {
+            $query->select('user_blocker')
+                ->from('blocks')
+                ->where('user_blocked', $userid);
             })->whereIn('user_id', function ($query) use ($userid) {
                 $query->select('user_follower')
                     ->from('follows')
-                    ->where('user_follow', $userid);
-            })->latest()->Paginate(2);
-
+                ->where('user_follow', $userid);
+            })->latest()->Paginate(2);            
         if($request->ajax()){
             $view = view('posts.load', compact('posts'))->render();
             return response()->json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl()]);
@@ -56,6 +52,10 @@ class PostController extends Controller{
         $post = post::create([
             'user_id' => $id,
             'text' => $text ,
+        ]);
+        share::create([
+            'user_id' => $id,
+            'post_id' => $post->id,
         ]);
 
         $fileTypes = ['images', 'videos', 'files', 'voice'];

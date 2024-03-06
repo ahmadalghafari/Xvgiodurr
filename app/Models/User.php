@@ -91,4 +91,7 @@ class User extends Authenticatable implements MustVerifyEmail,CanResetPassword
         return $this->hasMany(commentlike::class , 'user_id' , 'id');
     }
 
+    public function share() : HasMany {
+        return $this->hasMany(share::class);
+    }
 }

@@ -28,4 +28,8 @@ class post extends Model
         return $this->hasMany(file::class , 'post_id' , 'id');
     }
 
+    public function share():HasMany{
+        return $this->hasMany(share::class , 'post_id' , 'id');
+    }
+
 }

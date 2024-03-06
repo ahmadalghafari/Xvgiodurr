@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\post;
+use App\Models\share;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\User;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function show(User $user){
-        $posts = Post::where('user_id',$user->id)->latest()->get();
+        $posts = share::where('user_id',$user->id)->latest()->get();
         return view('users.profile' , compact('posts' , 'user'));
     }
 
