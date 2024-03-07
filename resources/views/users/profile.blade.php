@@ -493,7 +493,7 @@ Header END -->
                                                 <div class="modal-body">
                                                     <ul class="comment-wrap list-unstyled">
                                                         <!-- Comments item START -->
-                                                        @foreach($post->comment as $comment)
+                                                        @foreach($post->post->comment as $comment)
                                                         <li class="comment-item">
                                                             <div class="d-flex">
                                                                 <!-- Avatar -->

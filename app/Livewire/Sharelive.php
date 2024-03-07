@@ -17,16 +17,15 @@ class Sharelive extends Component
     }
 
     public function shareing(){
-        $user_id = Auth::user()->id;
-        // dd($this->isshared);
         if($this->isshared){
-            share::where('post_id',$this->post->id)->where('user_id',$user_id)->delete();
+            Auth::user()->share()->where('post_id',$this->post->id)->delete();
+            $this->post->decrement('share_number');
+            auth::user()->info->decrement('posts_number');
             $this->isshared = false ;
         }else{
-            share::create([
-                'user_id'=>$user_id,
-                'post_id'=>$this->post->id,
-            ]);
+            Auth::user()->share()->create(['post_id' => $this->post->id]);
+            $this->post->increment('share_number');
+            auth::user()->info->increment('posts_number');
             $this->isshared = true ;
         }
         $this->post = $this->post->fresh();

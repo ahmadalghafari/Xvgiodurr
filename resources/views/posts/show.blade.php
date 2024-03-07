@@ -108,7 +108,7 @@ Header END -->
         <div class="col-lg-8 mx-auto">
           <div class="card card-body">
               <!-- Card header START -->
-              <div class="card-header border-0 pb-0">
+                <div class="card-header border-0 pb-0">
                   <div class="d-flex align-items-center justify-content-between">
                       <div class="d-flex align-items-center">
                           <!-- Avatar -->
@@ -378,25 +378,19 @@ Header END -->
 
                       <!-- Card share action START -->
                       <li class="nav-item dropdown ms-sm-auto">
-                          <a class="nav-link mb-0" href="#" id="cardShareAction" data-bs-toggle="dropdown" aria-expanded="false">
-                              <i class="bi bi-reply-fill flip-horizontal ps-1"></i>Share (3)
-                          </a>
-                          <!-- Card share action dropdown menu -->
-                          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardShareAction">
-                              <li><a class="dropdown-item" href="#"> <i class="bi bi-envelope fa-fw pe-2"></i>Send via Direct Message</a></li>
-                              <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark-check fa-fw pe-2"></i>Bookmark </a></li>
-                              <li><a class="dropdown-item" href="#"> <i class="bi bi-link fa-fw pe-2"></i>Copy link to post</a></li>
-                              <li><a class="dropdown-item" href="#"> <i class="bi bi-share fa-fw pe-2"></i>Share post via …</a></li>
-                              <li><hr class="dropdown-divider"></li>
-                              <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Share to News Feed</a></li>
-                          </ul>
+                        @if($post->user_id != Auth::user()->id)
+                            @livewire('sharelive', ['post' => $post])
+                        @endif
                       </li>
                       <!-- Card share action END -->
                   </ul>
                   <!-- Feed react END -->
 
-                  <!-- Add wcomment -->
-                  <div class="d-flex mb-3">
+                  <!-- Add comment -->
+                  @livewire('comment-live', ['post' => $post])
+
+                  
+                  {{-- <div class="d-flex mb-3">
                       <!-- Avatar -->
                       <div class="avatar avatar-xs me-2">
                           <a href="#!"> <img class="avatar-img rounded-circle"
@@ -413,10 +407,10 @@ Header END -->
                               <i class="bi bi-send-fill"> </i>
                           </button>
                       </form>
-                  </div>
+                  </div> --}}
 
                   <!-- Comment wrap START -->
-                  <ul class="comment-wrap list-unstyled">
+                  {{-- <ul class="comment-wrap list-unstyled">
                       @foreach($post->comment as $comment)
                           <li class="comment-item">
                               <div class="d-flex">
@@ -491,7 +485,7 @@ Header END -->
                               </div>
                           </li>
                       @endforeach
-                 </ul>
+                 </ul> --}}
                   <!-- Comment wrap END -->
               </div>
               <!-- Card body END -->

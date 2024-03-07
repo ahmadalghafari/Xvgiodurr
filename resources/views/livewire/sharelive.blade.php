@@ -4,5 +4,5 @@ active
 @endif
 " href="#" id="cardShareAction" data-bs-toggle="dropdown" aria-expanded="false">
     <i class="bi bi-reply-fill flip-horizontal ps-1"></i>Share 
-    {{-- ({{$post->share_number}}) --}}
+    ({{$this->post->share_number}})
 </button>

@@ -18,9 +18,11 @@ class LikeCommentLive extends Component
     {
         if($this->isliked){
             Auth::user()->commentlike()->where('comment_id',$this->comment->id)->delete();
+            $this->comment->decrement("likes_number");
             $this->isliked = false ;
         }else{
             Auth::user()->commentlike()->create([ 'comment_id' => $this->comment->id]);
+            $this->comment->increment("likes_number");
             $this->isliked = true ;
         }
         $this->comment = $this->comment->fresh();
@@ -29,6 +31,6 @@ class LikeCommentLive extends Component
     }
     public function render()
     {
-        return view('livewire.like-comment-live' , ['commentlikecount' => commentlike::where('comment_id',$this->comment->id)->count()]);
+        return view('livewire.like-comment-live' );
     }
 }

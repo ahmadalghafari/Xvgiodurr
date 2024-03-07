@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('infos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->integer('follower')->nullable($value = false)->default(0);
+            $table->integer('following')->nullable($value = false)->default(0);
+            $table->integer('posts_number')->nullable($value = false)->default(0);
             $table->string('phone')->nullable();
             $table->string('overview')->nullable();
             $table->string('address')->nullable();

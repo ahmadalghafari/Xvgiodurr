@@ -57,7 +57,7 @@
         <!-- Card body START --- the post content -->
         <div class="card-body">
             <h6 class="nav-item card-title mb-0">
-                <a href="{{route('home.posts.show' , $post)}}">
+                <a href="{{route('home.posts.show' , $post->post)}}">
                     <p>{{$post->post->text}}</p>
                 </a>
             </h6>

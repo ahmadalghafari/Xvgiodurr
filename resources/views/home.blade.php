@@ -169,21 +169,21 @@ Header END -->
 										<div class="hstack gap-2 gap-xl-3 justify-content-center">
 											<!-- User stat item -->
 											<div>
-												<h6 class="mb-0">{{Auth::user()->post->count()}}</h6>
-												<small>Post</small>
+												<h6 class="mb-0">{{Auth::user()->info->posts_number}}</h6>
+												<small>Posts</small>
 											</div>
 											<!-- Divider -->
 											<div class="vr"></div>
 											<!-- User stat item -->
                                             <div>
-                                                <h6 class="mb-0">{{Auth::user()->followMe->count()}}</h6>
-                                                <small>Followers</small>
+                                                <h6 class="mb-0">{{Auth::user()->info->follower}}</h6>
+                                                <small>Follower</small>
                                             </div>
                                             <!-- Divider -->
                                             <div class="vr"></div>
                                             <!-- User stat item -->
                                             <div>
-                                                <h6 class="mb-0">{{Auth::user()->follow->count()}}</h6>
+                                                <h6 class="mb-0">{{Auth::user()->info->following}}</h6>
                                                 <small>Following</small>
                                             </div>
 										</div>
@@ -259,6 +259,7 @@ Header END -->
 				<!-- Navbar END-->
 			</div>
 			<!-- Sidenav END -->
+			
 
 			<!-- Main content START -->
             <!--warning --- don't delete or change the id of the under div : id="posts-container"-->
@@ -951,10 +952,6 @@ JS libraries, plugins and custom scripts -->
             });
         }
     });
-
-
 </script>
-
-
 </body>
 </html>

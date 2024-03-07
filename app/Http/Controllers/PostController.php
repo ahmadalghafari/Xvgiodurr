@@ -19,7 +19,8 @@ class PostController extends Controller{
                 $query->select('user_follower')
                     ->from('follows')
                 ->where('user_follow', $userid);
-            })->latest()->Paginate(2);            
+            })->latest()->Paginate(5);
+        // dd($posts->nextPageUrl());            
         if($request->ajax()){
             $view = view('posts.load', compact('posts'))->render();
             return response()->json(['view' => $view, 'nextPageUrl' => $posts->nextPageUrl()]);
@@ -57,6 +58,7 @@ class PostController extends Controller{
             'user_id' => $id,
             'post_id' => $post->id,
         ]);
+        auth::user()->info->increment('posts_number');
 
         $fileTypes = ['images', 'videos', 'files', 'voice'];
 
@@ -127,7 +129,7 @@ class PostController extends Controller{
         }
 
         $post->delete();
-
+        auth::user()->info->decrement('posts_number');
         return redirect()->back()->with('success', 'Post deleted successfully');
     }
 

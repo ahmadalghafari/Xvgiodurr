@@ -35,9 +35,9 @@ class CommentLive extends Component
     {
         $id = Auth::user()->id;
         // dd($this->file);
-        if(empty($this->text) && !$this->file){
-            return;
-        }
+        // if(empty($this->text) && !$this->file){
+        //     return;
+        // }
         if ($this->file != null) {
             $this->validate([
                 'file' => 'file|max:10000',
@@ -75,7 +75,7 @@ class CommentLive extends Component
             ]);
         } else {
             $this->validate([
-                'text' => 'max:200' ,
+                'text' => 'required|max:200' 
             ]);
             $id = Auth::user()->id;
             Comment::create([
