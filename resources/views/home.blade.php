@@ -400,7 +400,7 @@ Header END -->
 				<li class="mt-3 hstack gap-3 align-items-center position-relative toast-btn" data-target="chatToast">
 					<!-- Avatar -->
 					<div class="avatar status-online">
-						<img class="avatar-img rounded-circle" src="assets/images/avatar/01.jpg" alt="">
+						<img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/01.jpg')}}" alt="">
 					</div>
 					<!-- Info -->
 					<div class="overflow-hidden">
@@ -415,7 +415,7 @@ Header END -->
 				<li class="mt-3 hstack gap-3 align-items-center position-relative toast-btn" data-target="chatToast2">
 					<!-- Avatar -->
 					<div class="avatar status-online">
-						<img class="avatar-img rounded-circle" src="assets/images/avatar/02.jpg" alt="">
+						<img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/02.jpg')}}" alt="">
 					</div>
 					<!-- Info -->
 					<div class="overflow-hidden">
@@ -430,7 +430,7 @@ Header END -->
 				<li class="mt-3 hstack gap-3 align-items-center position-relative">
 					<!-- Avatar -->
 					<div class="avatar status-offline">
-						<img class="avatar-img rounded-circle" src="assets/images/avatar/placeholder.jpg" alt="">
+						<img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/placeholder.jpg')}}" alt="">
 					</div>
 					<!-- Info -->
 					<div class="overflow-hidden">
@@ -445,7 +445,7 @@ Header END -->
 				<li class="mt-3 hstack gap-3 align-items-center position-relative">
 					<!-- Avatar -->
 					<div class="avatar">
-						<img class="avatar-img rounded-circle" src="assets/images/avatar/04.jpg" alt="">
+						<img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/04.jpg')}}" alt="">
 					</div>
 					<!-- Info -->
 					<div class="overflow-hidden">
@@ -460,7 +460,7 @@ Header END -->
 				<li class="mt-3 hstack gap-3 align-items-center position-relative">
 					<!-- Avatar -->
 					<div class="avatar avatar-story status-online">
-						<img class="avatar-img rounded-circle" src="assets/images/avatar/05.jpg" alt="">
+						<img class="avatar-img rounded-circle" src="{{asset('import/assets/images/avatar/05.jpg')}}" alt="">
 					</div>
 					<!-- Info -->
 					<div class="overflow-hidden">

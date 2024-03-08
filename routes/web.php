@@ -11,16 +11,12 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Models\User;
 
-// Route::view('testing','testing.test');
-Route::get('/' , function(){
-    return "test is sucss";
-});
-Route::get('test' , function(){
-    return view('home');
-});
 
 Route::name('home.')->middleware(['auth','verified'])->prefix('home/')->group(function (){
 
+    Route::get('chats' , function (){
+        return view('message');
+    });
     Route::resource('posts',PostController::class)->except('show');
     Route::get('posts/show/{post}' ,[PostController::class , 'show'])->name('posts.show')->middleware('blockPost');
     Route::view('search' ,'search')->name('search');
