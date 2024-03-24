@@ -263,7 +263,7 @@
                         <i class="bi bi-chat-fill pe-1"></i>Comments 
                         {{-- ({{$post->post->comments_number}}) --}}
                     </button>
-                    @if($post->post->comment()->count() != 0)
+                    @if($post->post->comments_number != 0)
                     <!-- Modal -->
                     <div class="modal fade" id="Modal{{$post->post->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -383,13 +383,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             const postGallery = GLightbox({
                 selector: '[data-gallery="image-popup{{$post->post->id}}"]',
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const postGallery = GLightbox({
-                selector: '[data-gallery="image-popup11"]',
             });
         });
     </script>

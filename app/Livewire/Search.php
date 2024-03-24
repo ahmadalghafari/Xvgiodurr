@@ -13,8 +13,12 @@ class Search extends Component
     public function toggleFollow(User $user) :void{
         if(Auth::user()->follow->contains('user_follower' , $user->id)){
             Auth::user()->follow()->where('user_follower' , $user->id)->delete();
+            Auth::user()->info->decrement('following');
+            $user->info->decrement('follower');
         }else{
             Auth::user()->follow()->create(['user_follower' => $user->id]);
+            Auth::user()->info->increment('following');
+            $user->info->increment('follower');
         }
 
     }

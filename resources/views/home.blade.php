@@ -91,10 +91,13 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.css')}}">
 
 	<!-- Theme CSS -->
-	    <link rel="stylesheet" type="text/css" href="{{asset('import/assets/css/style.css')}}">
-{{--        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>--}}
-{{--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>--}}
-{{--        @livewireStyles--}}
+	<link rel="stylesheet" type="text/css" href="{{asset('import/assets/css/style.css')}}">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.min.js')}}" defer></script>
+	<script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.js')}}" defer></script>
+	<livewire:styles />
 </head>
 <body>
 {{--<div class="preloader">--}}
@@ -346,7 +349,7 @@ Header END -->
 <!-- **************** MAIN CONTENT END **************** -->
 
 <!-- Main Chat START -->
-<div class="d-none d-lg-block">
+{{-- <div class="d-none d-lg-block">
 	<!-- Button -->
 	<a class="icon-md btn btn-primary position-fixed end-0 bottom-0 me-5 mb-5" data-bs-toggle="offcanvas" href="#offcanvasChat" role="button" aria-controls="offcanvasChat">
 		<i class="bi bi-chat-left-text-fill"></i>
@@ -892,6 +895,7 @@ Header END -->
 							<button class="btn btn-sm btn-secondary-soft me-2"><i class="fa-solid fa-paperclip fs-6"></i></button>
 							<button class="btn btn-sm btn-success-soft me-2"> Gif </button>
 							<button class="btn btn-sm btn-primary ms-auto"> Send </button>
+							
 						</div>
 					</div>
 					<!-- Chat bottom START -->
@@ -903,30 +907,14 @@ Header END -->
 	</div>
 	<!-- Chat END -->
 
-</div>
+</div> --}}
  <!-- Main Chat END -->
 
 
 
-<!-- =======================
-JS libraries, plugins and custom scripts -->
-<script src="{{asset('import/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}" defer></script>
-<script src="{{asset('import/assets/vendor/tiny-slider/dist/tiny-slider.js')}}" defer></script>
-<script src="{{asset('import/assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js')}}" defer></script>
-<script src="{{asset('import/assets/vendor/choices.js/public/assets/scripts/choices.min.js')}}" defer></script>
-<script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.min.js')}}" defer></script>
-<script src="{{asset('import/assets/vendor/glightbox-master/dist/js/glightbox.js')}}" defer></script>
-<script src="{{asset('import/assets/vendor/flatpickr/dist/flatpickr.min.js')}}" defer></script>
-<script src="{{asset('import/assets/vendor/plyr/plyr.js')}}" defer></script>
-<script src="{{asset('import/assets/vendor/dropzone/dist/min/dropzone.min.js')}}" defer></script>
-<script src="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.js')}}" defer></script>
-<script src="{{asset('import/assets/js/zuck-stories.js')}}" defer></script>
 
-<!-- Theme Functions -->
-<script src="{{asset('import/assets/js/functions.js')}}" defer></script>
 <script>
     $(document).ready(function () {
-
         let nextPageUrl = '{{ $posts->nextPageUrl() }}';
         $(window).scroll(function () {
             if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
@@ -953,5 +941,19 @@ JS libraries, plugins and custom scripts -->
         }
     });
 </script>
+<script src="{{asset('import/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/tiny-slider/dist/tiny-slider.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/choices.js/public/assets/scripts/choices.min.js')}}" defer></script>
+
+<script src="{{asset('import/assets/vendor/flatpickr/dist/flatpickr.min.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/plyr/plyr.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/dropzone/dist/min/dropzone.min.js')}}" defer></script>
+<script src="{{asset('import/assets/vendor/zuck.js/dist/zuck.min.js')}}" defer></script>
+<script src="{{asset('import/assets/js/zuck-stories.js')}}" defer></script>
+
+<!-- Theme Functions -->
+<script src="{{asset('import/assets/js/functions.js')}}" defer></script>
+<livewire:scripts />
 </body>
 </html>
